@@ -11,10 +11,7 @@ function print(text) {
  */
 function isValid(name) {
   let isValid = true;
-  if (name === null) {
-    isValid = false;
-  }
-  else if (name === '') {
+  if (!name) {
     isValid = false;
   }
   else if (name.indexOf(' ') >= 0) {

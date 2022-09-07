@@ -1,10 +1,6 @@
 function truncate(str, maxlength) {
-  let resStr = '';
   if (str.length <= maxlength) {
-    resStr = str;
+    return str;
   }
-  else {
-    resStr = `${str.substring(0, maxlength - 1)}…`;
-  }
-  return resStr;
+  return `${str.substring(0, maxlength - 1)}…`;
 }
