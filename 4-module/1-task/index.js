@@ -9,13 +9,7 @@ function makeFriendsList(friends) {
             `;
   };
 
-  const listItemString = () => friends.map(({firstName, lastName}) => {
-    return `
-    ${getListItem({firstName, lastName})}
-    `;
-  }).join('');
-
-  list.innerHTML = listItemString();
+  list.innerHTML = friends.map(({firstName, lastName}) => `${getListItem({firstName, lastName})}`).join('');
   return list;
 
 }
