@@ -7,34 +7,25 @@ export default class Carousel {
     this.slides = slides;
     this.counter = 0;
     this.render();
+    this.addEventListeners();
   }
 
   render() {
-    this.elem = createElement(this.template());
-      this.elem.addEventListener('click', this.onAddBtnClick);
-    document.addEventListener('DOMContentLoaded', (ev) => {
-      const btnPrev = document.querySelector('.carousel__arrow_left');
-      const btnNext = document.querySelector('.carousel__arrow_right');
-      btnPrev.style.display = 'none';
-      btnPrev.addEventListener('click', this.onPrevButtonClick);
-      btnNext.addEventListener('click', this.onNextButtonClick);
-    });
+    const element = document.createElement("div");
+    element.innerHTML = this.getCarousel(this.slides);
+    this.elem = element.firstElementChild;
   }
 
-  template() {
+  getCarousel = (data) => {
     return `
         <div class="carousel">
             <div class="carousel__arrow carousel__arrow_right">
                 <img src="/assets/images/icons/angle-icon.svg" alt="icon">
             </div>
-            <div class="carousel__arrow carousel__arrow_left">
+            <div class="carousel__arrow carousel__arrow_left" style="display: none">
                 <img src="/assets/images/icons/angle-left-icon.svg" alt="icon">
             </div>
-            <div class="carousel__inner">
-            ${this.slides.map(slide => {
-                return this.getSlide(slide);
-              }).join("")}
-            </div>
+            ${this.getSlides(data)}
         </div>
 
     `;
@@ -42,7 +33,7 @@ export default class Carousel {
 
   getSlide = ({name, price, image, id}) => {
     return `
-    <div class="carousel__slide" id="${id}">
+    <div class="carousel__slide" data-id="${id}">
         <img src="/assets/images/carousel/${image}" class="carousel__img" alt="slide">
         <div class="carousel__caption">
           <span class="carousel__price">${this.formatPrice(price)}</span>
@@ -55,25 +46,50 @@ export default class Carousel {
     `;
   }
 
+  getSlides = (data) => {
+    return `
+       <div class="carousel__inner">
+            ${data.map(slide => {
+      return this.getSlide(slide);
+    }).join('')}
+       </div>
+    `;
+  }
+
   formatPrice = (num) => {
     return `€${parseInt(num).toFixed(2)}`;
   }
 
-  onAddBtnClick = (ev) => {
-    const target = ev.target;
-    const addBtn = target.closest('.carousel__button');
-    if (!addBtn) return;
-    const event = new CustomEvent('product-add', {
-      bubbles: true,
-      detail: target.closest('.carousel__slide').id,
-    });
+  addEventListeners() {
+    this.elem.onclick = ({target}) => {
+      this.onAddBtnClick(target);
 
-    this.elem.dispatchEvent(event);
+      if (target.closest('.carousel__arrow_right')) {
+        this.onNextButtonClick(target);
+      }
+
+      if (target.closest('.carousel__arrow_left')) {
+        this.onPrevButtonClick(target);
+      }
+    };
+
   }
 
-  onPrevButtonClick = (ev) => {
-    const target = ev.target;
-    const btnPrev = target.closest('.carousel__arrow_left');
+  onAddBtnClick = (target) => {
+    const addBtn = target.closest('.carousel__button');
+    if (addBtn) {
+      const slideID = target.closest('[data-id]').dataset.id;
+      const event = new CustomEvent('product-add', {
+        bubbles: true,
+        detail: slideID,
+      });
+      this.elem.dispatchEvent(event);
+    }
+
+  }
+
+  onPrevButtonClick = (target) => {
+    const btnPrev = target;
     const btnNext = document.querySelector('.carousel__arrow_right');
     const inner = document.querySelector('.carousel__inner');
     const dist = document.querySelector('.carousel__inner').offsetWidth;
@@ -95,9 +111,8 @@ export default class Carousel {
     }
   }
 
-  onNextButtonClick = (ev) => {
-    const target = ev.target;
-    const btnNext = target.closest('.carousel__arrow_right');
+  onNextButtonClick = (target) => {
+    const btnNext = target;
     const btnPrev = document.querySelector('.carousel__arrow_left');
     const inner = document.querySelector('.carousel__inner');
     const dist = document.querySelector('.carousel__inner').offsetWidth;
