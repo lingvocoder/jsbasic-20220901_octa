@@ -35,7 +35,7 @@ export default class UserTable {
                     </thead>
                     <tbody>
                         ${this.data.map(item => {
-      return this.getTableRow(item);
+         return this.getTableRow(item);
     }).join("")}
                     </tbody>
                 </table>
