@@ -1,4 +1,4 @@
-import createElement from '../../assets/lib/create-element.js';
+import createElement from "../../assets/lib/create-element.js";
 
 export default class Carousel {
   elem = null;
@@ -11,9 +11,7 @@ export default class Carousel {
   }
 
   render() {
-    const element = document.createElement("div");
-    element.innerHTML = this.getCarousel(this.slides);
-    this.elem = element.firstElementChild;
+    this.elem = createElement(this.getCarousel(this.slides));
   }
 
   getCarousel = (data) => {
@@ -25,9 +23,8 @@ export default class Carousel {
             <div class="carousel__arrow carousel__arrow_left" style="display: none">
                 <img src="/assets/images/icons/angle-left-icon.svg" alt="icon">
             </div>
-            ${this.getSlides(data)}
+            <div class="carousel__inner">${this.getSlides(data)}</div>
         </div>
-
     `;
   }
 
@@ -47,91 +44,78 @@ export default class Carousel {
   }
 
   getSlides = (data) => {
-    return `
-       <div class="carousel__inner">
-            ${data.map(slide => {
-      return this.getSlide(slide);
-    }).join('')}
-       </div>
-    `;
-  }
-
-  formatPrice = (num) => {
-    return `€${parseInt(num).toFixed(2)}`;
+    return data.map(item => {
+      return this.getSlide(item);
+    }).join('');
   }
 
   addEventListeners() {
-    this.elem.onclick = ({target}) => {
+
+    this.elem.addEventListener('click', ({target}) => {
+      const prevBtn = target.closest('.carousel__arrow_left');
+      const nextBtn = target.closest('.carousel__arrow_right');
       this.onAddBtnClick(target);
-
-      if (target.closest('.carousel__arrow_right')) {
-        this.onNextButtonClick(target);
+      if (prevBtn) {
+        this.onPrevButtonClick();
       }
-
-      if (target.closest('.carousel__arrow_left')) {
-        this.onPrevButtonClick(target);
+      if (nextBtn) {
+        this.onNextButtonClick();
       }
-    };
-
+    });
   }
 
   onAddBtnClick = (target) => {
     const addBtn = target.closest('.carousel__button');
-    if (addBtn) {
-      const slideID = target.closest('[data-id]').dataset.id;
-      const event = new CustomEvent('product-add', {
-        bubbles: true,
-        detail: slideID,
-      });
-      this.elem.dispatchEvent(event);
+    if (!addBtn) {
+      return;
     }
-
+    const slideID = target.closest('.carousel__slide[data-id]').dataset.id;
+    const event = new CustomEvent('product-add', {
+      bubbles: true,
+      detail: slideID,
+    });
+    this.elem.dispatchEvent(event);
+    console.log(event.detail);
   }
 
-  onPrevButtonClick = (target) => {
-    const btnPrev = target;
+  moveSlider = () => {
     const btnNext = document.querySelector('.carousel__arrow_right');
-    const inner = document.querySelector('.carousel__inner');
-    const dist = document.querySelector('.carousel__inner').offsetWidth;
-
-    btnNext.style.display = '';
-    if (!btnPrev) {
-      return;
-    }
-    this.counter--;
-    inner.style.transform = `translateX(-${this.counter * dist}px)`;
-    if (this.counter < 0) {
-      this.counter = 0;
-      return;
-    }
-    if (this.counter === 0) {
-      btnPrev.style.display = 'none';
-    } else {
-      btnPrev.style.display = '';
-    }
-  }
-
-  onNextButtonClick = (target) => {
-    const btnNext = target;
     const btnPrev = document.querySelector('.carousel__arrow_left');
     const inner = document.querySelector('.carousel__inner');
     const dist = document.querySelector('.carousel__inner').offsetWidth;
 
-    btnPrev.style.display = '';
-    if (!btnNext) {
-      return;
-    }
-    this.counter++;
-    inner.style.transform = `translateX(-${this.counter * dist}px)`;
+    let offset = -this.counter * dist;
+    inner.style.transform = `translateX(${offset}px)`;
 
-    if (this.counter > this.slides.length - 1) {
-      this.counter = this.slides.length - 1;
-      return;
+    if (this.counter === 0) {
+      btnPrev.style.display = 'none';
+    } else {
+      btnPrev.style.display = '';
     }
     if (this.counter === this.slides.length - 1) {
       btnNext.style.display = 'none';
     } else {
       btnNext.style.display = '';
     }
+  }
+
+  formatPrice = (num) => {
+    return `€${parseInt(num).toFixed(2)}`;
+  }
+
+  onPrevButtonClick = () => {
+    this.counter--;
+    if (this.counter < 0) {
+      this.counter = 0;
+    }
+    this.moveSlider();
+  }
+
+  onNextButtonClick = () => {
+    this.counter++;
+    if (this.counter > this.slides.length - 1) {
+      this.counter = this.slides.length - 1;
+    }
+    this.moveSlider();
   };
 }
