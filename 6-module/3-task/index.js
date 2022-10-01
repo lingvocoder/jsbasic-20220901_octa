@@ -50,7 +50,6 @@ export default class Carousel {
   }
 
   addEventListeners() {
-
     this.elem.addEventListener('click', ({target}) => {
       const prevBtn = target.closest('.carousel__arrow_left');
       const nextBtn = target.closest('.carousel__arrow_right');

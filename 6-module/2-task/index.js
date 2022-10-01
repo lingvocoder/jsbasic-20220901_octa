@@ -39,7 +39,9 @@ export default class ProductCard {
   onAddBtnClick = (ev) => {
     const target = ev.target;
     const addBtn = target.closest('.card__button');
-    if (!addBtn) {return;}
+    if (!addBtn) {
+      return;
+    }
     const event = new CustomEvent('product-add', {
       bubbles: true,
       detail: this.productID,
