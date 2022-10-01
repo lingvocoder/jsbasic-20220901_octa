@@ -82,8 +82,8 @@ export default class Carousel {
     const btnPrev = document.querySelector('.carousel__arrow_left');
     const inner = document.querySelector('.carousel__inner');
     const dist = document.querySelector('.carousel__inner').offsetWidth;
-
     let offset = -this.counter * dist;
+
     inner.style.transform = `translateX(${offset}px)`;
 
     if (this.counter === 0) {

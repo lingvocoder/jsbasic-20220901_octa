@@ -36,6 +36,7 @@ export default class ProductCard {
     this.elem = createElement(this.template());
     this.elem.addEventListener('click', this.onAddBtnClick);
   }
+
   onAddBtnClick = (ev) => {
     const target = ev.target;
     const addBtn = target.closest('.card__button');
@@ -46,7 +47,6 @@ export default class ProductCard {
       bubbles: true,
       detail: this.productID,
     });
-
     addBtn.dispatchEvent(event);
   }
 

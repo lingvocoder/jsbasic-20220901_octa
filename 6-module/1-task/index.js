@@ -47,13 +47,13 @@ export default class UserTable {
     const action = 'remove';
 
     return `
-                <tr>
-                    <td>${name}</td>
-                    <td>${age}</td>
-                    <td>${salary}</td>
-                    <td>${city}</td>
-                    <td><button data-action="${action}">X</button></td>
-                </tr>
+             <tr>
+                 <td>${name}</td>
+                 <td>${age}</td>
+                 <td>${salary}</td>
+                 <td>${city}</td>
+                 <td><button data-action="${action}">X</button></td>
+             </tr>
             `;
   }
 
