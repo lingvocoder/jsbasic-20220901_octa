@@ -79,7 +79,7 @@ export default class StepSlider {
   }
 
   onStepClick = (ev) => {
-    const valueOutput = document.querySelector('.slider__value');
+    const valueOutput = this.elem.querySelector('.slider__value');
     let {value, percent} = this.calculateLeftOffset(ev);
     valueOutput.textContent = String(value);
     this.value = value;
@@ -89,7 +89,7 @@ export default class StepSlider {
   }
 
   onDragThumb = (ev) => {
-    const valueOutput = document.querySelector('.slider__value');
+    const valueOutput = this.elem.querySelector('.slider__value');
     let {value, percent} = this.calculateDragLeftOffset(ev);
     valueOutput.textContent = String(value);
     this.value = value;
@@ -129,7 +129,7 @@ export default class StepSlider {
   }
 
   changeSliderThumbPosition = (percent) => {
-    const progressBar = document.querySelector('.slider__thumb');
+    const progressBar = this.elem.querySelector('.slider__thumb');
     progressBar.style.left = `${percent}%`;
   }
 

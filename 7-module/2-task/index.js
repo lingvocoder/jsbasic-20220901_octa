@@ -13,7 +13,7 @@ export default class Modal {
   }
 
   addEventListeners() {
-    document.addEventListener("click", this.onCloseBtnClick);
+    this.elem.addEventListener("click", this.onCloseBtnClick);
     document.addEventListener("keydown", this.onEscButtonClick);
   }
 
