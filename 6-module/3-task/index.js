@@ -74,6 +74,7 @@ export default class Carousel {
       detail: slideID,
     });
     this.elem.dispatchEvent(event);
+    console.log(event.detail);
   }
 
   moveSlider = () => {
