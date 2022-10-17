@@ -85,7 +85,7 @@ export default class ProductGrid {
     }
 
     const filterProductObjects = (filter) => this.products.filter(product => {
-      return Object.keys(filter).every(key => product[key] === filter[key]);
+      return Object.keys(filter).every(key => key === 'spiciness' ? product[key] <= filter[key] : product[key] === filter[key]);
     });
 
     gridInner.innerHTML = this.getProductCards(filterProductObjects(this.filters));

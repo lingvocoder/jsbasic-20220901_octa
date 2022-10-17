@@ -73,10 +73,11 @@ describe('8-module-2-task', () => {
         });
 
       let expectedProductNames = [
-        "Tom yam vegetarian",
-        "Tom kha vegetarian", "Chicken cashew",
-        "Prawn crackers",
-        "Fish cakes", "Chicken satay", "Fresh prawn crackers"
+        "Som tam papaya salad", "Tom yam vegetarian",
+        "Tom kha vegetarian", "Chicken cashew", "Green curry veggies",
+        "Tofu cashew", "Krapau tofu", "Prawn crackers",
+        "Fish cakes", "Chicken satay", "Fresh prawn crackers",
+        "Stir fried vegetables", "White rice"
       ];
 
       expect(filteredProductCardsNames).toEqual(expectedProductNames);
