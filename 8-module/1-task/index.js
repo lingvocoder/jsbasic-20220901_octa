@@ -67,6 +67,5 @@ export default class CartIcon {
       cartIcon.style.left = '';
       cartIcon.style.zIndex = '';
     }
-
   }
 }
