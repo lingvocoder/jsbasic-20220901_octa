@@ -1,4 +1,5 @@
 import createElement from "../../assets/lib/create-element.js";
+// const createElement = require("../../assets/lib/create-element.js");
 
 export default class Carousel {
   elem = null;
@@ -8,10 +9,18 @@ export default class Carousel {
     this.counter = 0;
     this.render();
     this.addEventListeners();
+    this.initCarousel();
   }
 
   render() {
-    this.elem = createElement(this.getCarousel(this.slides));
+    if (!this.elem) {
+      this.elem = createElement(this.getCarousel(this.slides));
+    }
+    return this.elem;
+  }
+
+  initCarousel() {
+    this.checkEdgeSlides();
   }
 
   getCarousel = (data) => {
@@ -20,13 +29,13 @@ export default class Carousel {
             <div class="carousel__arrow carousel__arrow_right">
                 <img src="/assets/images/icons/angle-icon.svg" alt="icon">
             </div>
-            <div class="carousel__arrow carousel__arrow_left" style="display: none">
+            <div class="carousel__arrow carousel__arrow_left">
                 <img src="/assets/images/icons/angle-left-icon.svg" alt="icon">
             </div>
             <div class="carousel__inner">${this.getSlides(data)}</div>
         </div>
     `;
-  }
+  };
 
   getSlide = ({name, price, image, id}) => {
     return `
@@ -41,12 +50,34 @@ export default class Carousel {
         </div>
       </div>
     `;
+  };
+
+  getSlides = (data) => data.map(item => this.getSlide(item)).join('');
+
+  moveSlide() {
+    const carouselInner = this.elem.querySelector('.carousel__inner');
+    const slideWidth = parseFloat(window.getComputedStyle(carouselInner).width);
+    let dist = -this.counter * slideWidth;
+    carouselInner.style.transform = `translateX(${dist}px)`;
   }
 
-  getSlides = (data) => {
-    return data.map(item => {
-      return this.getSlide(item);
-    }).join('');
+  checkEdgeSlides() {
+    const btnPrev = this.elem.querySelector('.carousel__arrow_left');
+    const btnNext = this.elem.querySelector('.carousel__arrow_right');
+    let slideCount = this.elem.querySelectorAll('.carousel__slide').length;
+
+    btnPrev.style.display = this.counter === 0 ? 'none' : '';
+    btnNext.style.display = this.counter === slideCount - 1 ? 'none' : '';
+  }
+
+  prev() {
+    this.counter--;
+    this.moveSlide();
+  }
+
+  next() {
+    this.counter++;
+    this.moveSlide();
   }
 
   addEventListeners() {
@@ -55,11 +86,12 @@ export default class Carousel {
       const nextBtn = target.closest('.carousel__arrow_right');
       this.onAddBtnClick(target);
       if (prevBtn) {
-        this.onPrevButtonClick();
+        this.prev();
       }
       if (nextBtn) {
-        this.onNextButtonClick();
+        this.next();
       }
+      this.checkEdgeSlides();
     });
   }
 
@@ -74,47 +106,12 @@ export default class Carousel {
       detail: slideID,
     });
     this.elem.dispatchEvent(event);
-    console.log(event.detail);
-  }
-
-  moveSlider = () => {
-    const btnNext = document.querySelector('.carousel__arrow_right');
-    const btnPrev = document.querySelector('.carousel__arrow_left');
-    const inner = document.querySelector('.carousel__inner');
-    const dist = document.querySelector('.carousel__inner').offsetWidth;
-    let offset = -this.counter * dist;
-
-    inner.style.transform = `translateX(${offset}px)`;
-
-    if (this.counter === 0) {
-      btnPrev.style.display = 'none';
-    } else {
-      btnPrev.style.display = '';
-    }
-    if (this.counter === this.slides.length - 1) {
-      btnNext.style.display = 'none';
-    } else {
-      btnNext.style.display = '';
-    }
-  }
+  };
 
   formatPrice = (num) => {
     return `€${parseInt(num).toFixed(2)}`;
-  }
-
-  onPrevButtonClick = () => {
-    this.counter--;
-    if (this.counter < 0) {
-      this.counter = 0;
-    }
-    this.moveSlider();
-  }
-
-  onNextButtonClick = () => {
-    this.counter++;
-    if (this.counter > this.slides.length - 1) {
-      this.counter = this.slides.length - 1;
-    }
-    this.moveSlider();
   };
+
 }
+
+// module.exports = Carousel;

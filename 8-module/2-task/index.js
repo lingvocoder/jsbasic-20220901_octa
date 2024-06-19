@@ -1,37 +1,13 @@
 import createElement from '../../assets/lib/create-element.js';
-import ProductCard from '../../6-module/2-task/index.js';
+import ProductCard from '../../6-module/2-task/index.mjs';
 
 export default class ProductGrid {
   elem = null;
 
   constructor(products) {
-    this.products = products.map(product => this.modifyProductsObject(product));
+    this.products = products;
     this.filters = {};
     this.render();
-  }
-
-  modifyProductsObject = (obj) => {
-    if (!obj.hasOwnProperty('nuts')) {
-      if (!obj.hasOwnProperty('vegeterian')) {
-        obj = {
-          ...obj,
-          vegeterian: false,
-          nuts: true
-        };
-      } else {
-        obj = {
-          ...obj,
-          nuts: true
-        };
-      }
-    } else {
-      obj = {
-        ...obj,
-        nuts: false,
-        vegeterian: false,
-      };
-    }
-    return obj;
   }
 
   render() {
@@ -69,25 +45,32 @@ export default class ProductGrid {
       const propValue = filters[prop];
 
       switch (prop) {
-      case 'maxSpiciness':
-        this.filters[propName] = propValue;
-        break;
-      case 'vegeterianOnly':
-        this.filters[propName] = propValue;
-        break;
-      case 'noNuts':
-        this.filters[propName] = propValue;
-        break;
-      case 'category':
-        this.filters[propName] = propValue;
-        break;
+        case 'maxSpiciness':
+          this.filters[propName] = propValue;
+          break;
+        case 'vegeterianOnly':
+          this.filters[propName] = propValue;
+          break;
+        case 'noNuts':
+          this.filters[propName] = propValue;
+          break;
+        case 'category':
+          this.filters[propName] = propValue;
+          break;
       }
     }
 
     const filterProductObjects = (filter) => this.products.filter(product => {
-      return Object.keys(filter).every(key => key === 'spiciness' ? product[key] <= filter[key] : product[key] === filter[key]);
+      return Object.keys(filter).every(key => {
+        if (key === 'spiciness') {
+          return product[key] <= filter[key];
+        }
+        if (key === 'nuts') {
+          return product[key] !== filter[key];
+        }
+        return product[key] === filter[key];
+      });
     });
-
     gridInner.innerHTML = this.getProductCards(filterProductObjects(this.filters));
   };
 }

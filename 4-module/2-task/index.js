@@ -4,3 +4,5 @@ function makeDiagonalRed(table) {
     td.style.background = 'red';
   }
 }
+
+module.exports = makeDiagonalRed;

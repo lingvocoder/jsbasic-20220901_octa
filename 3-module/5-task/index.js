@@ -4,3 +4,5 @@ function getMinMax(str) {
   const max = Math.max(...numString);
   return {min, max};
 }
+
+module.exports = getMinMax;

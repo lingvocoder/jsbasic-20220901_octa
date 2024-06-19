@@ -1,6 +1,6 @@
-import Modal from './index.js';
+const Modal = require('./index') ;
 
-describe('7-module-2-task', () => {
+describe('Класс, описывающий компонент "Модальное окно"', () => {
   let modal;
 
   beforeEach(() => {
@@ -11,7 +11,7 @@ describe('7-module-2-task', () => {
     modal.close();
   });
 
-  describe('метод open()', () => {
+  describe('Метод open()', () => {
     beforeEach(() => {
       modal.open();
     });
@@ -20,27 +20,27 @@ describe('7-module-2-task', () => {
       modal.close();
     });
 
-    it('должна создавать основной элемент модального окна', () => {
+    it('Создаёт основной элемент модального окна', () => {
       let modalElement = document.body.querySelector('.modal');
 
       expect(modalElement).toBeTruthy();
     });
 
-    it('должна создавать прозрачный фон', () => {
+    it('Создаёт прозрачный фон', () => {
       let modalElement = document.body.querySelector('.modal .modal__overlay');
 
       expect(modalElement).toBeTruthy();
     });
 
-    it('должна добавлять класс "is-modal-open" элементу body', () => {
+    it('Добавляет класс "is-modal-open" элементу body', () => {
       let hasIsModalOpenClass = document.body.classList.contains('is-modal-open');
 
       expect(hasIsModalOpenClass).toBe(true);
     });
   });
 
-  describe(`метод setTitle('modal title')`, () => {
-    it('должен задавать заголовок модального окна', () => {
+  describe(`Метод setTitle('modal title')`, () => {
+    it('Устанавливает значение заголовка модального окна', () => {
       let title = 'Я главное модальное окно';
 
       modal.setTitle(title);
@@ -53,7 +53,7 @@ describe('7-module-2-task', () => {
       modal.close();
     });
 
-    it('должен задавать заголовок модального окна после его открытия', () => {
+    it('Устанавливает значение заголовка модального окна после его открытия', () => {
       let title = 'Я главное модальное окно';
 
       modal.open();
@@ -68,7 +68,7 @@ describe('7-module-2-task', () => {
     });
   });
 
-  describe(`метод setBody(node)`, () => {
+  describe(`Метод setBody(node)`, () => {
     const createModalBody = (text) => {
       let node = document.createElement('div');
       node.className = 'test-node-class';
@@ -89,7 +89,7 @@ describe('7-module-2-task', () => {
       modal.close();
     });
 
-    it('должен вставлять содержимое модального окна в элемента с классом "modal__body"', () => {
+    it('Вставляет содержимое модального окна в элемент с классом "modal__body"', () => {
       let innerTitleText = 'Внутренний заголовок содержимого';
       const node = createModalBody(innerTitleText);
 
@@ -100,7 +100,7 @@ describe('7-module-2-task', () => {
       expect(selectInnerTitle()).toBe(innerTitleText);
     });
 
-    it('должен вставлять содержимое модального окна в элемента с классом "modal__body" после его открытия', () => {
+    it('Вставляет содержимое модального окна в элемент с классом "modal__body" после его открытия', () => {
       modal.open();
 
       let innerTitleText = 'Внутренний заголовок содержимого';
@@ -112,18 +112,18 @@ describe('7-module-2-task', () => {
     });
   });
 
-  describe('закрытие', () => {
+  describe('Закрытие', () => {
     let clickEvent;
     let closeButton;
 
     beforeEach(() => {
       modal.open();
 
-      clickEvent = new MouseEvent('click', { bubbles: true });
+      clickEvent = new MouseEvent('click', {bubbles: true});
       closeButton = document.body.querySelector('.modal .modal__close');
     });
 
-    it('при вызове метода close(), вёрстка модального окна должна удаляться из body', () => {
+    it('При вызове метода close() вёрстка модального окна удаляется из body', () => {
       modal.close();
 
       let modalElement = document.querySelector('.modal');
@@ -131,7 +131,7 @@ describe('7-module-2-task', () => {
       expect(modalElement).toBeNull();
     });
 
-    it('при вызове метода close(), должен удаляться класс "is-modal-open" с элемента body', () => {
+    it('При вызове метода close() класс "is-modal-open" удаляется с элемента body', () => {
       modal.close();
 
       let hasIsModalOpenClass = document.body.classList.contains('is-modal-open');
@@ -139,7 +139,7 @@ describe('7-module-2-task', () => {
       expect(hasIsModalOpenClass).toBe(false);
     });
 
-    it('при клике по [X], вёрстка модального окна должна удаляться из body', () => {
+    it('При клике по [X], вёрстка модального окна удаляется из body', () => {
       closeButton.dispatchEvent(clickEvent);
 
       let modalElement = document.querySelector('.modal');
@@ -147,7 +147,7 @@ describe('7-module-2-task', () => {
       expect(modalElement).toBeNull();
     });
 
-    it('при клике по [X], должен удаляться класс "is-modal-open" с элемента body', () => {
+    it('При клике по [X] класс "is-modal-open" удаляется с элемента body', () => {
       closeButton.dispatchEvent(clickEvent);
 
       let hasIsModalOpenClass = document.body.classList.contains('is-modal-open');
@@ -155,14 +155,18 @@ describe('7-module-2-task', () => {
       expect(hasIsModalOpenClass).toBe(false);
     });
 
-    describe('если была нажата клавиша ESC', () => {
+    describe('Если была нажата клавиша ESC', () => {
       let escKeyDownEvent;
 
       beforeEach(() => {
-        escKeyDownEvent = new KeyboardEvent('keydown', { code: 'Escape', key: 'Escape', bubbles: true });
+        escKeyDownEvent = new KeyboardEvent('keydown', {
+          code: 'Escape',
+          key: 'Escape',
+          bubbles: true
+        });
       });
 
-      it('вёрстка модального окна должна удаляться из body', () => {
+      it('Вёрстка модального окна удаляется из body', () => {
         document.body.dispatchEvent(escKeyDownEvent);
 
         let modalElement = document.querySelector('.modal');
@@ -170,7 +174,7 @@ describe('7-module-2-task', () => {
         expect(modalElement).toBeNull();
       });
 
-      it('должен удаляться класс "is-modal-open" с элемента body', () => {
+      it('Удаляется класс "is-modal-open" с элемента body', () => {
         document.body.dispatchEvent(escKeyDownEvent);
 
         let hasIsModalOpenClass = document.body.classList.contains('is-modal-open');
@@ -179,14 +183,18 @@ describe('7-module-2-task', () => {
       });
     });
 
-    describe('если была нажата любая другая клавиша кроме ESC', () => {
+    describe('Если была нажата любая другая клавиша кроме ESC', () => {
       let spaceButtonKeyDownEvent;
 
       beforeEach(() => {
-        spaceButtonKeyDownEvent = new KeyboardEvent('keydown', { code: ' ', key: 'Space', bubbles: true });
+        spaceButtonKeyDownEvent = new KeyboardEvent('keydown', {
+          code: ' ',
+          key: 'Space',
+          bubbles: true
+        });
       });
 
-      it('вёрстка модального окна НЕ должна удаляться из body', () => {
+      it('Вёрстка модального окна НЕ удаляется из body', () => {
         document.body.dispatchEvent(spaceButtonKeyDownEvent);
 
         let modalElement = document.querySelector('.modal');
@@ -194,7 +202,7 @@ describe('7-module-2-task', () => {
         expect(modalElement).not.toBeNull();
       });
 
-      it('НЕ должен удаляться класс "is-modal-open" с элемента body', () => {
+      it('НЕ удаляется класс "is-modal-open" с элемента body', () => {
         document.body.dispatchEvent(spaceButtonKeyDownEvent);
 
         let hasIsModalOpenClass = document.body.classList.contains('is-modal-open');

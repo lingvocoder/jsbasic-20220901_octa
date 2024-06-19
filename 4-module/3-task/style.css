@@ -1,5 +1,12 @@
 /* Styles go here */
 
+:root {
+  --color-green: #008000;
+  --color-violet: #932BB3;
+  --color-sky: #65bff3;
+  --color-red: #FF0000;
+}
+
 table, td {
     border: 1px solid #cecece;
     padding: 10px;
@@ -10,17 +17,17 @@ thead {
 }
 
 .male td {
-    background-color: #65bff3;
+    background-color: var(--color-sky);
 }
 
 .female td {
-    background-color: #932bb3;
+    background-color: var(--color-violet);
 }
 
 .available td {
-    border: 2px solid green;
+    border: 2px solid var(--color-green);
 }
 
 .unavailable td {
-    border: 2px solid red;
+    border: 2px solid var(--color-red);
 }

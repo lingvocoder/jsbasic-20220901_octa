@@ -1,12 +1,11 @@
-import UserTable from './index.js';
+const UserTable = require('./index');
 
-describe('6-module-1-task', () => {
+describe('Класс, который создаёт таблицу с переданными данными', () => {
   let userTable;
-
   let clickEvent;
 
   beforeEach(() => {
-    clickEvent = new MouseEvent('click', { bubbles: true });
+    clickEvent = new MouseEvent('click', {bubbles: true});
 
     let rows = [
       {
@@ -32,20 +31,20 @@ describe('6-module-1-task', () => {
     userTable.elem.remove();
   });
 
-  it('свойство elem возвращает один и тот же елемент, при каждом обращении', () => {
+  it('[При каждом обращении возвращает один и тот же элемент, сохраненный в свойстве elem', () => {
     const elementFirstCall = userTable.elem;
     const elementSecondCall = userTable.elem;
 
     expect(elementFirstCall).toBe(elementSecondCall);
   });
 
-  it('компонент должен отрисовать всех пользователей', () => {
-    let rowsInHTMLlength = userTable.elem.querySelectorAll('tbody tr').length;
+  it('Количество строк созданной таблицы соответствует длине переданного в качестве аргумента массива объектов', () => {
+    let rowsInHTMLLength = userTable.elem.querySelectorAll('tbody tr').length;
 
-    expect(rowsInHTMLlength).toBe(2);
+    expect(rowsInHTMLLength).toBe(2);
   });
 
-  it('при клике на кнопку удаляется строка', () => {
+  it('При нажатии кнопки строка удаляется', () => {
     let buttons = userTable.elem.querySelectorAll('button');
 
     buttons[0].dispatchEvent(clickEvent);

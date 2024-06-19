@@ -1,7 +1,7 @@
 # Определите, пуст ли объект
 
-Создайте функцию isEmpty(obj), которая возвращает true, 
-если в объекте нет свойств и false – если хоть одно свойство есть.
+Необходимо создать функцию isEmpty(obj), которая возвращает `true`, 
+если в объекте нет свойств и `false` – если хоть одно свойство есть.
 
 Работать должно так:
 ```js
@@ -11,9 +11,9 @@ function isEmpty(obj) {
 
 let schedule = {};
 
-alert( isEmpty(schedule) ); // true
+console.log( isEmpty(schedule) ); // true
 
 schedule["8:30"] = "подъём";
 
-alert( isEmpty(schedule) ); // false
+console.log( isEmpty(schedule) ); // false
 ```

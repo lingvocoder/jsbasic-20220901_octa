@@ -60,12 +60,5 @@ export default class CartIcon {
       cartIcon.style.left = '';
       cartIcon.style.zIndex = '';
     }
-
-    if (document.documentElement.clientWidth <= 767) {
-      cartIcon.style.position = '';
-      cartIcon.style.top = '';
-      cartIcon.style.left = '';
-      cartIcon.style.zIndex = '';
-    }
   }
 }

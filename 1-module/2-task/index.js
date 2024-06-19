@@ -11,10 +11,11 @@ function print(text) {
  */
 function isValid(name) {
   let isValid = true;
+
   if (!name) {
     isValid = false;
   }
-  else if (name.indexOf(' ') >= 0) {
+  else if (name.indexOf(' ') !== -1) {
     isValid = false;
   }
   else if (name.length < 4) {
@@ -32,3 +33,5 @@ function sayHello() {
     print('Некорректное имя');
   }
 }
+
+module.exports = isValid;

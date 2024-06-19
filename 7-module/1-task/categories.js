@@ -1,4 +1,4 @@
-export default [
+const categories = [
   {
     id: '',
     name: 'All'
@@ -36,3 +36,6 @@ export default [
     name: 'On the side'
   }
 ];
+
+export default categories;
+// module.exports = categories;

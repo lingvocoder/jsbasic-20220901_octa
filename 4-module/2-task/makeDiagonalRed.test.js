@@ -1,4 +1,6 @@
-describe('4-module-2-task', () => {
+const makeDiagonalRed = require('./index');
+
+describe('Функция, которая выделит красным цветом все ячейки в таблице по диагонали слева направо', () => {
   let table;
 
   beforeEach(() => {
@@ -42,7 +44,7 @@ describe('4-module-2-task', () => {
     `;
   });
 
-  it('должна окрашивать ячейку первой строки в красный', () => {
+  it('Окрашивает ячейку первой строки в красный цвет', () => {
     makeDiagonalRed(table);
 
     let cell = table.rows[0].cells[0];
@@ -50,7 +52,7 @@ describe('4-module-2-task', () => {
     expect(cell.style.backgroundColor).toBe('red');
   });
 
-  it('должна окрашивать ячейку второй строки в красный', () => {
+  it('Окрашивает ячейку второй строки в красный цвет', () => {
     makeDiagonalRed(table);
 
     let cell = table.rows[1].cells[1];
@@ -58,7 +60,7 @@ describe('4-module-2-task', () => {
     expect(cell.style.backgroundColor).toBe('red');
   });
 
-  it('должна окрашивать ячейку третьей строки в красный', () => {
+  it('Окрашивает ячейку третьей строки в красный цвет', () => {
     makeDiagonalRed(table);
 
     let cell = table.rows[2].cells[2];
@@ -66,7 +68,7 @@ describe('4-module-2-task', () => {
     expect(cell.style.backgroundColor).toBe('red');
   });
 
-  it('должна окрашивать ячейку четвёртой строки в красный', () => {
+  it('Окрашивает ячейку четвёртой строки в красный цвет', () => {
     makeDiagonalRed(table);
 
     let cell = table.rows[3].cells[3];
@@ -74,7 +76,7 @@ describe('4-module-2-task', () => {
     expect(cell.style.backgroundColor).toBe('red');
   });
 
-  it('должна окрашивать ячейку пятой строки в красный', () => {
+  it('Окрашивает ячейку пятой строки в красный цвет', () => {
     makeDiagonalRed(table);
 
     let cell = table.rows[4].cells[4];

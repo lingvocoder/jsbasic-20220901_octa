@@ -1,15 +1,14 @@
 let calculator = {
   read(a, b) {
-    this.a = a;
-    this.b = b;
+    this.a = parseFloat(a);
+    this.b = parseFloat(b);
   },
   sum() {
     return this.a + this.b;
   },
-  mul() {
+  multiply() {
     return this.a * this.b;
   }
 };
 
-// НЕ УДАЛЯТЬ СТРОКУ, НУЖНА ДЛЯ ПРОВЕРКИ
-window.calculator = calculator; // делает ваш калькулятор доступным глобально
+module.exports = calculator;

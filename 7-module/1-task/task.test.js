@@ -1,7 +1,7 @@
-import categories from './categories.js';
-import RibbonMenu from './index.js';
+const categories = require('./categories');
+const RibbonMenu = require('./index');
 
-describe('7-module-1-task', () => {
+describe('Класс, описывающий компонент "Ленты-Меню"', () => {
   let sut;
 
   let ribbonInner;
@@ -19,56 +19,56 @@ describe('7-module-1-task', () => {
     ribbonArrowRight = sut.elem.querySelector('.ribbon__arrow_right');
     ribbonArrowLeft = sut.elem.querySelector('.ribbon__arrow_left');
 
-    clickEvent = new MouseEvent('click', { bubbles: true });
+    clickEvent = new MouseEvent('click', {bubbles: true});
   });
 
   afterEach(() => {
     sut.elem.remove();
   });
 
-  describe('отрисовка вёрстки после создания', () => {
-    it('должна добавлять корневой элемент в свойство "elem"', () => {
+  describe('Отрисовка вёрстки после создания экземпляра класса', () => {
+    it('Добавляет корневой элемент в свойство "elem"', () => {
       expect(sut.elem.classList.contains('ribbon')).toBe(true);
     });
 
-    it('должна отрисовать все категории', () => {
-      let categoriesElements = sut.elem.querySelectorAll('.ribbon__item');
+    it('Отрисовывает все слайды', () => {
+      let categoryElements = sut.elem.querySelectorAll('.ribbon__item');
 
-      expect(categoriesElements.length).toBe(9);
+      expect(categoryElements.length).toBe(9);
     });
   });
 
-  describe('прокрутка', () => {
-    let scrollBySpy;
+  describe('Прокрутка', () => {
+    let scrollBySpy = jest.fn();
 
     beforeEach(() => {
-      scrollBySpy = spyOn(ribbonInner, 'scrollBy').and.callThrough();
+      ribbonInner.scrollBy = scrollBySpy;
     });
 
-    describe('вперёд', () => {
-      it('при клике на кнопке "вперёд", должна прокрутить на 350px вперёд', () => {
+    describe('Прокрутка вперёд', () => {
+      it('При клике по кнопке "вперёд", прокручивает на 350px вперёд', () => {
         ribbonArrowRight.dispatchEvent(clickEvent);
 
-        expect(scrollBySpy).toHaveBeenCalledWith(350, 0);
+        expect(ribbonInner.scrollBy).toHaveBeenCalledWith(350, 0);
       });
     });
 
-    describe('назад', () => {
+    describe('Прокрутка назад', () => {
       beforeEach(() => {
         ribbonArrowRight.dispatchEvent(clickEvent);
         ribbonArrowRight.dispatchEvent(clickEvent);
       });
 
-      it('при клике по кнопке "назад", должна прокрутить на 350px назад', () => {
+      it('При клике по кнопке "назад" прокручивает на 350px назад', () => {
         ribbonArrowLeft.dispatchEvent(clickEvent);
 
-        expect(scrollBySpy).toHaveBeenCalledWith(-350, 0);
+        expect(ribbonInner.scrollBy).toHaveBeenCalledWith(-350, 0);
       });
     });
 
   });
 
-  describe('выбор категории', () => {
+  describe('Выбор категории', () => {
     let ribbonSelectEventName;
     let ribbonSelectEvent;
     let category;
@@ -78,7 +78,7 @@ describe('7-module-1-task', () => {
 
       document.body.addEventListener(ribbonSelectEventName, (event) => {
         ribbonSelectEvent = event;
-      }, { once: true });
+      }, {once: true});
 
       category = categories[1];
       let categorySelectButton = sut.elem.querySelector(`[data-id="${category.id}"]`);
@@ -86,11 +86,11 @@ describe('7-module-1-task', () => {
       categorySelectButton.dispatchEvent(clickEvent);
     });
 
-    it('после клика по ссылке, должно быть создано событие', () => {
+    it('После клика по кнопке, создаётся событие', () => {
       expect(ribbonSelectEvent instanceof CustomEvent).toBe(true);
     });
 
-    it('созданное событие должно содержать в себе уникальный идентификатор товара ("id")', () => {
+    it('Созданное событие содержит в себе уникальный идентификатор товара("id")', () => {
       expect(ribbonSelectEvent.detail).toBe(category.id);
     });
   });

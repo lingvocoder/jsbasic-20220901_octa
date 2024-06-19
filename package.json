@@ -7,8 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "npm run karma",
-    "karma": "karma start karma.conf.js",
+    "test": "jest",
     "lint": "eslint \"./*-module/**/*.js\"",
     "lint:fix": "eslint --fix \"./*-module/**/*.js\""
   },
@@ -23,16 +22,17 @@
   },
   "homepage": "https://github.com/javascript-info/tasks-jsbasic#readme",
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.1.4",
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.1.0",
     "eslint": "^5.16.0",
     "eslint-plugin-import": "^2.18.2",
     "jasmine": "^3.3.1",
     "jasmine-core": "^3.3.0",
-    "karma": "^6.3.4",
-    "karma-chrome-launcher": "^2.2.0",
-    "karma-jasmine": "^2.0.1",
-    "karma-mocha-reporter": "git+https://github.com/javascriptru/karma-mocha-reporter.git",
-    "karma-viewport": "^1.0.6"
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  },
+  "dependencies": {
+    "@testing-library/dom": "^9.3.3"
   }
 }

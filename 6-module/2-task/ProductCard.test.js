@@ -1,8 +1,7 @@
-import ProductCard from './index.js';
+import {ProductCard} from './index.mjs';
 
-describe('6-module-2-task', () => {
+describe('Класс, описывающий компонент "Карточка товара"', () => {
   let sut;
-
   let product;
   let clickEvent;
 
@@ -15,7 +14,7 @@ describe('6-module-2-task', () => {
       id: "laab-kai-chicken-salad"
     };
 
-    clickEvent = new MouseEvent('click', { bubbles: true });
+    clickEvent = new MouseEvent('click', {bubbles: true});
 
     sut = new ProductCard(product);
 
@@ -26,25 +25,24 @@ describe('6-module-2-task', () => {
     sut.elem.remove();
   });
 
-  describe('отрисовка', () => {
-    it('свойство elem возвращает один и тот же элемент, при каждом обращении', () => {
+  describe('Отрисовка', () => {
+    it('Свойство elem возвращает один и тот же элемент, при каждом обращении', () => {
       const elementFirstCall = sut.elem;
       const elementSecondCall = sut.elem;
-  
+
       expect(elementFirstCall).toBe(elementSecondCall);
     });
 
-    it('карточка товара должна содержать картинку', () => {
+    it('Карточка товара содержит картинку', () => {
       let imageElement = sut.elem.querySelector('.card__image');
       let actualImageSrc = imageElement.src.trim();
       let expectedImageSrc = `/assets/images/products/${product.image}`;
-
       let isCorrectSource = actualImageSrc.includes(expectedImageSrc);
 
       expect(isCorrectSource).toBe(true);
     });
 
-    it('карточка товара должна содержать цену', () => {
+    it('Карточка товара содержит цену', () => {
       let priceElement = sut.elem.querySelector('.card__price');
       let actualPrice = priceElement.innerHTML.trim();
       let expectedPrice = '€10.00';
@@ -52,7 +50,7 @@ describe('6-module-2-task', () => {
       expect(actualPrice).toBe(expectedPrice);
     });
 
-    it('карточка товара должна содержать название товара', () => {
+    it('Карточка товара содержит название товара', () => {
       let nameElement = sut.elem.querySelector('.card__title');
       let actualName = nameElement.innerHTML.trim();
       let expectedName = product.name;
@@ -61,7 +59,7 @@ describe('6-module-2-task', () => {
     });
   });
 
-  describe('генерация события добавления в корзину("product-add")', () => {
+  describe('Генерация события добавления в корзину("product-add")', () => {
     let productAddEventName;
     let productAddEvent;
 
@@ -70,18 +68,18 @@ describe('6-module-2-task', () => {
 
       document.body.addEventListener(productAddEventName, (event) => {
         productAddEvent = event;
-      }, { once: true });
+      }, {once: true});
 
       let addButton = sut.elem.querySelector('.card__button');
 
       addButton.dispatchEvent(clickEvent);
     });
 
-    it('после клика по кнопке, должно быть создано событие', () => {
+    it('После клика по кнопке, создаётся событие', () => {
       expect(productAddEvent instanceof CustomEvent).toBe(true);
     });
 
-    it('созданное событие должно содержать в себе уникальный идентификатор товара ("id")', () => {
+    it('Созданное событие содержит в себе уникальный идентификатор товара ("id")', () => {
       expect(productAddEvent.detail).toBe(product.id);
     });
   });

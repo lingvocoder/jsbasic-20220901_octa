@@ -1,5 +1,7 @@
-describe('4-module-3-task', () => {
-  it('Проставит класс available/unavailable, в зависимости от значения атрибута data-available у ячейки Status', () => {
+const highlight = require('./index');
+
+describe('Функция, которая вносит изменения в таблицу', () => {
+  it('Подставляет класс available/unavailable, в зависимости от значения атрибута data-available у ячейки Status', () => {
     const table = document.createElement('table');
 
     table.innerHTML = `
@@ -35,7 +37,7 @@ describe('4-module-3-task', () => {
     expect(table.querySelector('.js-second').classList.contains('unavailable')).toEqual(true);
   });
 
-  it('Проставит аттрибут hidden, если  data-available атрибута нет вообще', () => {
+  it('Подставляет атрибут hidden, если атрибут data-available отсутствует', () => {
     const table = document.createElement('table');
 
     table.innerHTML = `
@@ -61,7 +63,7 @@ describe('4-module-3-task', () => {
     expect(table.querySelector('.js-first').hasAttribute('hidden')).toEqual(true);
   });
 
-  it('Проставит класс male/female, в зависимости от содержимого ячекйки Gender', () => {
+  it('Подставляет класс male/female, в зависимости от содержимого ячейки Gender', () => {
     const table = document.createElement('table');
 
     table.innerHTML = `
@@ -94,7 +96,7 @@ describe('4-module-3-task', () => {
     expect(table.querySelector('.js-second').classList.contains('female')).toEqual(true);
   });
 
-  it('Установит inline-стиль style="text-decoration: line-through", если значение ячейки Age меньше 18', () => {
+  it('Устанавливает inline-стиль style="text-decoration: line-through", если значение ячейки Age меньше 18', () => {
     const table = document.createElement('table');
 
     table.innerHTML = `

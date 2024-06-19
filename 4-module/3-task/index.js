@@ -6,9 +6,8 @@ function highlight(table) {
       const text = td.textContent;
       const {available} = td.dataset;
 
-      if (!available) {
-        row.hidden = true;
-      }
+      row.hidden = !td.hasAttribute('data-available');
+
       if (parseInt(text) <= 18) {
         row.style.textDecoration = 'line-through';
       }
@@ -17,12 +16,9 @@ function highlight(table) {
       } else if (available === 'false') {
         row.classList.add('unavailable');
       }
-      if (text === 'm') {
-        row.classList.add('male');
-      } else if (text === 'f') {
-        row.classList.add('female');
-      }
+      row.classList.add(`${text === 'm' ? 'male' : 'female'}`);
     }
   }
 }
 
+module.exports = highlight;

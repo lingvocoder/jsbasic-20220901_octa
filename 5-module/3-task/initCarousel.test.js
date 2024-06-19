@@ -1,12 +1,14 @@
-describe('5-module-3-task', () => {
+const initCarousel = require('./index');
+
+describe('Функция, которая создаёт элемент интерфейса – карусель', () => {
   let carouselWrapper;
   let carouselInner;
   let carouselArrowRight;
   let carouselArrowLeft;
-
   let clickEvent;
 
   beforeEach(() => {
+    clickEvent = new MouseEvent('click', { bubbles: true });
     carouselWrapper = document.createElement('div');
     carouselWrapper.setAttribute('data-carousel-holder', '');
     carouselWrapper.classList.add('container');
@@ -66,7 +68,6 @@ describe('5-module-3-task', () => {
             </div>
         </div>
     `;
-
     document.body.append(carouselWrapper);
 
     let slideWidth = '500px';
@@ -87,44 +88,42 @@ describe('5-module-3-task', () => {
     carouselArrowRight = carouselWrapper.querySelector('.carousel__arrow_right');
     carouselArrowLeft = carouselWrapper.querySelector('.carousel__arrow_left');
 
-    clickEvent = new MouseEvent('click', { bubbles: true });
-
     initCarousel();
   });
 
   afterEach(() => {
-    carouselWrapper.remove(carouselWrapper);
+    carouselWrapper.remove();
   });
 
 
-  describe('переключение вперёд', () => {
-    it('при клике по кнопке "вперёд", должна переключать на один слайд вперёд', () => {
+  describe('Переключение вперёд', () => {
+    it('При нажатии кнопки "вперёд", передвигает на один слайд вперёд', () => {
       carouselArrowRight.dispatchEvent(clickEvent);
 
       expect(carouselInner.style.transform).toBe("translateX(-500px)");
     });
   });
 
-  describe('переключение назад', () => {
+  describe('Переключение назад', () => {
     beforeEach(() => {
       carouselArrowRight.dispatchEvent(clickEvent);
       carouselArrowRight.dispatchEvent(clickEvent);
       carouselArrowRight.dispatchEvent(clickEvent);
     });
 
-    it('при клике по кнопке "назад", должна переключать на один слайд назад', () => {
+    it('При нажатии кнопки "назад", передвигает на один слайд назад', () => {
       carouselArrowLeft.dispatchEvent(clickEvent);
 
       expect(carouselInner.style.transform).toBe('translateX(-1000px)');
     });
   });
 
-  describe('скрытие стрелок переключения', () => {
-    it('должна по умолчанию скрыть стрелку переключения назад', () => {
+  describe('Скрытие стрелок переключения', () => {
+    it('В исходном состоянии скрывает стрелку переключения назад', () => {
       expect(carouselArrowLeft.style.display).toBe('none');
     });
 
-    it('при достижении четвёртого слайда, должна скрыть стрелку переключения вперёд', () => {
+    it('При достижении четвёртого слайда скрывает стрелку переключения вперёд', () => {
       carouselArrowRight.dispatchEvent(clickEvent);
       carouselArrowRight.dispatchEvent(clickEvent);
       carouselArrowRight.dispatchEvent(clickEvent);

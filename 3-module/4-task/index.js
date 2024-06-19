@@ -3,3 +3,5 @@ function showSalary(users, age) {
     .map(({name, balance}) => `${name}, ${balance}`)
     .join('\n');
 }
+
+module.exports = showSalary;

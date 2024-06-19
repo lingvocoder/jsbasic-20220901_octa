@@ -1,14 +1,13 @@
 .hide-self-button {
-  font-size: 20px;
+  align-items: center;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  padding: 0.75rem 1.5rem;
   font-weight: bold;
-  border: 2px solid #bada55;
+  border: none;
+  color: rgb(255, 255, 255);
+  border-radius: .375rem;
+  background-color: rgb(79, 70, 229);
+  cursor: pointer;
 }
 
-.hide-self-button:active {
-  background-color: #cfcccc;
-}
-
-body {
-  padding-top: 50px;
-  padding-left: 50px;
-}

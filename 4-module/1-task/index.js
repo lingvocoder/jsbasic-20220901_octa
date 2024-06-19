@@ -1,5 +1,5 @@
-function makeFriendsList(friends) {
-  const list = document.createElement('ul');
+function makeFriendList(friends) {
+  let list = document.createElement('ul');
   const getListItem = ({firstName, lastName}) => {
     return `
             <li>
@@ -9,7 +9,10 @@ function makeFriendsList(friends) {
             `;
   };
 
-  list.innerHTML = friends.map(({firstName, lastName}) => `${getListItem({firstName, lastName})}`).join('');
+  list.innerHTML = friends.map(({firstName, lastName}) => `
+  ${getListItem({firstName, lastName})}`).join('');
   return list;
-
 }
+
+module.exports = makeFriendList;
+

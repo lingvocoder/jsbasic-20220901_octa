@@ -1,6 +1,7 @@
-import createElement from '../../assets/lib/create-element.js';
+// import createElement from '../../assets/lib/create-element.js';
+const createElement = require('../../assets/lib/create-element.js') ;
 
-export default class Modal {
+class Modal {
   elem = null;
 
   constructor() {
@@ -9,45 +10,10 @@ export default class Modal {
   }
 
   render() {
-    this.elem = createElement(this.getModal());
-  }
-
-  addEventListeners() {
-    this.elem.addEventListener("click", this.onCloseBtnClick);
-    document.addEventListener("keydown", this.onEscButtonClick);
-  }
-
-  open() {
-    const body = document.body;
-    body.classList.add('is-modal-open');
-    body.append(this.elem);
-  }
-
-  close() {
-    const body = document.body;
-    body.classList.remove('is-modal-open');
-    this.elem.remove();
-  }
-
-  onEscButtonClick = (ev) => {
-    if (ev.keyCode === 27 || ev.key === 'Escape') {
-      this.close();
+    if (!this.elem) {
+      this.elem = createElement(this.getModal());
     }
-  }
-
-  onCloseBtnClick = (ev) => {
-    const target = ev.target;
-    const closeBtn = target.closest(".modal__close");
-    if (!closeBtn) return;
-    this.close();
-  }
-
-  setTitle = (title) => {
-    this.elem.querySelector('.modal__title').textContent = title;
-  }
-
-  setBody = (node) => {
-    this.elem.querySelector('.modal__body').append(node);
+    return this.elem;
   }
 
   getModal = () => {
@@ -67,4 +33,47 @@ export default class Modal {
     `;
   }
 
+  addEventListeners() {
+    this.elem.addEventListener("click", this.onCloseBtnClick);
+    document.addEventListener("keydown", this.onEscButtonClick);
+  }
+
+  open() {
+    const body = document.body;
+    body.classList.add('is-modal-open');
+    body.append(this.elem);
+  }
+
+  close() {
+    const body = document.body;
+    document.removeEventListener('keydown', this.onEscButtonClick);
+    body.classList.remove('is-modal-open');
+    this.elem.remove();
+  }
+
+  onEscButtonClick = (ev) => {
+    if (ev.keyCode === 27 || ev.key === 'Escape') {
+      this.close();
+    }
+  };
+
+  onCloseBtnClick = (ev) => {
+    const target = ev.target;
+    const closeBtn = target.closest(".modal__close");
+    if (!closeBtn) {
+      return;
+    }
+    this.close();
+  };
+
+  setTitle = (title) => {
+    this.elem.querySelector('.modal__title').textContent = title;
+  };
+
+  setBody = (node) => {
+    this.elem.querySelector('.modal__body').append(node);
+  };
+
 }
+
+module.exports = Modal;

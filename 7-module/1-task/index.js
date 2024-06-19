@@ -1,32 +1,27 @@
 import createElement from '../../assets/lib/create-element.js';
+// const createElement = require("../../assets/lib/create-element.js");
 
-export default class RibbonMenu {
+class RibbonMenu {
   elem = null;
   selectedCategory;
 
   constructor(categories) {
     this.categories = categories;
+    this.direction = 1;
     this.render();
     this.addEventListeners();
-    this.direction = 1;
+    this.initRibbonMenu();
   }
 
   render() {
-    this.elem = createElement(this.getMenu(this.categories));
+    if (!this.elem) {
+      this.elem = createElement(this.getMenu(this.categories));
+    }
+    return this.elem;
   }
 
-  addEventListeners() {
-    this.elem.addEventListener('click', (ev) => {
-      const prevBtn = ev.target.closest('.ribbon__arrow_left');
-      const nextBtn = ev.target.closest('.ribbon__arrow_right');
-      this.onCategoryChoose(ev);
-      if (prevBtn) {
-        this.onPrevButtonClick();
-      }
-      if (nextBtn) {
-        this.onNextButtonClick();
-      }
-    });
+  initRibbonMenu() {
+    this.checkEdgeSlides();
   }
 
   getMenu = (data) => {
@@ -43,32 +38,30 @@ export default class RibbonMenu {
                 </button>
             </div>
             `;
-  }
+  };
+
   getLink = ({id = '', name = ''}) => {
     return `
             <a href="#" class="ribbon__item" data-id="${id}">${name}</a>
            `;
-  }
+  };
+  getLinks = (data) => data.map(item => this.getLink(item)).join('');
 
-  getLinks = (data) => {
-    return data.map(item => {
-      return this.getLink(item);
-    }).join('');
-  }
+  moveRibbon = () => {
+    const inner = this.elem.querySelector('.ribbon__inner');
+    const dist = 350;
+    let offset = this.direction * dist;
+    inner.scrollBy(offset, 0);
+  };
 
-
-  moveSlider = () => {
-    const btnNext = document.querySelector('.ribbon__arrow_right');
-    const btnPrev = document.querySelector('.ribbon__arrow_left');
-    const inner = document.querySelector('.ribbon__inner');
+  checkEdgeSlides = () => {
+    const inner = this.elem.querySelector('.ribbon__inner');
+    const btnNext = this.elem.querySelector('.ribbon__arrow_right');
+    const btnPrev = this.elem.querySelector('.ribbon__arrow_left');
     const scrollWidth = inner.scrollWidth;
     const scrollLeft = inner.scrollLeft;
     const clientWidth = inner.clientWidth;
-    const dist = 350;
     let scrollRight = scrollWidth - scrollLeft - clientWidth;
-
-    let offset = this.direction * dist;
-    inner.scrollBy(offset, 0);
 
     if (inner.scrollLeft === 0) {
       btnPrev.classList.remove('ribbon__arrow_visible');
@@ -80,19 +73,34 @@ export default class RibbonMenu {
     } else {
       btnNext.classList.add('ribbon__arrow_visible');
     }
+  };
+
+  prev() {
+    this.direction = -1;
+    this.moveRibbon();
   }
 
-  highlightCategory = (cat) => {
-    if (this.selectedCategory) {
-      this.selectedCategory.classList.remove('ribbon__item_active');
-    }
-    this.selectedCategory = cat;
-    this.selectedCategory.classList.add('ribbon__item_active');
+  next() {
+    this.direction = 1;
+    this.moveRibbon();
   }
 
-  onCategoryChoose = (ev) => {
-    ev.preventDefault();
-    const {target} = ev;
+  addEventListeners() {
+    this.elem.addEventListener('click', ({target}) => {
+      const prevBtn = target.closest('.ribbon__arrow_left');
+      const nextBtn = target.closest('.ribbon__arrow_right');
+      this.onCategoryChoose(target);
+      if (prevBtn) {
+        this.prev();
+      }
+      if (nextBtn) {
+        this.next();
+      }
+      this.checkEdgeSlides();
+    });
+  }
+
+  onCategoryChoose = (target) => {
     const category = target.closest('.ribbon__item');
     if (!category) {
       return;
@@ -104,17 +112,15 @@ export default class RibbonMenu {
       detail: categoryID,
     });
     this.elem.dispatchEvent(event);
-  }
-
-  onPrevButtonClick = () => {
-    this.direction = -1;
-    this.moveSlider();
-  }
-
-  onNextButtonClick = () => {
-    this.direction = 1;
-    this.moveSlider();
+  };
+  highlightCategory = (categoryItem) => {
+    if (this.selectedCategory) {
+      this.selectedCategory.classList.remove('ribbon__item_active');
+    }
+    this.selectedCategory = categoryItem;
+    this.selectedCategory.classList.add('ribbon__item_active');
   };
 
-
 }
+export default RibbonMenu;
+// module.exports = RibbonMenu;

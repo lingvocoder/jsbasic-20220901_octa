@@ -1,4 +1,6 @@
-describe('5-module-1-task', () => {
+const hideSelf = require('./index');
+
+describe('Функция, которая скрывает/показывает кнопку', () => {
   let buttonElement;
 
   beforeEach(() => {
@@ -15,7 +17,7 @@ describe('5-module-1-task', () => {
     buttonElement.remove();
   });
 
-  it('после клика по кнопке она должна исчезнуть', () => {
+  it('При первом нажатии кнопки она скрывается', () => {
     let clickEvent = new MouseEvent('click', { bubbles: true });
     buttonElement.dispatchEvent(clickEvent);
 

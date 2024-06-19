@@ -1,5 +1,7 @@
-describe('2-module-1-task', () => {
-  it('должна складывать все зарплаты', () => {
+const sumSalary = require('./index');
+
+describe('Функция, которая суммирует зарплаты всех участников', () => {
+  it('Возвращает сумму зарплат участников', () => {
     let salaries = {
       John: 1000,
       Ann: 1600,
@@ -9,7 +11,7 @@ describe('2-module-1-task', () => {
     expect(sumSalary(salaries)).toEqual(3900);
   });
 
-  it('должна игнорировать свойства других типов', () => {
+  it('Игнорирует значения нечислового типа', () => {
     let salaries = {
       John: 1000,
       Ann: 1600,
@@ -22,7 +24,7 @@ describe('2-module-1-task', () => {
     expect(sumSalary(salaries)).toEqual(3900);
   });
 
-  it('должна игнорировать специальные числовые значения', () => {
+  it('Игнорирует специальные числовые значения (Infinity, -Infinity, NaN)', () => {
     let salaries = {
       John: 1000,
       Ann: 1600,
@@ -38,7 +40,7 @@ describe('2-module-1-task', () => {
     expect(sumSalary(salaries)).toEqual(3900);
   });
 
-  it('должна возвращать 0 если нет свойств с зарплатами', () => {
+  it('Возвращает 0, если нет свойств с числовыми значениями', () => {
     let salaries = {
       month: 'December',
       currency: 'USD',

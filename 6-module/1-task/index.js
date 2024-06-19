@@ -12,7 +12,7 @@
  *      }
  *
  */
-export default class UserTable {
+class UserTable {
   elem = null;
 
   constructor(rows = []) {
@@ -52,10 +52,12 @@ export default class UserTable {
                  <td>${age}</td>
                  <td>${salary}</td>
                  <td>${city}</td>
-                 <td><button data-action="${action}">X</button></td>
+                 <td>
+                 <button data-action="${action}">X</button>
+                 </td>
              </tr>
             `;
-  }
+  };
 
   render() {
     const wrapper = document.createElement("div");
@@ -65,7 +67,7 @@ export default class UserTable {
   }
 
   onDeleteBtnClick = (ev) => {
-    const target = ev.target;
+    const {target} = ev;
 
     if (target.dataset.action !== 'remove') {
       return;
@@ -75,7 +77,7 @@ export default class UserTable {
       return;
     }
     row.remove();
-  }
-
-
+  };
 }
+
+module.exports = UserTable;
