@@ -1,24 +1,29 @@
 import createElement from "../../assets/lib/create-element.js";
 
 export default class StepSlider {
-  elem
+  elem= null;
+  activeStep;
 
-  constructor({steps, value = 0}) {
+  constructor({steps = 0, value = 0}) {
     this.steps = steps;
+    this.segments = [...Array(steps).keys()];
     this.value = value;
     this.render();
     this.addEventListeners();
   }
 
   render() {
-    this.elem = createElement(this.getSlider());
-    let thumb = this.elem.querySelector('.slider__thumb');
-    thumb.ondragstart = () => false;
-    this.getSteps();
-    this.setStepActive();
+    if (!this.elem) {
+      this.elem = createElement(this.getSlider(this.segments));
+      let thumb = this.elem.querySelector('.slider__thumb');
+      thumb.ondragstart = () => false;
+      this.setDefaultParams(this.value);
+      this.setStepActive();
+    }
+    return this.elem;
   }
 
-  getSlider() {
+  getSlider(segments) {
     return `
             <div class="slider">
                 <div class="slider__thumb" style="left: 50%;">
@@ -26,28 +31,26 @@ export default class StepSlider {
                 </div>
                 <div class="slider__progress" style="width: 50%;"></div>
                 <div class="slider__steps">
+                ${this.getSteps(segments)}
                 </div>
             </div>
     `;
   }
 
-  getSteps = () => {
-    let counter = 0;
-    while (counter <= this.steps - 1) {
-      this.elem.querySelector('.slider__steps').innerHTML += `
-        <span data-value="${counter}" ></span>
-        `;
-      counter++;
-    }
-  }
+  getStep = (counter) => {
+    return `<span data-value="${counter}"></span>`;
+  };
+
+  getSteps = (segments) => segments.map(step => this.getStep(step)).join('');
 
   setStepActive = () => {
     const steps = [...this.elem.querySelectorAll('span[data-value]')];
-    steps.forEach(step => {
-      step.classList.remove('slider__step-active');
-    });
-    const activeStep = steps.find(span => span.dataset.value === String(this.value));
-    activeStep.classList.add('slider__step-active');
+    const currStep = steps.find(span => span.dataset.value === String(this.value));
+    if (this.activeStep) {
+      this.activeStep.classList.remove('slider__step-active');
+    }
+    this.activeStep = currStep;
+    this.activeStep.classList.add('slider__step-active');
   }
 
   addEventListeners() {
@@ -58,6 +61,15 @@ export default class StepSlider {
     });
     this.elem.addEventListener('pointerdown', this.onPointerDown);
   }
+
+  setDefaultParams(value) {
+    const valueOutput = this.elem.querySelector('.slider__value');
+    valueOutput.textContent = String(value);
+    let percent = (value / (this.steps - 1)) * 100;
+    this.changeProgressBarWidth(percent);
+    this.changeSliderThumbPosition(percent);
+  }
+
 
   onPointerDown = () => {
     document.addEventListener('pointermove', this.onPointerMove);
@@ -134,7 +146,7 @@ export default class StepSlider {
   }
 
   changeProgressBarWidth = (percent) => {
-    const progressBar = document.querySelector('.slider__progress');
+    const progressBar = this.elem.querySelector('.slider__progress');
     progressBar.style.width = `${percent}%`;
   }
 
@@ -147,3 +159,5 @@ export default class StepSlider {
   }
 
 }
+
+// module.exports = StepSlider;

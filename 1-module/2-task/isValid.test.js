@@ -1,4 +1,4 @@
-const isValid = require('./index');
+const isValid = require('./isValid');
 
 describe('Функция проверяет, что имя соответствует заявленным параметрам', () => {
   it('Возвращает true, если имя соответствует параметрам', () => {

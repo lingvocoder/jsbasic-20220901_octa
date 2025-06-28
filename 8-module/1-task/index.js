@@ -53,8 +53,13 @@ export default class CartIcon {
       cartIcon.style.top = '50px';
       cartIcon.style.left = `${Math.min(rightOffset, leftOffset)}px`;
       cartIcon.style.zIndex = 100;
+    } else {
+      cartIcon.style.position = '';
+      cartIcon.style.top = '';
+      cartIcon.style.left = '';
+      cartIcon.style.zIndex = '';
     }
-    else {
+    if (document.documentElement.clientWidth <= 767) {
       cartIcon.style.position = '';
       cartIcon.style.top = '';
       cartIcon.style.left = '';

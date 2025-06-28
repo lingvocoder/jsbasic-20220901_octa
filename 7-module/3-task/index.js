@@ -1,4 +1,5 @@
 import createElement from "../../assets/lib/create-element.js";
+// const createElement = require ("../../assets/lib/create-element.js");
 
 export default class StepSlider {
   elem = null;
@@ -39,6 +40,7 @@ export default class StepSlider {
   getStep = (counter) => {
     return `<span data-value="${counter}"></span>`;
   };
+
   getSteps = (segments) => segments.map(step => this.getStep(step)).join('');
 
   setStepActive = () => {
@@ -107,3 +109,4 @@ export default class StepSlider {
     this.elem.dispatchEvent(event);
   };
 }
+// module.exports = StepSlider;

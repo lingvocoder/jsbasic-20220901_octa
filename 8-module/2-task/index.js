@@ -11,7 +11,10 @@ export default class ProductGrid {
   }
 
   render() {
-    this.elem = createElement(this.getProductGrid(this.products));
+    if (!this.elem) {
+      this.elem = createElement(this.getProductGrid(this.products));
+    }
+    return this.elem;
   }
 
   getProductGrid = (data) => {
@@ -22,56 +25,35 @@ export default class ProductGrid {
             </div>
         </div>
     `;
-  }
+  };
 
   getProductCards = (data) => {
     return data.map(item => {
       return new ProductCard(item).elem.outerHTML;
     }).join('');
-  }
+  };
 
-  updateFilter = (filters = {}) => {
+  updateFilter = (filter = {}) => {
+    Object.assign(this.filters, filter);
+    this.renderFilteredProducts();
+  };
+
+  renderFilteredProducts = () => {
     const gridInner = document.querySelector('.products-grid__inner');
+    const products = this.products;
+    const filters = this.filters;
 
-    const vocabulary = {
-      maxSpiciness: 'spiciness',
-      category: 'category',
-      vegeterianOnly: 'vegeterian',
-      noNuts: 'nuts'
-    };
-
-    for (const prop in filters) {
-      const propName = vocabulary[prop];
-      const propValue = filters[prop];
-
-      switch (prop) {
-        case 'maxSpiciness':
-          this.filters[propName] = propValue;
-          break;
-        case 'vegeterianOnly':
-          this.filters[propName] = propValue;
-          break;
-        case 'noNuts':
-          this.filters[propName] = propValue;
-          break;
-        case 'category':
-          this.filters[propName] = propValue;
-          break;
-      }
+    function filter() {
+      return products.filter(product => {
+        return Object.keys(filters).some(key => {
+          return product[key] === filters[key];
+        });
+      });
     }
 
-    const filterProductObjects = (filter) => this.products.filter(product => {
-      return Object.keys(filter).every(key => {
-        if (key === 'spiciness') {
-          return product[key] <= filter[key];
-        }
-        if (key === 'nuts') {
-          return product[key] !== filter[key];
-        }
-        return product[key] === filter[key];
-      });
-    });
-    gridInner.innerHTML = this.getProductCards(filterProductObjects(this.filters));
+    let filteredProducts = filter();
+    gridInner.innerHTML = this.getProductCards(filteredProducts);
   };
-}
+
+};
 

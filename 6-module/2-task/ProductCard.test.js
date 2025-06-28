@@ -1,4 +1,4 @@
-import {ProductCard} from './index.mjs';
+import ProductCard from './index.mjs';
 
 describe('Класс, описывающий компонент "Карточка товара"', () => {
   let sut;

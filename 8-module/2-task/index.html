@@ -7,7 +7,7 @@
   <title>Бангкок Экспресс: Иконка корзины</title>
 
   <link rel="stylesheet" href="./index.css" />
-  <link rel="stylesheet" href="../../../6-module/2-task/index.css">
+  <link rel="stylesheet" href="../../6-module/2-task/index.css">
   <link rel="stylesheet" href="/assets/styles/common.css" />
 </head>
 
@@ -61,29 +61,35 @@
     container.append(productGrid.elem);
 
     let noNutsControl = document.querySelector('[data-no-nuts]');
-    noNutsControl.addEventListener('change', () => {
-      productGrid.updateFilter({ noNuts: event.target.checked });
+    noNutsControl.addEventListener('change', (ev) => {
+      console.log( ev.target.checked);
+      productGrid.updateFilter({ nuts: ev.target.checked });
     });
 
     let vegetarianOnlyControl = document.querySelector('[data-vegetarian-only]');
-    vegetarianOnlyControl.addEventListener('change', () => {
-      productGrid.updateFilter({ vegeterianOnly: event.target.checked });
+    vegetarianOnlyControl.addEventListener('change', (ev) => {
+      console.log( ev.target.checked);
+      productGrid.updateFilter({ vegetarian: ev.target.checked });
     });
 
     let maxSpicinessControl = document.querySelector('[data-max-spiciness]');
-    maxSpicinessControl.addEventListener('change', () => {
-      if (event.target.checked) {
-        productGrid.updateFilter({ maxSpiciness: 2 });
+    maxSpicinessControl.addEventListener('change', (ev) => {
+      if (ev.target.checked) {
+        console.log( ev.target.checked);
+        productGrid.updateFilter({ spiciness: 2 });
       } else {
-        productGrid.updateFilter({ maxSpiciness: 4 });
+        console.log( ev.target.checked);
+        productGrid.updateFilter({ spiciness: 4 });
       }
     });
 
     let categoryControl = document.querySelector('[data-category]');
-    categoryControl.addEventListener('change', () => {
-      if (event.target.checked) {
+    categoryControl.addEventListener('change', (ev) => {
+      if (ev.target.checked) {
+        console.log( ev.target.checked);
         productGrid.updateFilter({ category: 'soups' });
       } else {
+        console.log( ev.target.checked);
         productGrid.updateFilter({ category: '' });
       }
     });

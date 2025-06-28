@@ -1,5 +1,6 @@
 import createElement from "../../assets/lib/create-element.js";
-export class ProductCard {
+
+export default class ProductCard {
   elem = null;
 
   constructor({name, price, category, image, id} = {}) {
@@ -59,13 +60,4 @@ export class ProductCard {
 
 }
 
-const card = new ProductCard({
-  name: "Laab kai chicken salad",
-  price: 10,
-  category: "salads",
-  image: "laab_kai_chicken_salad.png",
-  id: "laab-kai-chicken-salad"
-});
 
-const holder = document.getElementById('holder');
-holder.append(card.elem);

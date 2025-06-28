@@ -1,4 +1,4 @@
-const filterRange = require('./index');
+const filterRange = require('./filterRange');
 
 describe('Функция, которая принимает в качестве аргумента массив чисел и возвращает отфильтрованный массив', () => {
   let arr;
@@ -7,7 +7,7 @@ describe('Функция, которая принимает в качестве 
     arr = [5, 3, 8, 1];
   });
 
-  it('Возвращает массив, отфильтрованный в указанном диапазоне', () => {
+  it('Возвращает массив, который отфильтрован в указанном диапазоне', () => {
     let actualFiltered = filterRange(arr, 1, 4);
     let expectedFiltered = [3, 1];
 

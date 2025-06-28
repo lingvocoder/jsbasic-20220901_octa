@@ -1,7 +1,7 @@
 import Main from './index.js';
 import createElement from '../../assets/lib/create-element.js';
 
-describe('9-module-2-task', () => {
+describe('9-module-2-2-task', () => {
   let main;
 
   let realFetch;

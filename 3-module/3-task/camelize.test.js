@@ -1,4 +1,4 @@
-const camelize = require('./index');
+const camelize = require('./camelize');
 
 describe('Функция, которая преобразует строку вида \'my-short-string\' в \'myShortString', () => {
   it('Возвращает пустую строку без изменений ', () => {

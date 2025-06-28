@@ -3,24 +3,23 @@ const UserTable = require('./index');
 describe('Класс, который создаёт таблицу с переданными данными', () => {
   let userTable;
   let clickEvent;
+  let rows = [
+    {
+      name: 'Вася',
+      age: 25,
+      salary: 1000,
+      city: 'Самара'
+    },
+    {
+      name: 'Петя',
+      age: 30,
+      salary: 1500,
+      city: 'Москва'
+    }
+  ];
 
   beforeEach(() => {
     clickEvent = new MouseEvent('click', {bubbles: true});
-
-    let rows = [
-      {
-        name: 'Вася',
-        age: 25,
-        salary: 1000,
-        city: 'Самара'
-      },
-      {
-        name: 'Петя',
-        age: 30,
-        salary: 1500,
-        city: 'Москва'
-      }
-    ];
 
     userTable = new UserTable(rows);
 
@@ -41,7 +40,7 @@ describe('Класс, который создаёт таблицу с перед
   it('Количество строк созданной таблицы соответствует длине переданного в качестве аргумента массива объектов', () => {
     let rowsInHTMLLength = userTable.elem.querySelectorAll('tbody tr').length;
 
-    expect(rowsInHTMLLength).toBe(2);
+    expect(rowsInHTMLLength).toEqual(rows.length);
   });
 
   it('При нажатии кнопки строка удаляется', () => {

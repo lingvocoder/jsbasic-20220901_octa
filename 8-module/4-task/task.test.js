@@ -1,6 +1,6 @@
 import Cart from './index.js';
 
-describe('8-module-4-task', () => {
+describe('8-module-4-2-task', () => {
   let cart;
 
   let cartIcon;

@@ -1,4 +1,4 @@
-const initCarousel = require('./index');
+const initCarousel = require('./initCarousel');
 
 describe('Функция, которая создаёт элемент интерфейса – карусель', () => {
   let carouselWrapper;

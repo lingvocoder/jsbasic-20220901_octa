@@ -1,12 +1,12 @@
-const toggleText = require('./index');
+const toggleText = require('./toggleText');
 
-describe("Функция, которая скрывает элемент при первом нажатии кнопки, а при повторном нажатии отображает этот элемент", () => {
+describe("Функция, которая скрывает элемент при первом нажатии кнопки, а при повторном нажатии делает элемент видимым", () => {
   let buttonElement;
   let textElement;
 
   beforeEach(() => {
     buttonElement = document.createElement('button');
-    buttonElement.textContent = 'Нажмите, чтобы спрятать/показать текст';
+    buttonElement.textContent = 'Нажмите, чтобы скрыть/показать текст';
     buttonElement.className = 'toggle-text-button';
 
     textElement = document.createElement('div');

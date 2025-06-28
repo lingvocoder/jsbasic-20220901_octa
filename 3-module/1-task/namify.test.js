@@ -1,4 +1,4 @@
-const namify = require('./index');
+const namify = require('./namify');
 
 describe('Функция, которая преобразует исходный массив в массив имён', () => {
   it('Возвращает массив имён', () => {

@@ -1,12 +1,12 @@
 /**
- * Эту функцию трогать не нужно
+ * Данная функция остаётся без изменений
  */
 function print(text) {
   console.log(text);
 }
 
 /**
- * Эту функцию нужно поменять так,
+ * Данную функцию необходимо изменить так,
  * чтобы функция sayHello работала корректно
  */
 function isValid(name) {
@@ -30,7 +30,7 @@ function sayHello() {
   if (isValid(userName)) {
     print(`Welcome back, ${userName}!`);
   } else {
-    print('Некорректное имя');
+    print('Некорректное имя пользователя');
   }
 }
 

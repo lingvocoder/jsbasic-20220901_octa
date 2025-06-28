@@ -1,4 +1,4 @@
-const sumSalary = require('./index');
+const sumSalary = require('./sumSalary');
 
 describe('Функция, которая суммирует зарплаты всех участников', () => {
   it('Возвращает сумму зарплат участников', () => {

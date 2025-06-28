@@ -1,5 +1,5 @@
-// import createElement from '../../assets/lib/create-element.js';
-const createElement = require('../../assets/lib/create-element.js') ;
+import createElement from '../../assets/lib/create-element.js';
+// const createElement = require('../../assets/lib/create-element.js') ;
 
 class Modal {
   elem = null;
@@ -75,5 +75,5 @@ class Modal {
   };
 
 }
-
-module.exports = Modal;
+// export default Modal;
+export {Modal};

@@ -1,6 +1,6 @@
-const makeDiagonalRed = require('./index');
+const makeDiagonalRed = require('./makeDiagonalRed');
 
-describe('Функция, которая выделит красным цветом все ячейки в таблице по диагонали слева направо', () => {
+describe('Функция, которая выделяет красным цветом все ячейки в таблице по диагонали слева направо', () => {
   let table;
 
   beforeEach(() => {

@@ -1,4 +1,4 @@
-const hideSelf = require('./index');
+const hideSelf = require('./hideSelf');
 
 describe('Функция, которая скрывает/показывает кнопку', () => {
   let buttonElement;

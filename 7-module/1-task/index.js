@@ -1,4 +1,5 @@
 import createElement from '../../assets/lib/create-element.js';
+
 // const createElement = require("../../assets/lib/create-element.js");
 
 class RibbonMenu {
@@ -7,10 +8,8 @@ class RibbonMenu {
 
   constructor(categories) {
     this.categories = categories;
-    this.direction = 1;
     this.render();
     this.addEventListeners();
-    this.initRibbonMenu();
   }
 
   render() {
@@ -20,8 +19,28 @@ class RibbonMenu {
     return this.elem;
   }
 
-  initRibbonMenu() {
-    this.checkEdgeSlides();
+  addEventListeners() {
+    const inner = this.sub('inner');
+
+    this.elem.addEventListener('click', ({target}) => {
+      const prevBtn = target.closest('.ribbon__arrow_left');
+      const nextBtn = target.closest('.ribbon__arrow_right');
+      if (prevBtn) {
+        this.onPrevButtonClick();
+      }
+      if (nextBtn) {
+        this.onNextButtonClick();
+      }
+    });
+
+    this.elem.addEventListener('click', (ev) => {
+      this.onCategoryChoose(ev);
+    });
+
+    inner.addEventListener('scroll', (ev) => {
+      this.onScroll(ev);
+    });
+
   }
 
   getMenu = (data) => {
@@ -45,62 +64,57 @@ class RibbonMenu {
             <a href="#" class="ribbon__item" data-id="${id}">${name}</a>
            `;
   };
+
   getLinks = (data) => data.map(item => this.getLink(item)).join('');
 
-  moveRibbon = () => {
-    const inner = this.elem.querySelector('.ribbon__inner');
-    const dist = 350;
-    let offset = this.direction * dist;
-    inner.scrollBy(offset, 0);
+  sub(ref) {
+    return this.elem.querySelector(`.ribbon__${ref}`);
+  }
+
+  scrollRight() {
+    return this.sub('inner').scrollWidth - (this.sub('inner').scrollLeft + this.sub('inner').clientWidth);
+  }
+
+  scrollLeft() {
+    return this.sub('inner').scrollLeft;
+  }
+
+  updateArrows = () => {
+
+    if (this.scrollLeft() > 0) {
+      this.sub('arrow_left').classList.add('ribbon__arrow_visible');
+    } else {
+      this.sub('arrow_left').classList.remove('ribbon__arrow_visible');
+    }
+
+    let scrollRight = this.scrollRight();
+    scrollRight = scrollRight < 1 ? 0 : scrollRight; // Это нужно для ситуации, когда скролл произошел с погрешностью
+    if (scrollRight > 0) {
+      this.sub('arrow_right').classList.add('ribbon__arrow_visible');
+    } else {
+      this.sub('arrow_right').classList.remove('ribbon__arrow_visible');
+    }
   };
 
-  checkEdgeSlides = () => {
-    const inner = this.elem.querySelector('.ribbon__inner');
-    const btnNext = this.elem.querySelector('.ribbon__arrow_right');
-    const btnPrev = this.elem.querySelector('.ribbon__arrow_left');
-    const scrollWidth = inner.scrollWidth;
-    const scrollLeft = inner.scrollLeft;
-    const clientWidth = inner.clientWidth;
-    let scrollRight = scrollWidth - scrollLeft - clientWidth;
+  onScroll() {
+    this.updateArrows();
+  }
 
-    if (inner.scrollLeft === 0) {
-      btnPrev.classList.remove('ribbon__arrow_visible');
-    } else {
-      btnPrev.classList.add('ribbon__arrow_visible');
-    }
-    if (scrollRight < 1) {
-      btnNext.classList.remove('ribbon__arrow_visible');
-    } else {
-      btnNext.classList.add('ribbon__arrow_visible');
-    }
+  onPrevButtonClick = () => {
+    let offset = 350;
+    this.sub('inner').scrollBy(-offset, 0);
+    this.updateArrows();
   };
 
-  prev() {
-    this.direction = -1;
-    this.moveRibbon();
-  }
+  onNextButtonClick = () => {
+    let offset = 350;
+    this.sub('inner').scrollBy(offset, 0);
+    this.updateArrows();
+  };
 
-  next() {
-    this.direction = 1;
-    this.moveRibbon();
-  }
-
-  addEventListeners() {
-    this.elem.addEventListener('click', ({target}) => {
-      const prevBtn = target.closest('.ribbon__arrow_left');
-      const nextBtn = target.closest('.ribbon__arrow_right');
-      this.onCategoryChoose(target);
-      if (prevBtn) {
-        this.prev();
-      }
-      if (nextBtn) {
-        this.next();
-      }
-      this.checkEdgeSlides();
-    });
-  }
-
-  onCategoryChoose = (target) => {
+  onCategoryChoose = (ev) => {
+    const {target} = ev;
+    ev.preventDefault();
     const category = target.closest('.ribbon__item');
     if (!category) {
       return;
@@ -113,6 +127,7 @@ class RibbonMenu {
     });
     this.elem.dispatchEvent(event);
   };
+
   highlightCategory = (categoryItem) => {
     if (this.selectedCategory) {
       this.selectedCategory.classList.remove('ribbon__item_active');
@@ -122,5 +137,7 @@ class RibbonMenu {
   };
 
 }
+
+
 export default RibbonMenu;
 // module.exports = RibbonMenu;

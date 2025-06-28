@@ -274,7 +274,7 @@ const data = [
     'favouriteFruit': 'strawberry'
   }
 ];
-const showSalary = require('./index');
+const showSalary = require('./sumSalary');
 
 describe('Функция возвращает строку с именами и зарплатами пользователей, возраст которых меньше или равен переданному параметру', () => {
   it('Возвращает строку с зарплатами для пользователей до 30 лет', () => {
