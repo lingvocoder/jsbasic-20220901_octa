@@ -1,4 +1,4 @@
-const highlight = require('./highlight');
+import highlight from "./highlight";
 
 describe('Функция, которая вносит изменения в таблицу', () => {
   it('Подставляет класс available/unavailable, в зависимости от значения атрибута data-available у ячейки Status', () => {

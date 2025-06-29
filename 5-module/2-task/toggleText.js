@@ -6,4 +6,4 @@ function toggleText() {
   });
 }
 
-module.exports = toggleText;
+export default toggleText;

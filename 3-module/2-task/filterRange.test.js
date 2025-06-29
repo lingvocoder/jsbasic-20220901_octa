@@ -1,4 +1,4 @@
-const filterRange = require('./filterRange');
+import filterRange from "./filterRange";
 
 describe('Функция, которая принимает в качестве аргумента массив чисел и возвращает отфильтрованный массив', () => {
   let arr;

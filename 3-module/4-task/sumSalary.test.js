@@ -1,4 +1,6 @@
 /* eslint-disable */
+import showSalary from "./sumSalary";
+
 const data = [
   {
     'balance': '$1,825.65',
@@ -274,8 +276,6 @@ const data = [
     'favouriteFruit': 'strawberry'
   }
 ];
-const showSalary = require('./sumSalary');
-
 describe('Функция возвращает строку с именами и зарплатами пользователей, возраст которых меньше или равен переданному параметру', () => {
   it('Возвращает строку с зарплатами для пользователей до 30 лет', () => {
     expect(showSalary(data, 30)).toEqual('Golden Branch, $1,825.65\nDuncan Randall, $1,490.15');

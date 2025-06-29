@@ -1,5 +1,4 @@
 import createElement from "../../assets/lib/create-element.js";
-// const createElement = require("../../assets/lib/create-element.js");
 
 export default class Carousel {
   elem = null;
@@ -111,7 +110,4 @@ export default class Carousel {
   formatPrice = (num) => {
     return `€${parseInt(num).toFixed(2)}`;
   };
-
 }
-
-// module.exports = Carousel;

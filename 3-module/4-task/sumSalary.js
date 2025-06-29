@@ -4,4 +4,4 @@ function showSalary(users, age) {
     .join('\n');
 }
 
-module.exports = showSalary;
+export default showSalary;

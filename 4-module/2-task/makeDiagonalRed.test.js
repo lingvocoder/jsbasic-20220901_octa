@@ -1,4 +1,4 @@
-const makeDiagonalRed = require('./makeDiagonalRed');
+import makeDiagonalRed from "./makeDiagonalRed";
 
 describe('Функция, которая выделяет красным цветом все ячейки в таблице по диагонали слева направо', () => {
   let table;

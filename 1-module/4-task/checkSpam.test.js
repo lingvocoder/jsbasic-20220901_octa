@@ -1,4 +1,4 @@
-const checkSpam = require('./checkSpam');
+import checkSpam from "./checkSpam";
 
 describe('Функция, которая проверяет, содержит ли строка \'1xBet\' или \'XXX\'', () => {
   it('Возвращает true, если строка содержит \'1XbeT now\'', () => {

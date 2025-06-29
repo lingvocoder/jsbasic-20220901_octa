@@ -5,4 +5,4 @@ function getMinMax(str) {
   return {min, max};
 }
 
-module.exports = getMinMax;
+export default getMinMax;

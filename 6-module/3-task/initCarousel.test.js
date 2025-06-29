@@ -1,6 +1,6 @@
-const data = require('./slides.mjs');
-const Carousel = require('./index.mjs');
+import data from "./slides.js";
 
+import Carousel from "./initCarousel.js";
 
 describe('Класс, описывающий компонент "Карусель"', () => {
   let sut;
@@ -18,7 +18,7 @@ describe('Класс, описывающий компонент "Карусел�
     sut = new Carousel(testSlides);
     document.body.append(sut.elem);
 
-    let slideWidth = '500px';
+    const slideWidth = '500px';
 
     carouselInner = sut.elem.querySelector('.carousel__inner');
     carouselInner.style.width = slideWidth;
@@ -58,7 +58,7 @@ describe('Класс, описывающий компонент "Карусел�
 
   describe('Переключение слайдов', () => {
     describe('Переключение вперёд', () => {
-      it('При клике по кнопке "вперёд", передвигает на один слайд вперёд', () => {
+      it('При нажатии кнопки "вперёд" передвигает на один слайд вперёд', () => {
         carouselArrowRight.dispatchEvent(clickEvent);
 
         expect(carouselInner.style.transform).toBe("translateX(-500px)");
@@ -72,7 +72,7 @@ describe('Класс, описывающий компонент "Карусел�
         carouselArrowRight.dispatchEvent(clickEvent);
       });
 
-      it('При клике по кнопке "назад", передвигает на один слайд назад', () => {
+      it('При нажатии кнопки "назад" передвигает на один слайд назад', () => {
         carouselArrowLeft.dispatchEvent(clickEvent);
 
         expect(carouselInner.style.transform).toBe('translateX(-1000px)');

@@ -12,4 +12,4 @@ function findMinEvenNumber(nums) {
 }
 
 
-module.exports = findMinEvenNumber;
+export default findMinEvenNumber;

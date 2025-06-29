@@ -14,5 +14,5 @@ function makeFriendList(friends) {
   return list;
 }
 
-module.exports = makeFriendList;
+export default makeFriendList;
 

@@ -1,5 +1,5 @@
-import Carousel from '../../6-module/3-task/index.mjs';
-import slides from '../../6-module/3-task/slides.mjs';
+import Carousel from '../../6-module/3-task/initCarousel.js';
+import slides from '../../6-module/3-task/slides.js';
 
 import RibbonMenu from '../../7-module/1-task';
 import categories from '../../7-module/1-task/categories.js';

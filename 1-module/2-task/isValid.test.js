@@ -1,4 +1,4 @@
-const isValid = require('./isValid');
+import isValid from "./isValid";
 
 describe('Функция проверяет, что имя соответствует заявленным параметрам', () => {
   it('Возвращает true, если имя соответствует параметрам', () => {

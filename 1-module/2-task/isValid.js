@@ -34,4 +34,4 @@ function sayHello() {
   }
 }
 
-module.exports = isValid;
+export default isValid;

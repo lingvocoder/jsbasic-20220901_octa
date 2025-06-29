@@ -5,4 +5,4 @@ function makeDiagonalRed(table) {
   }
 }
 
-module.exports = makeDiagonalRed;
+export default makeDiagonalRed;

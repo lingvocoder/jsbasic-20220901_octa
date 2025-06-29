@@ -1,4 +1,4 @@
-const toggleText = require('./toggleText');
+import toggleText from "./toggleText";
 
 describe("Функция, которая скрывает элемент при первом нажатии кнопки, а при повторном нажатии делает элемент видимым", () => {
   let buttonElement;

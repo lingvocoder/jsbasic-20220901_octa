@@ -8,4 +8,4 @@ function findSequenceMax(nums) {
 }
 
 
-module.exports = findSequenceMax;
+export default findSequenceMax;

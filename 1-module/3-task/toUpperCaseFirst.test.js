@@ -1,4 +1,4 @@
-const toUpperCaseFirst = require('./toUpperCaseFirst');
+import toUpperCaseFirst from "./toUpperCaseFirst";
 
 describe('Функция, которая возвращает строку str, начинающуюся с заглавной буквы', () => {
   it('Возвращает строку с заглавной первой буквой', () => {

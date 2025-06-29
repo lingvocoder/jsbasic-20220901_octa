@@ -4,4 +4,4 @@ function checkSpam(str) {
   return (str.toLowerCase().indexOf(xxx) !== -1 || str.toLowerCase().indexOf(bet) !== -1);
 }
 
-module.exports = checkSpam;
+export default checkSpam;

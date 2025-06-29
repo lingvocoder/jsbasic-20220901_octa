@@ -1,4 +1,4 @@
-const makeFriendList = require('./makeFriendList.js');
+import makeFriendList from "./makeFriendList.js";
 
 describe('Функция, которая преобразует переданный в качестве аргумента массив объектов в стандартный HTML список, состоящий из тегов ul и li', () => {
   const friends = [

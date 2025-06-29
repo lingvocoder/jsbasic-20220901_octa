@@ -1,4 +1,4 @@
-const factorial = require('./factorial');
+import factorial from "./factorial.js";
 
 describe('Функция вычисляет факториал числа', () => {
   it('Факториал 0 равен 1', () => {

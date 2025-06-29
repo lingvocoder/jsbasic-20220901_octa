@@ -51,4 +51,4 @@ function initCarousel() {
 
 }
 
-module.exports = initCarousel;
+export default initCarousel;

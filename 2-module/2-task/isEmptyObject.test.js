@@ -1,4 +1,4 @@
-const isEmpty = require('./isEmptyObject');
+import isEmpty from "./isEmptyObject";
 
 describe('Функция, которая проверяет наличие свойств в объекте', () => {
   it('Возвращает true, если объект пустой', () => {

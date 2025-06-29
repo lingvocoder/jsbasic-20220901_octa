@@ -6,7 +6,7 @@ function camelize(str) {
     .join('');
 }
 
-module.exports = camelize;
+export default camelize;
 /*Решение с помощью цикла FOR*/
 // function camelize(str) {
 //     let strArray = str.split('-');

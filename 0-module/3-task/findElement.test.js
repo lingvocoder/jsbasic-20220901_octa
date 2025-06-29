@@ -1,4 +1,4 @@
-const findElement = require('./findElement');
+import findElement from "./findElement";
 
 describe('Функция осуществляет поиск элемента в массиве, состоящем из целых чисел, и возвращает индекс или -1', () => {
   it('Возвращает индекс 3 для элемента со значением 2', () => {

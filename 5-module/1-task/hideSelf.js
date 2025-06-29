@@ -5,4 +5,4 @@ function hideSelf() {
   });
 }
 
-module.exports = hideSelf;
+export default hideSelf;

@@ -24,4 +24,4 @@ function setConditioner(tRoom, tCond, mode) {
   }
 }
 
-module.exports = setConditioner;
+export default setConditioner;

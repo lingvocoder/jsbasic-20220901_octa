@@ -8,4 +8,4 @@ function sumSalary(salaries) {
   return resSum;
 }
 
-module.exports = sumSalary;
+export default sumSalary;

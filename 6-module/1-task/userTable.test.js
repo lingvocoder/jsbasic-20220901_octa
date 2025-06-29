@@ -1,4 +1,4 @@
-const UserTable = require('./index');
+import UserTable from "./userTable.js";
 
 describe('Класс, который создаёт таблицу с переданными данными', () => {
   let userTable;
@@ -43,7 +43,7 @@ describe('Класс, который создаёт таблицу с перед
     expect(rowsInHTMLLength).toEqual(rows.length);
   });
 
-  it('При нажатии кнопки строка удаляется', () => {
+  it('При нажатии на кнопку строка удаляется', () => {
     let buttons = userTable.elem.querySelectorAll('button');
 
     buttons[0].dispatchEvent(clickEvent);

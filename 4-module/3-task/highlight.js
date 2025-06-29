@@ -21,4 +21,4 @@ function highlight(table) {
   }
 }
 
-module.exports = highlight;
+export default highlight;

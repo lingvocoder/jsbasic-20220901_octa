@@ -1,4 +1,4 @@
-const namify = require('./namify');
+import namify from "./namify";
 
 describe('Функция, которая преобразует исходный массив в массив имён', () => {
   it('Возвращает массив имён', () => {

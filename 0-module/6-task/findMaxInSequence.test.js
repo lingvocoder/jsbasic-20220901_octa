@@ -1,4 +1,4 @@
-const findElement = require('./findMaxInSequence');
+import findElement from "./findMaxInSequence";
 
 describe('Функция находит максимум в массиве, состоящем из целых чисел, и возвращает его', () => {
   it('Возвращает число 6', () => {

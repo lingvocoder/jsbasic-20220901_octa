@@ -1,4 +1,4 @@
-const calculator = require('./calculator');
+import calculator from "./calculator";
 
 describe('Объект calculator, который имеет 3 метода: read, sum, multiply', () => {
   it('Возвращает сумму чисел', () => {

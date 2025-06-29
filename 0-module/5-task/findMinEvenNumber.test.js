@@ -1,4 +1,4 @@
-const findElement = require('./findMinEvenNumber');
+import findElement from "./findMinEvenNumber";
 
 describe('Функция осуществляет поиск минимального чётного числа в массиве, состоящем из целых чисел, и возвращает число или -1', () => {
   it('Возвращает число 4', () => {

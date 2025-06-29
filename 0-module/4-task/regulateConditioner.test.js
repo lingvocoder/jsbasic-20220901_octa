@@ -1,4 +1,4 @@
-const regulateConditioner = require('./regulateConditioner');
+import regulateConditioner from "./regulateConditioner";
 
 describe('Функция, определяющая температуру, которая будет установлена в комнате через час в зависимости от выбранного режима', () => {
   it('Возвращает 20 при температуре в комнате равной 10 и режиме работы heat', () => {

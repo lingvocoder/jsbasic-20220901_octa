@@ -9,4 +9,4 @@ function findElementInSequence(X, nums) {
   return isFoundAtIndex;
 }
 
-module.exports = findElementInSequence;
+export default findElementInSequence;

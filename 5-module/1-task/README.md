@@ -19,7 +19,7 @@ hideSelf();
 В файле `index.html` вы можете найти пример использования функции.
 
 ***
-Подсказка!
+**Подсказка!**
 
 Атрибут `hidden` — стандартный атрибут, поэтому он представлен в виде свойства DOM-элемента: <code>button.hidden</code>. 
 Подробнее можно прочитать [здесь](https://learn.javascript.ru/basic-dom-node-properties#svoystvo-hidden).
