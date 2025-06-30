@@ -35,6 +35,7 @@
     "jest-environment-jsdom": "^29.7.0"
   },
   "dependencies": {
+    "@jest/globals": "^30.0.3",
     "@testing-library/dom": "^9.3.3"
   }
 }

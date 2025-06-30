@@ -1,8 +1,6 @@
 import createElement from '../../assets/lib/create-element.js';
 
-// const createElement = require("../../assets/lib/create-element.js");
-
-class RibbonMenu {
+export default class RibbonMenu {
   elem = null;
   selectedCategory;
 
@@ -20,7 +18,7 @@ class RibbonMenu {
   }
 
   addEventListeners() {
-    const inner = this.sub('inner');
+    const ribbonInner = this.elem.querySelector('.ribbon__inner');
 
     this.elem.addEventListener('click', ({target}) => {
       const prevBtn = target.closest('.ribbon__arrow_left');
@@ -37,7 +35,7 @@ class RibbonMenu {
       this.onCategoryChoose(ev);
     });
 
-    inner.addEventListener('scroll', (ev) => {
+    ribbonInner.addEventListener('scroll', (ev) => {
       this.onScroll(ev);
     });
 
@@ -67,32 +65,33 @@ class RibbonMenu {
 
   getLinks = (data) => data.map(item => this.getLink(item)).join('');
 
-  sub(ref) {
-    return this.elem.querySelector(`.ribbon__${ref}`);
-  }
-
   scrollRight() {
-    return this.sub('inner').scrollWidth - (this.sub('inner').scrollLeft + this.sub('inner').clientWidth);
+    const ribbonInner = this.elem.querySelector('.ribbon__inner');
+    return ribbonInner.scrollWidth - (ribbonInner.scrollLeft + ribbonInner.clientWidth);
   }
 
   scrollLeft() {
-    return this.sub('inner').scrollLeft;
+    const ribbonInner = this.elem.querySelector('.ribbon__inner');
+    return ribbonInner.scrollLeft;
   }
 
   updateArrows = () => {
 
+    const btnPrev = this.elem.querySelector('.ribbon__arrow_left');
+    const btnNext = this.elem.querySelector('.ribbon__arrow_right');
+
     if (this.scrollLeft() > 0) {
-      this.sub('arrow_left').classList.add('ribbon__arrow_visible');
+      btnPrev.classList.add('ribbon__arrow_visible');
     } else {
-      this.sub('arrow_left').classList.remove('ribbon__arrow_visible');
+      btnPrev.classList.remove('ribbon__arrow_visible');
     }
 
     let scrollRight = this.scrollRight();
     scrollRight = scrollRight < 1 ? 0 : scrollRight; // Это нужно для ситуации, когда скролл произошел с погрешностью
     if (scrollRight > 0) {
-      this.sub('arrow_right').classList.add('ribbon__arrow_visible');
+      btnNext.classList.add('ribbon__arrow_visible');
     } else {
-      this.sub('arrow_right').classList.remove('ribbon__arrow_visible');
+      btnNext.classList.remove('ribbon__arrow_visible');
     }
   };
 
@@ -102,13 +101,15 @@ class RibbonMenu {
 
   onPrevButtonClick = () => {
     let offset = 350;
-    this.sub('inner').scrollBy(-offset, 0);
+    const ribbonInner = this.elem.querySelector('.ribbon__inner');
+    ribbonInner.scrollBy(-offset, 0);
     this.updateArrows();
   };
 
   onNextButtonClick = () => {
     let offset = 350;
-    this.sub('inner').scrollBy(offset, 0);
+    const ribbonInner = this.elem.querySelector('.ribbon__inner');
+    ribbonInner.scrollBy(offset, 0);
     this.updateArrows();
   };
 
@@ -137,7 +138,3 @@ class RibbonMenu {
   };
 
 }
-
-
-export default RibbonMenu;
-// module.exports = RibbonMenu;

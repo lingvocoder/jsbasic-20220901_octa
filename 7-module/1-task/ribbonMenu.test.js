@@ -1,7 +1,8 @@
-const categories = require('./categories');
-const RibbonMenu = require('./index');
+import categories from './categories.js';
+import RibbonMenu from "./ribbonMenu.js";
+import {expect, jest, test} from '@jest/globals';
 
-describe('Класс, описывающий компонент "Ленты-Меню"', () => {
+describe('Класс, описывающий компонент "Лента-Меню"', () => {
   let sut;
 
   let ribbonInner;
@@ -27,18 +28,18 @@ describe('Класс, описывающий компонент "Ленты-Ме
   });
 
   describe('Отрисовка вёрстки после создания экземпляра класса', () => {
-    it('Добавляет корневой элемент в свойство "elem"', () => {
+    it('Добавляет корневой элемент в свойство elem', () => {
       expect(sut.elem.classList.contains('ribbon')).toBe(true);
     });
 
-    it('Отрисовывает все слайды', () => {
+    it('Отрисовывает все категории меню', () => {
       let categoryElements = sut.elem.querySelectorAll('.ribbon__item');
 
       expect(categoryElements.length).toBe(9);
     });
   });
 
-  describe('Прокрутка', () => {
+  describe('Прокрутка ленты меню', () => {
     let scrollBySpy = jest.fn();
 
     beforeEach(() => {
@@ -46,7 +47,7 @@ describe('Класс, описывающий компонент "Ленты-Ме
     });
 
     describe('Прокрутка вперёд', () => {
-      it('При клике по кнопке "вперёд", прокручивает на 350px вперёд', () => {
+      it('При нажатии кнопки "вперёд", передвигает на 350px вперёд', () => {
         ribbonArrowRight.dispatchEvent(clickEvent);
 
         expect(ribbonInner.scrollBy).toHaveBeenCalledWith(350, 0);
@@ -59,7 +60,7 @@ describe('Класс, описывающий компонент "Ленты-Ме
         ribbonArrowRight.dispatchEvent(clickEvent);
       });
 
-      it('При клике по кнопке "назад" прокручивает на 350px назад', () => {
+      it('При нажатии кнопки "назад" передвигает на 350px назад', () => {
         ribbonArrowLeft.dispatchEvent(clickEvent);
 
         expect(ribbonInner.scrollBy).toHaveBeenCalledWith(-350, 0);
@@ -86,11 +87,11 @@ describe('Класс, описывающий компонент "Ленты-Ме
       categorySelectButton.dispatchEvent(clickEvent);
     });
 
-    it('После клика по кнопке, создаётся событие', () => {
+    it('При нажатии по кнопке создаётся событие', () => {
       expect(ribbonSelectEvent instanceof CustomEvent).toBe(true);
     });
 
-    it('Созданное событие содержит в себе уникальный идентификатор товара("id")', () => {
+    it('Созданное событие содержит в себе уникальный идентификатор категории ("id")', () => {
       expect(ribbonSelectEvent.detail).toBe(category.id);
     });
   });

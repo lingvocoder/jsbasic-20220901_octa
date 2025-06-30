@@ -1,7 +1,7 @@
 import Carousel from '../../6-module/3-task/initCarousel.js';
 import slides from '../../6-module/3-task/slides.js';
 
-import RibbonMenu from '../../7-module/1-task';
+import RibbonMenu from '../../7-module/1-task/ribbonMenu.js';
 import categories from '../../7-module/1-task/categories.js';
 
 import StepSlider from '../../7-module/4-task/index.js';
