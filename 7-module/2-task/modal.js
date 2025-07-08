@@ -1,7 +1,6 @@
 import createElement from '../../assets/lib/create-element.js';
-// const createElement = require('../../assets/lib/create-element.js') ;
 
-class Modal {
+export default class Modal {
   elem = null;
 
   constructor() {
@@ -58,7 +57,7 @@ class Modal {
   };
 
   onCloseBtnClick = (ev) => {
-    const target = ev.target;
+    const {target} = ev;
     const closeBtn = target.closest(".modal__close");
     if (!closeBtn) {
       return;
@@ -75,5 +74,3 @@ class Modal {
   };
 
 }
-// export default Modal;
-export {Modal};

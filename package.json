@@ -1,7 +1,7 @@
 {
   "type": "module",
-  "name": "tasks-jsbasic",
-  "version": "1.0.0",
+  "name": "dom-interfaces-for-rookies",
+  "version": "1.0.1",
   "description": "Repo with tasks for JS Basic",
   "main": "index.js",
   "directories": {
@@ -16,7 +16,7 @@
     "type": "git",
     "url": "git+https://github.com/javascript-info/tasks-js-dom-interfaces.git"
   },
-  "author": "Artsiom Mezin",
+  "author": "Aleksey Goncharov",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/javascript-info/tasks-jsbasic/issues"
@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@jest/globals": "^30.0.3",
-    "@testing-library/dom": "^9.3.3"
+    "@testing-library/dom": "^9.3.3",
+    "@testing-library/user-event": "^14.6.1"
   }
 }
