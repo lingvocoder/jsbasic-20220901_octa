@@ -16,8 +16,8 @@
     <h1 class="heading logo">Бангкок Экспресс</h1>
     <h3 class="subheading">Отличная еда・Бесплатная доставка・Лучшие цены</h3>
 
-    <div data-cart-icon-holder>
-      <!--СЮДА ВСТАВЛЯЕТСЯ CART-ICON-->
+    <div class="cart-icon-holder">
+      <!--СЮДА ВСТАВЛЯЕТСЯ корневой элемент из свойства CartIcon.elem-->
     </div>
   </header>
 
@@ -58,48 +58,11 @@
   </main>
 
   <script type="module">
-    import CartIcon from './index.js';
-
-    let product = {
-      price: 7,
-      count: 1,
-    }
-
-    let cart = {
-      products: [],
-
-      isEmpty() {
-        return this.products.length === 0;
-      },
-
-      getTotalCount() {
-        return this.products.length;
-      },
-
-      getTotalPrice() {
-        return this.products.reduce((totalPrice, product) => totalPrice + product.price, 0);
-      }
-    }
+    import {CartIcon} from './CartIcon.js';
 
     let cartIcon = new CartIcon();
-    let cartIconHolder = document.querySelector('[data-cart-icon-holder]');
+    let cartIconHolder = document.querySelector('.cart-icon-holder');
     cartIconHolder.append(cartIcon.elem);
-
-    let addProductButton = document.querySelector('[data-add-product]');
-    let removeAllProductsButton = document.querySelector('[data-remove-all-products]');
-
-    addProductButton.onclick = () => {
-      let productToAdd = Object.assign({}, product);
-      cart.products.push(productToAdd);
-
-      cartIcon.update(cart);
-    };
-
-    removeAllProductsButton.onclick = () => {
-      cart.products = [];
-
-      cartIcon.update(cart);
-    };
 
   </script>
 </body>

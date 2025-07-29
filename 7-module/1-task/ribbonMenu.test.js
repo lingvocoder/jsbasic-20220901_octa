@@ -1,6 +1,5 @@
 import categories from './categories.js';
 import RibbonMenu from "./ribbonMenu.js";
-import {expect, jest, test} from '@jest/globals';
 
 describe('Класс, описывающий компонент "Лента-Меню"', () => {
   let sut;

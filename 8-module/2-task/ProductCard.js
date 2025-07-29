@@ -1,24 +1,33 @@
-import createElement from '../../assets/lib/create-element.js';
+import {createElement} from '../../assets/lib/create-element.js';
 
 export default class CartIcon {
+  elem = null;
+
   constructor() {
     this.render();
     this.addEventListeners();
   }
 
   render() {
-    this.elem = createElement('<div class="cart-icon"></div>');
+    if (!this.elem) {
+      this.elem = createElement(this.getProductCard());
+    }
+    return this.elem;
   }
+
+  getProductCard() {
+    return `
+      <div class="cart-icon__inner">
+          <span class="cart-icon__count">1</span>
+          <span class="cart-icon__price">€2.00</span>
+        </div>;
+    `;
+  }
+
+      // this.elem.classList.add('cart-icon_visible');
 
   update(cart) {
     if (!cart.isEmpty()) {
-      this.elem.classList.add('cart-icon_visible');
-
-      this.elem.innerHTML = `
-        <div class="cart-icon__inner">
-          <span class="cart-icon__count">${cart.getTotalCount()}</span>
-          <span class="cart-icon__price">€${cart.getTotalPrice().toFixed(2)}</span>
-        </div>`;
 
       this.updatePosition();
 

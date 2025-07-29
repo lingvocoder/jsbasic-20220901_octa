@@ -1,3 +1,9 @@
+.cart-icon-holder {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
 .cart-icon {
   display: none;
   position: absolute;
@@ -8,12 +14,6 @@
   text-decoration: none;
   cursor: pointer;
   transition: all 0.5s ease;
-}
-
-.cart-icon.shake {
-  animation: cartshake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-  backface-visibility: hidden;
-  transform-origin: top right;
 }
 
 .cart-icon__inner {
@@ -47,36 +47,6 @@
   font-weight: 500;
   color: var(--color-black);
   margin: 0;
-}
-
-@keyframes cartshake {
-  0% {
-    transform: rotate(0);
-  }
-  15% {
-    transform: rotate(5deg);
-  }
-  30% {
-    transform: rotate(-5deg);
-  }
-  45% {
-    transform: rotate(4deg);
-  }
-  60% {
-    transform: rotate(-4deg);
-  }
-  75% {
-    transform: rotate(2deg);
-  }
-  85% {
-    transform: rotate(-2deg);
-  }
-  92% {
-    transform: rotate(1deg);
-  }
-  100% {
-    transform: rotate(0);
-  }
 }
 
 @media all and (max-width: 767px) {

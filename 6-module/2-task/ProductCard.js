@@ -1,4 +1,4 @@
-import createElement from "../../assets/lib/create-element.js";
+import {createElement} from "../../assets/lib/create-element.js";
 
 export default class ProductCard {
   elem = null;
@@ -12,8 +12,14 @@ export default class ProductCard {
     this.render();
     this.addEventListeners();
   }
+  render() {
+    if (!this.elem) {
+      this.elem = createElement(this.getCard());
+    }
+    return this.elem;
+  }
 
-  get template() {
+  getCard = () => {
     return `
     <div class="card">
       <div class="card__top">
@@ -36,13 +42,6 @@ export default class ProductCard {
 
   addEventListeners() {
     this.elem.addEventListener('click', this.onAddBtnClick);
-  }
-
-  render() {
-    if (!this.elem) {
-      this.elem = createElement(this.template);
-    }
-    return this.elem;
   }
 
   onAddBtnClick = (ev) => {

@@ -1,206 +1,84 @@
-# Учебный проект: Корзина, часть 2
+# Учебный проект: Список блюд
 
-"Корзина" - компонент интерфейса онлайн магазина или ресторана, в который пользователи добавляют товары для заказа.
-
-В прошлой задаче вы реализовали основу корзины, в этом мы ее закончим.
-
-В этой задаче у вас уже есть файл `ProductCard.js`, в котором находится класс `Cart`, описывающий этот компонент. Перед началом работы, скопируйте реализацию методов `addProduct`, `updateProductCount`, `isEmpty`, `getTotalCount`, `getTotalPrice` в класс `Cart` из предыдущей задачи.
-
-Также в этой части будет использоваться компонент "Модальное окно", который вы должны были создать ранее. 
-
-Хранение товаров товаров в корзине мы полностью переиспользуем из первой части.
-
-## Методы, которые уже готовы
-
-В этой задаче уже готов ряд простых методов, которые генерируют вёрстку, чтобы вы сосредоточились на JavaScript. Далее их описание.
-
-### Метод renderProduct(product, count)
-
-В качестве аргумента принимает `product` - объект товара, `count` - количество единиц этого товара. 
-
-Возвращает верстку этого товара, для показа в корзине:
+Создайте класс `ProductGrid`, описывающий компонент "Список товаров".
+В качестве аргумента в конструктор класса передаётся массив объектов:
 
 ```js
-// createElement - вспомогательная функция для создание элемента
+let products = [
+  {
+    name: "Laab kai chicken salad", // название блюда
+    price: 10, // цена блюда
+    category: "salads", // категория, к которой это блюдо относится (понадобится чуть позже)
+    image: "laab_kai_chicken_salad.png", // часть URL картинки блюда
+    id: "laab-kai-chicken-salad" // уникальный идентификатор блюда, который нужен для добавления данного его в корзину
+  },
 
-renderProduct(product, count) {
-    return createElement(`
-  <div class="cart-product" data-product-id="${
-    product.id
-  }">
-    <div class="cart-product__img">
-      <img src="/assets/images/products/${product.image}" alt="product">
-    </div>
-    <div class="cart-product__info">
-      <div class="cart-product__title">${escapeHtml(product.name)}</div>
-      <div class="cart-product__price-wrap">
-        <div class="cart-counter">
-          <button type="button" class="cart-counter__button cart-counter__button_minus">
-            <img src="/assets/images/icons/square-minus-icon.svg" alt="minus">
-          </button>
-          <span class="cart-counter__count">${count}</span>
-          <button type="button" class="cart-counter__button cart-counter__button_plus">
-            <img src="/assets/images/icons/square-plus-icon.svg" alt="plus">
-          </button>
-        </div>
-        <div class="cart-product__price">€${product.price.toFixed(2)}</div>
-      </div>
-    </div>
-  </div>`);
-  }
+  {
+    name: "Som tam papaya salad",
+    price: 9.5,
+    category: "salads",
+    image: "som_tam_papaya_salad.png",
+    id: "som-tam-papaya-salad",
+    spiciness: 0
+  },
+
+  // и др.
+];
+
+let productGrid = new ProductGrid(products);
 ```
 
-Результат работы этого метода можно увидеть на картинке ниже:
-
-<img width="100%" alt="Карточка товара в корзине" src="https://i.imgur.com/QXoif3I.png">
-
-Обратите внимание, в этой вёрстке рядом с картинкой товара есть кнопки по уменьшению и увеличению его количества с классами `cart-counter__button_minus` и `cart-counter__button_plus`. 
-
-Нужно будет сделать так, чтобы по нажатию на них изменялось количество единиц товара в корзине, об этом дальше.
-
-### Метод renderOrderForm()
-
-Этот метод возвращает форму для ввода данных пользователя в момент оформления заказа. 
-
-```js
-// createElement - вспомогательная функция для создание элемента
-
-renderOrderForm() {
-  return createElement(`<form class="cart-form">
-    <h5 class="cart-form__title">Delivery</h5>
-    <div class="cart-form__group cart-form__group_row">
-      <input name="name" type="text" class="cart-form__input" placeholder="Name" required value="Santa Claus">
-      <input name="email" type="email" class="cart-form__input" placeholder="Email" required value="john@gmail.com">
-      <input name="tel" type="tel" class="cart-form__input" placeholder="Phone" required value="+1234567">
-    </div>
-    <div class="cart-form__group">
-      <input name="address" type="text" class="cart-form__input" placeholder="Address" required value="North, Lapland, Snow Home">
-    </div>
-    <div class="cart-buttons">
-      <div class="cart-buttons__buttons btn-group">
-        <div class="cart-buttons__info">
-          <span class="cart-buttons__info-text">total</span>
-          <span class="cart-buttons__info-price">€${this.getTotalPrice().toFixed(2)}</span>
-        </div>
-        <button type="submit" class="cart-buttons__button btn-group__button button">order</button>
-      </div>
-    </div>
-  </form>`);
-}
-```
-Результат работы этого метода можно увидеть на картинке ниже:
-
-<img width="100%" alt="Форма заказа в корзине" src="https://i.imgur.com/s07fKN4.png">
-
-### Метод addEventListeners()
-
-Добавляет обработчик на открытие модального окна.
-
-```js
-addEventListeners() {
-  this.cartIcon.elem.onclick = () => this.renderModal();
-}
-```
-
-Метод `renderModal` реализуете вы.
-
-## Методы, которые нужно реализовать
-
-### Метод renderModal()
-
-Этот метод вызывается, когда пользователь кликает по иконке корзины. Он отвечает за открытие модального окна с корзиной.
-
-Перед реализацией рекомендуется освежить в памяти методы модального окна, которые мы реализовали ранее.
-
-**Требования к реализации метода:**
-
-1. Создает новое модальное окно на основе компонента `Modal`.
-2. Добавляет заголовок `"Your order"` в созданное модальное окно.
-3. Создает верстку корзины с корневым элементом `div` по принципу:
-```html
-<div>
-  < Карточка товара 1 /> <!-- результат вызова метода renderProduct -->
-  < Карточка товара 2 /> <!-- результат вызова метода renderProduct -->
-  <!-- ... остальные карточки товаров -->
-
-  < Форма заказа /> <!-- результат вызова метода renderOrderForm -->
-</div>  
-```
-4. Вставляет эту верстку в тело модального окна. 
-5. Добавляет необходимые обработчики (или один обработчик), чтобы при кликах на кнопках +/- увеличивать/уменьшать количество товаров.
-
-Для добавления или удаления товара нужно:
-
-- Определить по элементу +/-, какой это товар (в верстке для этого есть `data-product-id` с уникальным идентификтором товара)
-- Использовать уже существующий метод `updateProductCount`, чтобы обновить `cartItems`.
-   - Он вызовет уже существующий метод `onProductUpdate`, который нужно дописать, чтобы он обновлял отображение товара в модальном окне.
-
-6. Добавляет необходимый обработчик, чтобы при событии `submit` на элементе формы с классом `cart-form`, вызывался метод `onSubmit` данного компонента. При этом при вызове этого метода, ему нужно будет не забыть передать в качестве аргумента объект события:
-
-```js
-// event - объект события "submit"
-this.onSubmit(event);
-```
-Метод `onSubmit` вы реализуете сами, требования чуть ниже.
-
-### Метод onProductUpdate(cartItem)
-
-Допишите метод `onProductUpdate`, чтобы он обновлял верстку при изменении количества товара `cartItem`.
-
-Первым делом этот метод обновляет иконку корзины, вызывая метод `update`. Этот вызов уже есть в коде.
-
-Обновлять верстку нужно только том случае, если модальное окно с корзиной открыто. Определить это можно по наличию класса `is-modal-open` на элементе `body`. 
-
-Для обновления верстки (с учетом использования метода `renderProduct`) подойдут CSS-селекторы:
-
-```js
-let productId = "laab-kai-chicken-salad"; // Уникальный идентификатора товара (для примера)
-let modalBody = корневой элемент тела модального окна, который мы получили, вызвав метод renderModal
-
-// Элемент, который хранит количество товаров с таким productId в корзине
-let productCount = modalBody.querySelector(`[data-product-id="${productId}"] .cart-counter__count`); 
-
-// Элемент с общей стоимостью всех единиц этого товара
-let productPrice = modalBody.querySelector(`[data-product-id="${productId}"] .cart-product__price`); 
-
-// Элемент с суммарной стоимостью всех товаров
-let infoPrice = modalBody.querySelector(`.cart-buttons__info-price`); 
-```
-
-Изменение этих данных:
-```js
-productCount.innerHTML = новое количество единиц товара
-
-productPrice.innerHTML = `€${новая стоимость товаров такого вида с округлением до 2го знака после запятой}`;
-
-infoPrice.innerHTML = `€${новая общая стоимость корзины (по всем товарам) с округлением до 2го знака}`;
-```
-
-Если в корзине не осталось ни одного товара, например, был один такой товар в единственном экземпляре, и мы уменьшили его количество на единицу, то ничего обновлять не надо, нужно просто закрыть модальное окно.
-
-### onSubmit(event)
-
-Этот метод отправляет данные пользователя для размещения заказа. Он должен вызываться при попытке отправить форму.
-
-**Требования к реализации метода:**
-
-1. Предотвратить перезагрузку страницу после сабмита формы.
-2. Добавить класс `is-loading` кнопке с атрибутом `type="submit"`.
-3. Сделать запрос на сервер с помощью `fetch` и методом `POST` на адрес - `https://httpbin.org/post`. Данные для отправки нужно сформировать из формы с классом `cart-form` с помощью конструктора `FormData`. Подробнее об этом можно прочитать в статье - [FormData](https://learn.javascript.ru/formdata).
-
-**Если отправка данных была успешной:**
-
-1. Заменить заголовок модального окна на `'Success!'`.
-2. Удалить все товары из массива в свойстве `cartItems`.
-3. Заменить содержимое тела модального окна на верстку:
+После создания экземпляра класса в `productCard.elem` должен быть доступен DOM-элемент с карточками блюд. Вот его вид:
 
 ```html
-<div class="modal__body-inner">
-  <p>
-    Order successful! Your order is being cooked :) <br>
-    We’ll notify you about delivery time shortly.<br>
-    <img src="/assets/images/delivery.gif">
-  </p>
-</div>
-`;
+<div class="products-grid">
+  <div class="products-grid__inner">
+    <!--СЮДА ВСТАВЛЯЕМ КАРТОЧКИ БЛЮД-->
+  </div>
+</div>`
 ```
+
+Для каждого объекта из массива нужно отрисовать карточку блюда на основе класса `ProductCard`, который мы реализовали в **6-м** модуле.
+Карточки необходимо вставить внутрь контейнера с классом `products-grid__inner`.
+В данном задании используется такой же формат объекта товара как и в классе `ProductCard`.
+
+## Фильтрация товаров
+
+Как вы помните, в нашем ресторане есть возможность показывать только те блюда, которые соответствуют параметрам, заданным фильтрами.
+Например, блюда из определённой категории, блюда с максимальной остротой, с определенной ценой и так далее. 
+Для этого необходимо создать метод `updateFilter(newFilters)`, который отображает список блюд, в зависимости от выбранных параметров фильтров.
+
+В качестве аргумента метод принимает объект `newFilters`:
+
+```js
+let newFilters = {
+  excludeNuts: true, // true/false
+  onlyVegetarian: false, // true/false
+  maxSpiciness: 3, // число от 0 до 4
+  category: 'soups' // уникальный идентификатор блюда
+};
+
+productGrid.updateFilter(newFilters); 
+```
+
+После вызова метода должны быть показаны `только те блюда, которые удовлетворяют выбранным значениям фильтров`.
+Давайте разберём каждое значение отдельно:
+- `newFilters.excludeNuts`(`true/false`) — если значение `true`, то нужно исключить блюда `с орехами` (`nuts`:`true`). Если значение `false` — то не учитываем этот параметр. 
+- `newFilters.onlyVegetarian` (`true/false`) — если значение `true`, то нужно показать `вегетарианские` блюда (`vegetarian`:`true`). Если значение `false` — то не учитываем этот параметр.
+- `newFilters.maxSpiciness` (`число от 0 до 4`) — показываем только те блюда, в свойстве `spiciness` которых указано значение меньше или равное заданному.
+- `newFilters.category` (`уникальный идентификатор категории`) — показываем только те блюда, в свойстве `category` которых указано такое же значение. Если передана пустая строка или такого свойства нет в `activeFilters` — показываем все товары.
+
+Обращаем ваше внимание, что метод `updateFilter`, может вызываться с неполным объектом `newFilters`:
+
+```js
+productGrid.updateFilter({ nuts: false }); 
+productGrid.updateFilter({ category: 'soups' });
+
+/* После чего должны быть показаны товары для критериев:
+nuts: false и category: 'soups'
+*/
+```
+
+В таком случае, мы должны сохранять критерии фильтрации после предыдущего вызова.
+Например, после выполнения кода из примера выше, должны бы показаны товары, 
+которые соответствуют обоим критериям фильтрации: `nuts: false` и `category: 'soups'`. 

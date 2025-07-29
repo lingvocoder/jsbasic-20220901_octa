@@ -10,13 +10,13 @@
 /* ProductCard */
 @import '../../6-module/2-task/index.css';
 /* ProductsGrid */
-@import '../../8-module/2-task/index.css';
+@import '../../8-module/4-task/index.css';
 
 /* Modal */
 @import '../../7-module/2-task/index.css';
 /* CartIcon */
 @import '../../8-module/1-task/index.css';
 /* Cart */
-@import '../../8-module/4-task/index.css';
+@import '../../8-module/6-task/index.css';
 
 @import './filters.css'

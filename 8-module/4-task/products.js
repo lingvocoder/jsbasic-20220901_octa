@@ -6,8 +6,6 @@ export default [
     "image": "laab_kai_chicken_salad.png",
     "id": "laab-kai-chicken-salad",
     "spiciness": 2,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "Som tam papaya salad",
@@ -16,8 +14,6 @@ export default [
     "image": "som_tam_papaya_salad.png",
     "id": "som-tam-papaya-salad",
     "spiciness": 0,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "Tom yam kai",
@@ -26,8 +22,6 @@ export default [
     "image": "tom_yam.png",
     "id": "tom-yam-kai",
     "spiciness": 3,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "Tom kha kai",
@@ -36,8 +30,6 @@ export default [
     "image": "tom_kha.png",
     "id": "tom-kha-kai",
     "spiciness": 3,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "Tom kha koong",
@@ -46,8 +38,6 @@ export default [
     "image": "tom_kha.png",
     "id": "tom-kha-koong",
     "spiciness": 2,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "Tom yam koong",
@@ -56,8 +46,6 @@ export default [
     "image": "tom_yam.png",
     "id": "tom-yam-koong",
     "spiciness": 4,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "Tom yam vegetarian",
@@ -66,8 +54,6 @@ export default [
     "image": "tom_yam.png",
     "id": "tom-yam-vegetarian",
     "spiciness": 1,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "Tom kha vegetarian",
@@ -76,8 +62,6 @@ export default [
     "image": "tom_kha.png",
     "id": "tom-kha-vegetarian",
     "spiciness": 1,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "Sweet 'n sour chicken",
@@ -86,8 +70,6 @@ export default [
     "image": "sweet_n_sour.png",
     "id": "sweet-n-sour-chicken",
     "spiciness": 2,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "Chicken cashew",
@@ -96,8 +78,6 @@ export default [
     "image": "chicken_cashew.png",
     "id": "chicken-cashew",
     "spiciness": 1,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "Kai see ew",
@@ -106,8 +86,6 @@ export default [
     "image": "kai_see_ew.png",
     "id": "kai-see-ew",
     "spiciness": 4,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "Beef massaman",
@@ -116,8 +94,6 @@ export default [
     "image": "beef_massaman.png",
     "id": "beef-massaman",
     "spiciness": 2,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "Seafood chu chee",
@@ -126,8 +102,6 @@ export default [
     "image": "chu_chee.png",
     "id": "seafood-chu-chee",
     "spiciness": 2,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "Penang shrimp",
@@ -136,8 +110,6 @@ export default [
     "image": "red_curry.png",
     "id": "penang-shrimp",
     "spiciness": 4,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "Green curry veggies",
@@ -147,7 +119,6 @@ export default [
     "id": "green-curry-veggies",
     "spiciness": 0,
     "vegetarian": true,
-    "nuts":false
   },
   {
     "name": "Tofu cashew",
@@ -157,7 +128,6 @@ export default [
     "id": "tofu-cashew",
     "spiciness": 0,
     "vegetarian": true,
-    "nuts":false
   },
   {
     "name": "Red curry veggies",
@@ -166,8 +136,6 @@ export default [
     "image": "red_curry_vega.png",
     "id": "red-curry-veggies",
     "spiciness": 4,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "Krapau tofu",
@@ -176,8 +144,6 @@ export default [
     "image": "krapau_vega.png",
     "id": "krapau-tofu",
     "spiciness": 0,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "Prawn crackers",
@@ -186,8 +152,6 @@ export default [
     "image": "kroepoek.png",
     "id": "prawn-crackers",
     "spiciness": 1,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "Fish cakes",
@@ -196,8 +160,6 @@ export default [
     "image": "fish_cakes.png",
     "id": "fish-cakes",
     "spiciness": 1,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "Chicken satay",
@@ -206,8 +168,6 @@ export default [
     "image": "sate.png",
     "id": "chicken-satay",
     "spiciness": 1,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "Satay sauce",
@@ -216,8 +176,6 @@ export default [
     "image": "satesaus.png",
     "id": "satay-sauce",
     "spiciness": 2,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "Shrimp springrolls",
@@ -226,8 +184,6 @@ export default [
     "image": "koong_hom_pha.png",
     "id": "shrimp-springrolls",
     "spiciness": 3,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "Mini vegetarian spring rolls",
@@ -236,8 +192,6 @@ export default [
     "image": "mini_vega_springrolls.png",
     "id": "mini-vegetarian-spring-rolls",
     "spiciness": 2,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "Chicken springrolls",
@@ -246,8 +200,6 @@ export default [
     "image": "chicken_loempias.png",
     "id": "chicken-springrolls",
     "spiciness": 2,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "Thai fried rice",
@@ -256,8 +208,6 @@ export default [
     "image": "fried_rice.png",
     "id": "thai-fried-rice",
     "spiciness": 2,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "Prik nam pla",
@@ -266,8 +216,6 @@ export default [
     "image": "prik_nam_pla.png",
     "id": "prik-nam-pla",
     "spiciness": 4,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "Fresh prawn crackers",
@@ -276,8 +224,6 @@ export default [
     "image": "kroepoek.png",
     "id": "fresh-prawn-crackers",
     "spiciness": 1,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "Stir fried vegetables",
@@ -286,8 +232,6 @@ export default [
     "image": "stir_fried_vegetables.png",
     "id": "stir-fried-vegetables",
     "spiciness": 0,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "White rice",
@@ -296,8 +240,6 @@ export default [
     "image": "witte_rijst.png",
     "id": "white-rice",
     "spiciness": 0,
-    "vegetarian": false,
-    "nuts":false
   },
   {
     "name": "Fried noodles Thai style",
@@ -306,7 +248,6 @@ export default [
     "image": "fried_noodles.png",
     "id": "fried-noodles-thai-style",
     "spiciness": 2,
-    "vegetarian": false,
     "nuts": true,
   },
   {
@@ -316,7 +257,6 @@ export default [
     "image": "king_salad.png",
     "id": "king-salad",
     "spiciness": 2,
-    "vegetarian": false,
     "nuts": true,
   },
   {
@@ -326,7 +266,6 @@ export default [
     "image": "satesaus.png",
     "id": "sat-saus",
     "spiciness": 2,
-    "vegetarian": false,
     "nuts": true,
   }
 ];

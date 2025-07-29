@@ -52,7 +52,7 @@ let carousel = new Carousel(slides);
 ***
 
 **Важно!**
-- Для создания DOM-клементов рекомендуем использовать хэлпер `createElement`, который импортируется в первой строке `ProductCard.js`: `import createElement from '../../assets/lib/create-element.js';`. Он позволяет создать готовый элемент из вашей вёрстки
+- Для создания DOM-клементов рекомендуем использовать хэлпер `createElement`, который импортируется в первой строке `CartIcon.js`: `import createElement from '../../assets/lib/create-element.js';`. Он позволяет создать готовый элемент из вашей вёрстки
 
 Пример:
 

@@ -1,14 +1,13 @@
-import createElement from "../../assets/lib/create-element.js";
+import {createElement} from "../../assets/lib/create-element.js";
 import StepSlider from "./slider.js";
-import {expect, it, jest} from '@jest/globals';
 
 
 describe('Класс, описывающий компонент "Пошаговый слайдер"', () => {
+  const SLIDER_LEFT = 100;
+  const SLIDER_WIDTH = 330;
+  let config;
   let stepSlider;
   let mainElements;
-  const SLIDER_WIDTH = 330;
-  const SLIDER_LEFT = 100;
-  let config;
 
   beforeEach(() => {
     //Создание конфигурации слайдера
@@ -95,7 +94,7 @@ describe('Класс, описывающий компонент "Пошагов�
       mockSliderDimensions(slider, SLIDER_WIDTH);
 
       const clickEvent = new MouseEvent('click', {
-        clientX: 110,
+        clientX: SLIDER_LEFT,
         bubbles: true,
       });
 

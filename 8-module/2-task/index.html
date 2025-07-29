@@ -7,92 +7,62 @@
   <title>Бангкок Экспресс: Иконка корзины</title>
 
   <link rel="stylesheet" href="./index.css" />
-  <link rel="stylesheet" href="../../6-module/2-task/index.css">
+  <link rel="stylesheet" href="./product-grid.css" />
   <link rel="stylesheet" href="/assets/styles/common.css" />
 </head>
 
-<style>
-  .controls {
-    padding: 20px;
-    margin-bottom: 20px;
-    border: 5px solid var(--color-yellow);
-  }
-
-  .controls__row {
-    margin-top: 10px;
-  }
-</style>
-
 <body>
-  <div class="container controls">
-    <div class="controls__row">
-      <label class="subheading">
-        <input type="checkbox" data-no-nuts> No Nuts
-      </label>
+  <header class="header container">
+    <h1 class="heading logo">Бангкок Экспресс</h1>
+    <h3 class="subheading">Отличная еда・Бесплатная доставка・Лучшие цены</h3>
+
+    <div data-cart-icon-holder>
+      <!--СЮДА ВСТАВЛЯЕТСЯ CART-ICON-->
+    </div>
+  </header>
+
+  <main>
+    <div class="container" style="padding-bottom: 40px;">
+      <h2 class="section-heading">Наше Меню</h2>
+
+      <div>
+        <button class="button" data-add-product>Добавить один товар</button>
+      </div>
+
+      <div style="padding-top: 40px;">
+        <button class="button" data-remove-all-products>Удалить все товары</button>
+      </div>
     </div>
 
-    <div class="controls__row">
-      <label class="subheading">
-        <input type="checkbox" data-vegetarian-only> Vegetarian Only
-      </label>
-    </div>
+    <div class="container">
+      <div class="products-grid is-loading">
+        <div class="products-grid__skeleton">
+          <div class="products-grid__skeleton-item"></div>
+          <div class="products-grid__skeleton-item"></div>
+          <div class="products-grid__skeleton-item"></div>
+          <div class="products-grid__skeleton-item"></div>
+          <div class="products-grid__skeleton-item"></div>
+          <div class="products-grid__skeleton-item"></div>
 
-    <div class="controls__row">
-      <label class="subheading">
-        <input type="checkbox" data-max-spiciness> Показать товары с максимальной остротой "2"
-      </label>
-    </div>
+          <div class="products-grid__skeleton-item"></div>
+          <div class="products-grid__skeleton-item"></div>
+          <div class="products-grid__skeleton-item"></div>
+          <div class="products-grid__skeleton-item"></div>
+          <div class="products-grid__skeleton-item"></div>
+          <div class="products-grid__skeleton-item"></div>
+        </div>
 
-    <div class="controls__row">
-      <label class="subheading">
-        <input type="checkbox" data-category> Показать товары категории "soups"
-      </label>
+        <div class="products-grid__inner"></div>
+      </div>
     </div>
-  </div>
-
-  <div class="container" id="container"></div>
+  </main>
 
   <script type="module">
-    import ProductGrid from './index.js';
-    import products from './products.js';
+    import CartIcon from './ProductCard.js';
 
-    let productGrid = new ProductGrid(products);
-
-    container.append(productGrid.elem);
-
-    let noNutsControl = document.querySelector('[data-no-nuts]');
-    noNutsControl.addEventListener('change', (ev) => {
-      console.log( ev.target.checked);
-      productGrid.updateFilter({ nuts: ev.target.checked });
-    });
-
-    let vegetarianOnlyControl = document.querySelector('[data-vegetarian-only]');
-    vegetarianOnlyControl.addEventListener('change', (ev) => {
-      console.log( ev.target.checked);
-      productGrid.updateFilter({ vegetarian: ev.target.checked });
-    });
-
-    let maxSpicinessControl = document.querySelector('[data-max-spiciness]');
-    maxSpicinessControl.addEventListener('change', (ev) => {
-      if (ev.target.checked) {
-        console.log( ev.target.checked);
-        productGrid.updateFilter({ spiciness: 2 });
-      } else {
-        console.log( ev.target.checked);
-        productGrid.updateFilter({ spiciness: 4 });
-      }
-    });
-
-    let categoryControl = document.querySelector('[data-category]');
-    categoryControl.addEventListener('change', (ev) => {
-      if (ev.target.checked) {
-        console.log( ev.target.checked);
-        productGrid.updateFilter({ category: 'soups' });
-      } else {
-        console.log( ev.target.checked);
-        productGrid.updateFilter({ category: '' });
-      }
-    });
+    let cartIcon = new CartIcon();
+    let cartIconHolder = document.querySelector('[data-cart-icon-holder]');
+    cartIconHolder.append(cartIcon.elem);
 
   </script>
 </body>

@@ -2,89 +2,241 @@
 <html>
 
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Бангкок Экспресс: Корзина</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Бангкок Экспресс: Фильтрация блюд</title>
 
-  <link rel="stylesheet" href="/assets/styles/common.css" />
-  <link rel="stylesheet" href="./index.css">
-  <link rel="stylesheet" href="../1-task/index.css" />
-  <link rel="stylesheet" href="../../7-module/2-task/index.css" />
-
+  <link rel="stylesheet" href="./index.css"/>
+  <link rel="stylesheet" href="../../6-module/2-task/index.css">
+  <link rel="stylesheet" href="/assets/styles/common.css"/>
 </head>
 
+<style>
+  body {
+    color: var(--text-color);
+    line-height: 1.1;
+  }
+
+  .controls {
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 5px solid var(--color-yellow);
+    background: #fff;
+    border-radius: 8px;
+  }
+
+  .controls__title {
+    margin: 0 auto 20px;
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: bold;
+  }
+
+  .controls__row {
+    margin: 15px 0;
+  }
+
+  .controls__row label {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+
+  .controls__row input[type="checkbox"] {
+    margin-right: 10px;
+    transform: scale(1.2);
+  }
+
+  .controls__row select {
+    padding: 8px 12px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    background: white;
+  }
+
+  .controls__row select:focus {
+    border-color: var(--color-yellow);
+    outline: none;
+  }
+
+  .clear-btn {
+    margin-top: 20px;
+    padding: 10px 14px;
+    background-color: oklch(65.6% 0.241 354.308);
+    color: rgb(255, 255, 255);
+    border: 0 solid;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.25s ease-in 0s;
+  }
+
+  .clear-btn:hover {
+    background-color: oklch(0.599 0.24 356.935);
+  }
+
+  .results-info {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+    padding: 10px;
+    background: oklch(0.962 0.044 156.742996);
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    color: oklch(0.527 0.154 150.069);
+  }
+</style>
+
 <body>
-  <header class="header container">
-    <h1 class="heading logo">Бангкок Экспресс</h1>
-    <h3 class="subheading">Отличная еда・Бесплатная доставка・Лучшие цены</h3>
+<div class="container controls">
+  <div class="controls__row">
+    <h3 class="controls__title">🍽&nbsp;Фильтры для блюд</h3>
+  </div>
 
-    <div data-cart-icon-holder>
-      <!--СЮДА ВСТАВЛЯЕТСЯ CART-ICON-->
-    </div>
-  </header>
+  <div class="controls__row">
+    <label for="category-filter">📂&nbsp;Категория:</label>
+      <select name="category" id="category-filter">
+        <option value="">Все категории</option>
+        <option value="salads">🥗&nbsp;Салаты</option>
+        <option value="soups">🍜&nbsp;Супы</option>
+        <option value="chicken-dishes">🍗&nbsp;Блюда из курицы</option>
+        <option value="beef-dishes">🥩&nbsp;Блюда из говядины</option>
+        <option value="seafood-dishes">🦐&nbsp;Морепродукты</option>
+        <option value="vegetable-dishes">🥬&nbsp;Овощные блюда</option>
+        <option value="bits-and-bites">🥟&nbsp;Закуски</option>
+        <option value="on-the-side">🍚&nbsp;Гарниры</option>
+      </select>
+  </div>
 
-  <main>
-    <div class="container" style="padding-bottom: 40px;">
-      <h2 class="section-heading">Наше Меню</h2>
+  <div class="controls__row">
+    <label for="spiciness-filter">🌶️&nbsp;Максимальная острота:</label>
+      <select name="spiciness" id="spiciness-filter">
+        <option value="">Любая острота</option>
+        <option value="0">0 — Совсем не острое</option>
+        <option value="1">1 — Слегка острое</option>
+        <option value="2">2 — Умеренно острое</option>
+        <option value="3">3 — Острое</option>
+        <option value="4">4 — Очень острое</option>
+      </select>
+  </div>
 
-      <button class="button" data-add-product-id="laab-kai-chicken-salad">Добавить товар 1</button>
-      <button class="button" data-add-product-id="som-tam-papaya-salad">Добавить товар 2</button>
-      <button class="button" data-add-product-id="tom-yam-kai">Добавить товар 3</button>
-    </div>
+  <div class="controls__row">
+    <label for="vegetarian-only">
+      <input type="checkbox" id="vegetarian-only">
+      🌱&nbsp;Только вегетарианские блюда
+    </label>
+  </div>
 
-  </main>
+  <div class="controls__row">
+    <label for="exclude-nuts">
+      <input type="checkbox" id="exclude-nuts">
+      🚫🥜&nbsp;Исключить блюда с орехами
+    </label>
+  </div>
 
-  <script type="module">
-    import Cart from './index.js';
-    import CartIcon from '../1-task/index.js';
+  <button type="button" class="clear-btn" id="clear-all">Очистить все фильтры</button>
 
-    let cartIcon = new CartIcon();
-    let cartIconHolder = document.querySelector('[data-cart-icon-holder]');
-    cartIconHolder.append(cartIcon.elem);
+  <div class="results-info" id="results-info">
+    <div>Показано блюд: <span id="visible-count">0</span></div>
+    <div>Всего блюд: <span id="total-count">0</span></div>
+  </div>
+</div>
 
-    let products = [
-      {
-        "name": "Laab kai chicken salad",
-        "price": 10,
-        "category": "salads",
-        "image": "laab_kai_chicken_salad.png",
-        "id": "laab-kai-chicken-salad",
-        "spiciness": 2
-      },
-      {
-        "name": "Som tam papaya salad",
-        "price": 9.5,
-        "category": "salads",
-        "image": "som_tam_papaya_salad.png",
-        "id": "som-tam-papaya-salad",
-        "spiciness": 0
-      },
-      {
-        "name": "Tom yam kai",
-        "price": 7,
-        "category": "soups",
-        "image": "tom_yam.png",
-        "id": "tom-yam-kai",
-        "spiciness": 3
-      },
-    ]
+<div class="container" id="container"></div>
 
-    let cart = new Cart(cartIcon);
+<script type="module">
+  import ProductGrid from './productGrid.js';
+  import products from './products.js';
 
-    document.addEventListener('click', (event) => {
-      let button = event.target.closest('.button');
-      if (!button) {
-        return;
-      }
+  // Создаем grid блюд
+  const productGrid = new ProductGrid(products);
+  container.append(productGrid.elem);
 
-      let addProductId = button.dataset.addProductId;
-      let productToAdd = products.find((product) => product.id === addProductId);
+  // Получаем элементы управления
+  const categoryFilter = document.getElementById('category-filter');
+  const spicinessFilter = document.getElementById('spiciness-filter');
+  const vegetarianOnlyCheckbox = document.getElementById('vegetarian-only');
+  const excludeNutsCheckbox = document.getElementById('exclude-nuts');
+  const clearAllButton = document.getElementById('clear-all');
+  const visibleCount = document.getElementById('visible-count');
+  const totalCount = document.getElementById('total-count');
 
-      if (productToAdd) {
-        cart.addProduct(productToAdd);
-      }
-    })
-  </script>
+  // Устанавливаем общее количество блюд
+  totalCount.textContent = products.length;
+
+  // Функция обновления счетчика результатов
+  function updateResultsInfo() {
+    const count = productGrid.getVisibleProductsCount();
+    visibleCount.textContent = String(count);
+
+    // Меняем цвет в зависимости от количества блюд
+    const resultsInfo = document.getElementById('results-info');
+    if (count === 0) {
+      resultsInfo.style.background = 'oklch(0.936 0.032 17.716999)';
+      resultsInfo.style.color = 'oklch(0.505 0.213 27.518)';
+    } else if (count === products.length) {
+      resultsInfo.style.background = 'oklch(0.962 0.044 156.742996)';
+      resultsInfo.style.color = 'oklch(0.527 0.154 150.069)';
+    } else {
+      resultsInfo.style.background = 'oklch(0.973 0.071 103.193001)';
+      resultsInfo.style.color = 'oklch(0.476 0.114 61.907001)';
+    }
+  }
+
+  // Обработчик фильтра по категории
+  categoryFilter.addEventListener('change', (event) => {
+    const category = event.target.value || undefined;
+    productGrid.updateFilter({category});
+    updateResultsInfo();
+    console.log('Фильтр категории:', category || 'все');
+  });
+
+  // Обработчик фильтра по остроте
+  spicinessFilter.addEventListener('change', (event) => {
+    const maxSpiciness = event.target.value ? parseInt(event.target.value) : undefined;
+    productGrid.updateFilter({maxSpiciness});
+    updateResultsInfo();
+    console.log('Максимальная острота:', maxSpiciness ?? 'любая');
+  });
+
+  // Обработчик чекбокса "только вегетарианские"
+  vegetarianOnlyCheckbox.addEventListener('change', (event) => {
+    const onlyVegetarian = event.target.checked || undefined;
+    productGrid.updateFilter({onlyVegetarian});
+    updateResultsInfo();
+    console.log('Только вегетарианские:', onlyVegetarian || false);
+  });
+
+  // Обработчик чекбокса "исключить орехи"
+  excludeNutsCheckbox.addEventListener('change', (event) => {
+    const excludeNuts = event.target.checked || undefined;
+    productGrid.updateFilter({excludeNuts});
+    updateResultsInfo();
+    console.log('Исключить орехи:', excludeNuts || false);
+  });
+
+  // Обработчик кнопки "Очистить все"
+  clearAllButton.addEventListener('click', () => {
+    // Сбрасываем все контролы
+    categoryFilter.value = '';
+    spicinessFilter.value = '';
+    vegetarianOnlyCheckbox.checked = false;
+    excludeNutsCheckbox.checked = false;
+
+    // Очищаем фильтры в ProductGrid
+    productGrid.clearAllFilters();
+    updateResultsInfo();
+    console.log('Все фильтры очищены');
+  });
+
+  // Инициализируем счетчик результатов
+  updateResultsInfo();
+</script>
 </body>
 
 </html>

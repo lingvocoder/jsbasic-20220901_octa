@@ -2,6 +2,7 @@
 @import "./button.css";
 
 :root {
+  --text-color: #313131;
   --color-white: #fff;
   --color-black: #1f1e19;
   --color-yellow: #ecd41a;
@@ -14,7 +15,7 @@
   --color-body: var(--color-white);
   --carousel-height: 313px;
   --card-height: 320px;
-  --font-primary: "Lato";
+  --font-primary: Helvetica, sans-serif;
   --font-secondary: "Sriracha";
 }
 

@@ -1,14 +1,12 @@
-import createElement from "../../assets/lib/create-element.js";
+import {createElement} from "../../assets/lib/create-element.js";
 import StepSlider from "./slider_drag.js";
-import {expect, it, jest} from '@jest/globals';
-import * as events from "node:events";
 
 describe('Класс, описывающий компонент "Пошаговый слайдер"', () => {
-  const SLIDER_WIDTH = 330;
   const SLIDER_LEFT = 100;
+  const SLIDER_WIDTH = 330;
+  let config;
   let stepSlider;
   let sliderContainer;
-  let config;
 
   beforeEach(() => {
     //Создание конфигурации слайдера
@@ -94,7 +92,7 @@ describe('Класс, описывающий компонент "Пошагов�
       mockSliderDimensions(slider, SLIDER_WIDTH);
 
       const clickEvent = new MouseEvent('click', {
-        clientX: 110,
+        clientX: SLIDER_LEFT,
         bubbles: true,
       });
 
@@ -168,7 +166,7 @@ describe('Класс, описывающий компонент "Пошагов�
 
   });
 
-  describe('При Drag-and-Drop происходит замена текущего значения на значение, указанное в атрибуте активного шага', () => {
+  describe('Обработка событий pointerdown, pointermove, pointerup, генерируемых при Drag-and-Drop', () => {
     let thumb;
     let progress;
     let slider;
@@ -277,8 +275,8 @@ describe('Класс, описывающий компонент "Пошагов�
       ];
 
       testCases.forEach(({clientX, expectedValue, description}) => {
-        const mockEvent = {clientX};
-        const result = stepSlider.calculateDragLeftOffset(mockEvent);
+        const currX = {clientX};
+        const result = stepSlider.calculateDragLeftOffset(currX);
 
         expect(result.value).toBe(expectedValue);
       });

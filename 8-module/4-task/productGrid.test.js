@@ -1,7 +1,7 @@
-import ProductsGrid from './index.js';
+import ProductsGrid from './productGrid.js';
 import products from './products.js';
 
-describe('8-module-2-2-task', () => {
+describe('Класс, описывающий компонент "Список блюд"', () => {
   let productsGrid;
 
   beforeEach(() => {
@@ -14,23 +14,34 @@ describe('8-module-2-2-task', () => {
     productsGrid.elem.remove();
   });
 
-  describe('отрисовка', () => {
-    it('после создания должны быть показаны карточки для всех товаров', () => {
-      let productCardsElements = productsGrid.elem.querySelectorAll('.card');
+  describe('Отрисовка вёрстки компонента после создания экземпляра класса', () => {
+    it('Добавляет корневой элемент в свойство elem', ()=> {
+      expect(productsGrid.elem).not.toBeNull();
+      expect(productsGrid.elem.classList.contains('products-grid')).toBe(true);
+    })
 
-      expect(productCardsElements.length).toBe(products.length);
+    it('Элемент productsGrid отображает корректный HTML', () => {
+      let productsGridInner = productsGrid.elem.querySelector('.products-grid__inner');
+
+      expect(productsGridInner).not.toBeNull();
+    });
+
+    it('Отрисовывает карточки для всех блюд', () => {
+      let productCards = productsGrid.elem.querySelectorAll('.card');
+
+      expect(productCards.length).toBe(products.length);
     });
   });
 
-  describe('метод updateFilter(filters)', () => {
-    it('товары должны быть отфильтрованы по полю noNuts', () => {
-      productsGrid.updateFilter({ noNuts: true });
+  describe('Метод updateFilter(newFilters)', () => {
+    it('Фильтрует блюда по параметру excludeNuts', () => {
+      productsGrid.updateFilter({ excludeNuts: true });
 
       let filteredProductCardsNames = [...productsGrid.elem.querySelectorAll('.card')]
-        .map((productCard) => {
-          let cardTitleElement = productCard.querySelector('.card__title');
+        .map((product) => {
+          let cardTitle = product.querySelector('.card__title');
 
-          return cardTitleElement && cardTitleElement.textContent.trim();
+          return cardTitle && cardTitle.textContent.trim();
         });
 
       let expectedProductNames = [
@@ -47,14 +58,14 @@ describe('8-module-2-2-task', () => {
       expect(filteredProductCardsNames).toEqual(expectedProductNames);
     });
 
-    it('товары должны быть отфильтрованы по полю vegeterianOnly', () => {
-      productsGrid.updateFilter({ vegeterianOnly: true });
+    it('Фильтрует блюда по параметру onlyVegetarian', () => {
+      productsGrid.updateFilter({ onlyVegetarian: true });
 
       let filteredProductCardsNames = [...productsGrid.elem.querySelectorAll('.card')]
-        .map((productCard) => {
-          let cardTitleElement = productCard.querySelector('.card__title');
+        .map((product) => {
+          let cardTitle = product.querySelector('.card__title');
 
-          return cardTitleElement && cardTitleElement.textContent.trim();
+          return cardTitle && cardTitle.textContent.trim();
         });
 
       let expectedProductNames = ["Green curry veggies", "Tofu cashew"];
@@ -62,14 +73,14 @@ describe('8-module-2-2-task', () => {
       expect(filteredProductCardsNames).toEqual(expectedProductNames);
     });
 
-    it('товары должны быть отфильтрованы по полю maxSpiciness', () => {
+    it('Фильтрует блюда по параметру maxSpiciness', () => {
       productsGrid.updateFilter({ maxSpiciness: 1 });
 
       let filteredProductCardsNames = [...productsGrid.elem.querySelectorAll('.card')]
-        .map((productCard) => {
-          let cardTitleElement = productCard.querySelector('.card__title');
+        .map((product) => {
+          let cardTitle = product.querySelector('.card__title');
 
-          return cardTitleElement && cardTitleElement.textContent.trim();
+          return cardTitle && cardTitle.textContent.trim();
         });
 
       let expectedProductNames = [
@@ -83,14 +94,14 @@ describe('8-module-2-2-task', () => {
       expect(filteredProductCardsNames).toEqual(expectedProductNames);
     });
 
-    it('товары должны быть отфильтрованы по полю category', () => {
+    it('Фильтрует блюда по параметру category', () => {
       productsGrid.updateFilter({ category: 'seafood-dishes' });
 
       let filteredProductCardsNames = [...productsGrid.elem.querySelectorAll('.card')]
-        .map((productCard) => {
-          let cardTitleElement = productCard.querySelector('.card__title');
+        .map((product) => {
+          let cardTitle = product.querySelector('.card__title');
 
-          return cardTitleElement && cardTitleElement.textContent.trim();
+          return cardTitle && cardTitle.textContent.trim();
         });
 
       let expectedProductNames = ["Seafood chu chee", "Penang shrimp"];
