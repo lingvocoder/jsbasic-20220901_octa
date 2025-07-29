@@ -109,7 +109,7 @@ describe('Класс, описывающий компонент "Список б
       expect(filteredProductCardsNames).toEqual(expectedProductNames);
     });
 
-    it('должен объединять объекты filters между разными вызовами', () => {
+    it('Объединяет объекты newFilters между разными вызовами', () => {
       productsGrid.updateFilter({ maxSpiciness: 2 });
       productsGrid.updateFilter({ category: 'seafood-dishes' });
 
