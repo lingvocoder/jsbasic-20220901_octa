@@ -30,6 +30,7 @@ export default class CartIcon {
     document.addEventListener('scroll', () => this.updatePosition());
     window.addEventListener('resize', () => this.updatePosition());
   }
+
   getClientWidth() {
     return document.documentElement.clientWidth;
   }

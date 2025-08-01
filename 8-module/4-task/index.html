@@ -20,9 +20,10 @@
   .controls {
     padding: 20px;
     margin-bottom: 20px;
-    border: 5px solid var(--color-yellow);
-    background: #fff;
+    border: 2px solid var(--color-black-light);
+    background: var(--color-black-dark);
     border-radius: 8px;
+    color: var(--color-grey);
   }
 
   .controls__title {
@@ -100,29 +101,29 @@
 
   <div class="controls__row">
     <label for="category-filter">📂&nbsp;Категория:</label>
-      <select name="category" id="category-filter">
-        <option value="">Все категории</option>
-        <option value="salads">🥗&nbsp;Салаты</option>
-        <option value="soups">🍜&nbsp;Супы</option>
-        <option value="chicken-dishes">🍗&nbsp;Блюда из курицы</option>
-        <option value="beef-dishes">🥩&nbsp;Блюда из говядины</option>
-        <option value="seafood-dishes">🦐&nbsp;Морепродукты</option>
-        <option value="vegetable-dishes">🥬&nbsp;Овощные блюда</option>
-        <option value="bits-and-bites">🥟&nbsp;Закуски</option>
-        <option value="on-the-side">🍚&nbsp;Гарниры</option>
-      </select>
+    <select name="category" id="category-filter">
+      <option value="">Все категории</option>
+      <option value="salads">🥗&nbsp;Салаты</option>
+      <option value="soups">🍜&nbsp;Супы</option>
+      <option value="chicken-dishes">🍗&nbsp;Блюда из курицы</option>
+      <option value="beef-dishes">🥩&nbsp;Блюда из говядины</option>
+      <option value="seafood-dishes">🦐&nbsp;Морепродукты</option>
+      <option value="vegetable-dishes">🥬&nbsp;Овощные блюда</option>
+      <option value="bits-and-bites">🥟&nbsp;Закуски</option>
+      <option value="on-the-side">🍚&nbsp;Гарниры</option>
+    </select>
   </div>
 
   <div class="controls__row">
     <label for="spiciness-filter">🌶️&nbsp;Максимальная острота:</label>
-      <select name="spiciness" id="spiciness-filter">
-        <option value="">Любая острота</option>
-        <option value="0">0 — Совсем не острое</option>
-        <option value="1">1 — Слегка острое</option>
-        <option value="2">2 — Умеренно острое</option>
-        <option value="3">3 — Острое</option>
-        <option value="4">4 — Очень острое</option>
-      </select>
+    <select name="spiciness" id="spiciness-filter">
+      <option value="">Любая острота</option>
+      <option value="0">0 — Совсем не острое</option>
+      <option value="1">1 — Слегка острое</option>
+      <option value="2">2 — Умеренно острое</option>
+      <option value="3">3 — Острое</option>
+      <option value="4">4 — Очень острое</option>
+    </select>
   </div>
 
   <div class="controls__row">
