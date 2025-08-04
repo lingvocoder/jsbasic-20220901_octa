@@ -4,11 +4,11 @@ import slides from '../../6-module/3-task/slides.js';
 import RibbonMenu from '../../7-module/1-task/ribbonMenu.js';
 import categories from '../../7-module/1-task/categories.js';
 
-import StepSlider from '../../7-module/4-task/slider_drag.js';
-import ProductsGrid from '../../8-module/4-task/productGrid.js';
+import StepSlider from '../../7-module/4-task/slider-drag.js';
+import ProductsGrid from '../../8-module/4-task/product-grid.js';
 
-import {CartIcon} from '../../8-module/1-task/CartIcon.js';
-import Cart from '../../8-module/6-task/index.js';
+import {CartIcon} from '../../8-module/1-task/cart-icon.js';
+import Cart from '../../8-module/6-task/cart.js';
 
 export default class Main {
 

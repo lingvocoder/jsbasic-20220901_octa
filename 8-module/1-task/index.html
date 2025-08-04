@@ -15,7 +15,6 @@
   <header class="header container">
     <h1 class="heading logo">Бангкок Экспресс</h1>
     <h3 class="subheading">Отличная еда・Бесплатная доставка・Лучшие цены</h3>
-
     <div class="cart-icon-holder">
       <!--СЮДА ВСТАВЛЯЕТСЯ корневой элемент из свойства CartIcon.elem-->
     </div>
@@ -24,14 +23,6 @@
   <main>
     <div class="container" style="padding-bottom: 40px;">
       <h2 class="section-heading">Наше Меню</h2>
-
-      <div>
-        <button class="button" data-add-product>Добавить один товар</button>
-      </div>
-
-      <div style="padding-top: 40px;">
-        <button class="button" data-remove-all-products>Удалить все товары</button>
-      </div>
     </div>
 
     <div class="container">
@@ -58,7 +49,7 @@
   </main>
 
   <script type="module">
-    import CartIcon from './CartIcon.js';
+    import CartIcon from './cart-icon.js';
 
     let cartIcon = new CartIcon();
     let cartIconHolder = document.querySelector('.cart-icon-holder');

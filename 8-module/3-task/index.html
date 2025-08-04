@@ -1,90 +1,138 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Бангкок Экспресс: Корзина</title>
 
-  <link rel="stylesheet" href="/assets/styles/common.css" />
-  <link rel="stylesheet" href="./index.css">
-  <link rel="stylesheet" href="../1-task/index.css" />
-  <link rel="stylesheet" href="../../7-module/2-task/index.css" />
-
+  <link rel="stylesheet" href="index.css"/>
+  <link rel="stylesheet" href="../1-task/index.css"/>
+  <link rel="stylesheet" href="../1-task/product-grid.css"/>
+  <link rel="stylesheet" href="../../6-module/2-task/index.css"/>
+  <link rel="stylesheet" href="../../assets/styles/common.css"/>
 </head>
 
 <body>
-  <header class="header container">
-    <h1 class="heading logo">Бангкок Экспресс</h1>
-    <h3 class="subheading">Отличная еда・Бесплатная доставка・Лучшие цены</h3>
+<header class="container header">
+  <h1 class="heading logo">Бангкок Экспресс</h1>
+  <h3 class="subheading">Отличная еда・Бесплатная доставка・Лучшие цены</h3>
+  <div class="cart-icon-holder">
+    <!--СЮДА ВСТАВЛЯЕТСЯ корневой элемент из свойства CartIcon.elem-->
+  </div>
+</header>
 
-    <div data-cart-icon-holder>
-      <!--СЮДА ВСТАВЛЯЕТСЯ CART-ICON-->
+<div class="container">
+  <div class="products-grid">
+    <div class="products-grid__inner">
+      <!-- Тестовые товары для демонстрации -->
+      <div class="card">
+        <div class="card__top">
+          <img src="../../assets/images/products/laab_kai_chicken_salad.png" class="card__image" alt="product">
+          <span class="card__price">€10.00</span>
+        </div>
+        <div class="card__body">
+          <div class="card__title">Куриный салат</div>
+          <!--          <button type="button" class="card__button">-->
+          <!--            <img src="/assets/images/icons/plus-icon.svg" alt="icon">-->
+          <!--          </button>-->
+        </div>
+        <button class="button button_primary"
+                data-product='{
+                "id":"laab-kai-chicken-salad",
+                "name":"Куриный салат",
+                "price":10.00,
+                "image":"laab_kai_chicken_salad.png"
+                }'>
+          Добавить в корзину
+        </button>
+      </div>
+
+      <div class="card">
+        <div class="card__top">
+          <img src="../../assets/images/products/som_tam_papaya_salad.png" class="card__image" alt="product">
+          <span class="card__price">€9.50</span>
+        </div>
+        <div class="card__body">
+          <div class="card__title">Салат из папайи</div>
+          <!--          <button type="button" class="card__button">-->
+          <!--            <img src="/assets/images/icons/plus-icon.svg" alt="icon">-->
+          <!--          </button>-->
+        </div>
+        <button class="button button_primary"
+                data-product='{
+                "id":"Som tam papaya salad",
+                "name":"Салат из папайи",
+                "price":9.50,
+                "image":"som_tam_papaya_salad.png"
+                }'>
+          Добавить в корзину
+        </button>
+      </div>
+
+      <div class="card">
+        <div class="card__top">
+          <img src="../../assets/images/products/tom_yam.png" class="card__image" alt="product">
+          <span class="card__price">€7.00</span>
+        </div>
+        <div class="card__body">
+          <div class="card__title">Суп Том Ям</div>
+          <!--          <button type="button" class="card__button">-->
+          <!--            <img src="/assets/images/icons/plus-icon.svg" alt="icon">-->
+          <!--          </button>-->
+        </div>
+        <button class="button button_primary"
+                data-product='{
+                "id":"tom-yam-kai",
+                "name":"Суп Том Ям",
+                "price":7.00,
+                "image":"tom_yam.png"
+                }'>
+          Добавить в корзину
+        </button>
+      </div>
     </div>
-  </header>
+  </div>
+</div>
+<br>
+<br>
+<div class="container">
+  <button class="button" id="clear-cart">Очистить корзину</button>
+</div>
 
-  <main>
-    <div class="container" style="padding-bottom: 40px;">
-      <h2 class="section-heading">Наше Меню</h2>
 
-      <button class="button" data-add-product-id="laab-kai-chicken-salad">Добавить товар 1</button>
-      <button class="button" data-add-product-id="som-tam-papaya-salad">Добавить товар 2</button>
-      <button class="button" data-add-product-id="tom-yam-kai">Добавить товар 3</button>
-    </div>
+<script type="module">
+  import Cart from './cart.js';
+  import CartIcon from './cart-icon.js';
 
-  </main>
+  // ГЛАВНОЕ ИЗМЕНЕНИЕ: теперь Cart не знает про CartIcon!
+  const cart = new Cart();
+  const cartIcon = new CartIcon(cart); // CartIcon сам подписывается на события
 
-  <script type="module">
-    import Cart from './index.js';
-    import {CartIcon} from '../1-task/CartIcon.js';
+  // Добавляем иконку на страницу
+  let cartIconHolder = document.querySelector('.cart-icon-holder');
+  let container = document.querySelector('.container');
+  cartIconHolder.append(cartIcon.elem);
 
-    let cartIcon = new CartIcon();
-    let cartIconHolder = document.querySelector('[data-cart-icon-holder]');
-    cartIconHolder.append(cartIcon.elem);
+  // Демонстрация работы событий
+  document.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-product]');
+    if (!button) {
+      return;
+    }
 
-    let products = [
-      {
-        "name": "Laab kai chicken salad",
-        "price": 10,
-        "category": "salads",
-        "image": "laab_kai_chicken_salad.png",
-        "id": "laab-kai-chicken-salad",
-        "spiciness": 2
-      },
-      {
-        "name": "Som tam papaya salad",
-        "price": 9.5,
-        "category": "salads",
-        "image": "som_tam_papaya_salad.png",
-        "id": "som-tam-papaya-salad",
-        "spiciness": 0
-      },
-      {
-        "name": "Tom yam kai",
-        "price": 7,
-        "category": "soups",
-        "image": "tom_yam.png",
-        "id": "tom-yam-kai",
-        "spiciness": 3
-      },
-    ]
+    const product = JSON.parse(button.dataset.product);
+    cart.addProduct(product);
 
-    let cart = new Cart(cartIcon);
+    console.log('Товар добавлен:', product.name);
+    console.log('Всего в корзине:', cart.getTotalCount());
+  });
 
-    document.addEventListener('click', (event) => {
-      let button = event.target.closest('.button');
-      if (!button) {
-        return;
-      }
-
-      let addProductId = button.dataset.addProductId;
-      let productToAdd = products.find((product) => product.id === addProductId);
-
-      if (productToAdd) {
-        cart.addProduct(productToAdd);
-      }
-    })
-  </script>
+  // Очистка корзины
+  document.getElementById('clear-cart').onclick = () => {
+    cart.cartItems.length = 0;
+    cart.onProductUpdate();
+  };
+</script>
 </body>
 
 </html>

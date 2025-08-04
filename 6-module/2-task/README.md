@@ -41,7 +41,7 @@ let productCard = new ProductCard(product);
 
 **Важно!**
 
-- Для создания DOM-элементов рекомендуем использовать хэлпер `createElement`, который импортируется в первой строке `CartIcon.js`: `import createElement from '../../assets/lib/create-element.js';`. Он позволяет создать готовый элемент из вашей вёрстки
+- Для создания DOM-элементов рекомендуем использовать хэлпер `createElement`, который импортируется в первой строке `cart-icon.js`: `import createElement from '../../assets/lib/create-element.js';`. Он позволяет создать готовый элемент из вашей вёрстки
 
 Пример:
 

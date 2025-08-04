@@ -1,5 +1,2 @@
-@import './cart-counter.css';
-@import './cart-form.css';
-@import './cart-product.css';
-@import './cart-buttons.css';
+@import '../4-task/cart-counter.css';
 @import './mobile.css';

@@ -1,5 +1,12 @@
+.cart-icon-holder {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+
 .cart-icon {
-  display: none;
+  display: block;
   position: absolute;
   right: 0;
   top: 50px;
@@ -8,12 +15,6 @@
   text-decoration: none;
   cursor: pointer;
   transition: all 0.5s ease;
-}
-
-.cart-icon.shake {
-  animation: shakeSideways 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-  backface-visibility: hidden;
-  transform-origin: top right;
 }
 
 .cart-icon__inner {
@@ -27,10 +28,6 @@
   flex-direction: column;
   align-items: center;
   padding-right: 3px;
-}
-
-.cart-icon_visible {
-  display: block;
 }
 
 .cart-icon__count {
@@ -49,7 +46,13 @@
   margin: 0;
 }
 
-@keyframes shakeSideways {
+.cart-icon.shake {
+  animation: cartShake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  backface-visibility: hidden;
+  transform-origin: top right;
+}
+
+@keyframes cartShake {
   0% {
     transform: rotate(0);
   }

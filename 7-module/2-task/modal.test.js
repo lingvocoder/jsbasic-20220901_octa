@@ -1,4 +1,4 @@
-import Modal from "./modal.js";
+import Modal from "../../8-module/4-task/modal.js";
 
 describe('Класс, описывающий компонент "Модальное окно"', () => {
   let modal;
