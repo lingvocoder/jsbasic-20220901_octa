@@ -25,3 +25,8 @@
 
 # Важно!
 
+"scripts": {
+"test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
+"lint": "eslint \"./*-module/**/*.js\"",
+"lint:fix": "eslint --fix \"./*-module/**/*.js\""
+},

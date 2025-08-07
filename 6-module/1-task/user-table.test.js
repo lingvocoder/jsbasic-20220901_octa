@@ -1,4 +1,4 @@
-import UserTable from "./userTable.js";
+import UserTable from "./user-table.js";
 
 describe('Класс, который создаёт таблицу с переданными данными', () => {
   let userTable;

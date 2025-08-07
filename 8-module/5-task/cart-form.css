@@ -49,7 +49,7 @@
   color: var(--color-grey);
 }
 
-@media all and (max-width: 767px) {
+@media (max-width: 767px) {
   .cart-form {
     background-color: transparent;
     padding: 24px;

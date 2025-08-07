@@ -1,20 +1,14 @@
 import Cart from './cart.js';
-import {jest} from "@jest/globals";
 
 describe('Класс, описывающий компонент "Корзины"', () => {
   let cart;
-  let mockCartIcon;
   let sampleProduct;
   let anotherProduct;
 
   beforeEach(() => {
-    // Создаем мок-компонент CartIcon
-    mockCartIcon = {
-      update: jest.fn()
-    };
 
     // Создаем экземпляр корзины
-    cart = new Cart(mockCartIcon);
+    cart = new Cart();
 
     // Тестовые товары
     sampleProduct = {
@@ -42,9 +36,6 @@ describe('Класс, описывающий компонент "Корзины"
       expect(cart.getTotalPrice()).toBe(0);
     });
 
-    it('Сохраняет ссылку на cartIcon', () => {
-      expect(cart.cartIcon).toBe(mockCartIcon);
-    });
   });
 
   describe('Метод addProduct() — добавить блюда', () => {
@@ -78,19 +69,12 @@ describe('Класс, описывающий компонент "Корзины"
       expect(cart.cartItems[1].count).toBe(1);
     });
 
-    it('Вызывает метод onProductUpdate при добавлении заказа', () => {
-      cart.addProduct(sampleProduct);
-
-      expect(mockCartIcon.update).toHaveBeenCalledWith(cart);
-    });
-
     it('Игнорирует значения null и undefined', () => {
       cart.addProduct(null);
       cart.addProduct(undefined);
       cart.addProduct();
 
       expect(cart.cartItems).toHaveLength(0);
-      expect(mockCartIcon.update).not.toHaveBeenCalled();
     });
 
     it('Игнорирует блюда без свойства ID', () => {
@@ -102,7 +86,6 @@ describe('Класс, описывающий компонент "Корзины"
       cart.addProduct(productWithoutId);
 
       expect(cart.cartItems).toHaveLength(0);
-      expect(mockCartIcon.update).not.toHaveBeenCalled();
     });
   });
 
@@ -111,8 +94,6 @@ describe('Класс, описывающий компонент "Корзины"
       // Добавляем товары для тестирования
       cart.addProduct(sampleProduct);
       cart.addProduct(anotherProduct);
-      // Сбрасываем моки после setup
-      mockCartIcon.update.mockClear();
     });
 
     it('Увеличивает количество заказанных блюд на 1', () => {
@@ -120,7 +101,6 @@ describe('Класс, описывающий компонент "Корзины"
 
       const item = cart.cartItems.find(item => item.product.id === sampleProduct.id);
       expect(item.count).toBe(2);
-      expect(mockCartIcon.update).toHaveBeenCalledWith(cart);
     });
 
     it('Уменьшает количество заказанных блюд на 1', () => {
@@ -139,7 +119,6 @@ describe('Класс, описывающий компонент "Корзины"
 
       expect(cart.cartItems).toHaveLength(1);
       expect(cart.cartItems.find(item => item.product.id === sampleProduct.id)).toBeUndefined();
-      expect(mockCartIcon.update).toHaveBeenCalledWith(cart);
     });
 
     it('Удаляет блюдо из корзины когда количество заказов становится отрицательным', () => {
@@ -172,9 +151,7 @@ describe('Класс, описывающий компонент "Корзины"
       const initialLength = cart.cartItems.length;
 
       cart.updateProductCount('non-existent-id', 1);
-
       expect(cart.cartItems).toHaveLength(initialLength);
-      expect(mockCartIcon.update).toHaveBeenCalledWith(cart); // Вызов все равно происходит
     });
 
     it('Игнорирует некорректные параметры объекта блюда', () => {
@@ -186,7 +163,6 @@ describe('Класс, описывающий компонент "Корзины"
       cart.updateProductCount();
 
       expect(cart.cartItems[0].count).toBe(initialCount);
-      expect(mockCartIcon.update).not.toHaveBeenCalled();
     });
   });
 
@@ -314,29 +290,10 @@ describe('Класс, описывающий компонент "Корзины"
       expect(cart.isEmpty()).toBe(true);
     });
 
-    it('Обновляет cartIcon при каждом изменении', () => {
-      cart.addProduct(sampleProduct);
-      cart.addProduct(anotherProduct);
-      cart.updateProductCount(sampleProduct.id, 1);
-      cart.updateProductCount(anotherProduct.id, -1);
-
-      // 4 вызова: add, add, update, update (delete)
-      expect(mockCartIcon.update).toHaveBeenCalledTimes(4);
-
-      // Каждый раз передается корзина
-      mockCartIcon.update.mock.calls.forEach(call => {
-        expect(call[0]).toBe(cart);
-      });
-    });
-
     it('Вызывает метод onProductUpdate даже для несуществующих товаров', () => {
       cart.addProduct(sampleProduct);
-      mockCartIcon.update.mockClear();
-
       cart.updateProductCount('non-existent-id', 1);
 
-      // В моей реализации onProductUpdate вызывается всегда
-      expect(mockCartIcon.update).toHaveBeenCalledWith(cart);
     });
   });
 

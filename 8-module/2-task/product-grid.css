@@ -8,7 +8,7 @@
   display: none;
 }
 
-@media all and (max-width: 767px) {
+@media (max-width: 767px) {
   .products-grid .products-grid__inner {
     display: block;
     padding: 16px;

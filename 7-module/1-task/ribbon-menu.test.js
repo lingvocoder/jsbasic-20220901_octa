@@ -1,5 +1,5 @@
 import categories from './categories.js';
-import RibbonMenu from "./ribbonMenu.js";
+import RibbonMenu from "./ribbon-menu.js";
 
 describe('Класс, описывающий компонент "Лента-Меню"', () => {
   let sut;
@@ -39,7 +39,7 @@ describe('Класс, описывающий компонент "Лента-Ме
   });
 
   describe('Прокрутка ленты меню', () => {
-    let scrollBySpy = jest.fn();
+    let scrollBySpy = vi  .fn();
 
     beforeEach(() => {
       ribbonInner.scrollBy = scrollBySpy;

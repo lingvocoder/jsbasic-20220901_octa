@@ -1,16 +1,17 @@
 export default class Cart {
   cartItems = [];
 
-  constructor() {}
+  constructor() {
+  }
 
   addProduct(product) {
+    const availableItems = this.cartItems;
     if (!product || !product.id) return;
-
     let isFoundItem = -1;
 
     // Проходим по всему массиву, ищем товар
-    for (let i = 0; i < this.cartItems.length; i++) {
-      const currItem = this.cartItems[i];
+    for (let i = 0; i < availableItems.length; i++) {
+      const currItem = availableItems[i];
       if (currItem.product.id === product.id && isFoundItem === -1) {
         isFoundItem = i;
         currItem.count++; // Увеличиваем количество найденного товара
@@ -27,7 +28,9 @@ export default class Cart {
   }
 
   updateProductCount(productId, amount) {
-    if (!productId || !amount) return;
+    if (!productId || !amount) {
+      return;
+    }
 
     let isFoundItem = -1;
 

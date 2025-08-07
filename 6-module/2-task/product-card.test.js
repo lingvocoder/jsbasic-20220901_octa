@@ -1,4 +1,4 @@
-import ProductCard from './ProductCard.js';
+import ProductCard from './product-card.js';
 
 describe('Класс, описывающий компонент "Карточка товара"', () => {
   let item;

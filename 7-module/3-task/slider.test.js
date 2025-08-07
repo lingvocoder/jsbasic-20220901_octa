@@ -70,7 +70,7 @@ describe('Класс, описывающий компонент "Пошагов�
 
     afterEach(() => {
       // Очищаем моки
-      jest.restoreAllMocks();
+      vi.restoreAllMocks();
     });
 
     function mockSliderDimensions(slider, SLIDER_WIDTH) {
@@ -80,7 +80,7 @@ describe('Класс, описывающий компонент "Пошагов�
         writable: true
       });
 
-      jest.spyOn(slider, 'getBoundingClientRect').mockReturnValue({
+      vi.spyOn(slider, 'getBoundingClientRect').mockReturnValue({
         left: SLIDER_LEFT,
         right: SLIDER_LEFT + SLIDER_WIDTH,
         width: SLIDER_WIDTH,

@@ -12,7 +12,7 @@
  *      }
  *
  */
-class UserTable {
+export default class UserTable {
   elem = null;
 
   constructor(rows = []) {
@@ -79,5 +79,3 @@ class UserTable {
     row.remove();
   };
 }
-
-export default UserTable;

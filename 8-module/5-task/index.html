@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Бангкок Экспресс: Корзина</title>
+  <meta charset="UTF-8">
+  <title>Title</title>
 
-  <link rel="stylesheet" href="cart-product.css">
-  <link rel="stylesheet" href="cart-counter.css">
+  <link rel="stylesheet" href="cart-form.css"/>
+  <link rel="stylesheet" href="cart-buttons.css"/>
+  <link rel="stylesheet" href="../4-task/cart-product.css">
+  <link rel="stylesheet" href="../4-task/cart-counter.css">
   <link rel="stylesheet" href="../1-task/index.css"/>
   <link rel="stylesheet" href="../1-task/product-grid.css"/>
   <link rel="stylesheet" href="../../7-module/2-task/index.css"/>
   <link rel="stylesheet" href="../../6-module/2-task/index.css"/>
   <link rel="stylesheet" href="../../assets/styles/common.css"/>
 </head>
-
 <body>
+
 <header class="header container">
   <h1 class="heading logo">Бангкок Экспресс</h1>
   <h3 class="subheading">Отличная еда・Бесплатная доставка・Лучшие цены</h3>
@@ -22,8 +23,36 @@
     <!--СЮДА ВСТАВЛЯЕТСЯ корневой элемент из свойства CartIcon.elem-->
   </div>
 </header>
-
 <div class="container">
+  <h2>Инструкции:</h2>
+
+  <ul role="list" style="margin-top: 20px; margin-bottom: 20px; max-width: 988px; color: #ffffff;">
+    <li>
+      <mark style="list-style-type: disc"></mark>
+      <strong >Добавьте товары в корзину</strong>
+    </li>
+    <li>
+      <mark style="list-style-type: disc"></mark>
+      <strong style="font-weight: bold">Откройте модальное окно корзины</strong>
+    </li>
+    <li>
+      <mark style="list-style-type: disc"></mark>
+      <strong style="font-weight: bold">Заполните форму доставки (поля уже заполнены для демонстрации)</strong>
+    </li>
+    <li>
+      <mark style="list-style-type: disc"></mark>
+      <strong style="font-weight: bold">Нажмите кнопку "order" для отправки заказа</strong>
+    </li>
+    <li>
+      <mark style="list-style-type: disc"></mark>
+      <strong style="font-weight: bold">Дождитесь сообщения об успешном заказе</strong>
+    </li>
+    <li>
+      <mark style="list-style-type: disc"></mark>
+      <strong style="font-weight: bold">Корзина автоматически очистится</strong>
+    </li>
+  </ul>
+
   <div class="products-grid">
     <div class="products-grid__inner">
       <!-- Тестовые товары для демонстрации -->
@@ -34,9 +63,9 @@
         </div>
         <div class="card__body">
           <div class="card__title">Куриный салат</div>
-          <!--          <button type="button" class="card__button">-->
-          <!--            <img src="/assets/images/icons/plus-icon.svg" alt="icon">-->
-          <!--          </button>-->
+          <button type="button" class="card__button">
+            <img src="/assets/images/icons/plus-icon.svg" alt="icon">
+          </button>
         </div>
         <button class="button button_primary"
                 data-product='{
@@ -56,9 +85,9 @@
         </div>
         <div class="card__body">
           <div class="card__title">Салат из папайи</div>
-          <!--          <button type="button" class="card__button">-->
-          <!--            <img src="/assets/images/icons/plus-icon.svg" alt="icon">-->
-          <!--          </button>-->
+          <button type="button" class="card__button">
+            <img src="/assets/images/icons/plus-icon.svg" alt="icon">
+          </button>
         </div>
         <button class="button button_primary"
                 data-product='{
@@ -78,9 +107,9 @@
         </div>
         <div class="card__body">
           <div class="card__title">Суп Том Ям</div>
-          <!--          <button type="button" class="card__button">-->
-          <!--            <img src="/assets/images/icons/plus-icon.svg" alt="icon">-->
-          <!--          </button>-->
+          <button type="button" class="card__button">
+            <img src="/assets/images/icons/plus-icon.svg" alt="icon">
+          </button>
         </div>
         <button class="button button_primary"
                 data-product='{
@@ -95,29 +124,27 @@
     </div>
   </div>
 </div>
-<br>
-<br>
-<div class="container">
-  <button class="button" id="clear-cart">Очистить корзину</button>
-</div>
 
+<!-- Подключаем скрипты -->
 <script type="module">
   import Cart from '../3-task/cart.js';
   import CartIcon from './cart-icon.js';
 
-  // ГЛАВНОЕ ИЗМЕНЕНИЕ: теперь Cart не знает про CartIcon!
+  // Создаем корзину и иконку
   const cart = new Cart();
-  const cartIcon = new CartIcon(cart); // CartIcon сам подписывается на события
+  const cartIcon = new CartIcon(cart);
 
   // Добавляем иконку на страницу
   let cartIconHolder = document.querySelector('.cart-icon-holder');
   let container = document.querySelector('.container');
   cartIconHolder.append(cartIcon.elem);
 
-  // Демонстрация работы событий
+  // Обработчик добавления товаров в корзину
   document.addEventListener('click', (event) => {
     const button = event.target.closest('[data-product]');
-    if (!button) return;
+    if (!button) {
+      return;
+    }
 
     const product = JSON.parse(button.dataset.product);
     cart.addProduct(product);
@@ -125,12 +152,6 @@
     console.log('Товар добавлен:', product.name);
     console.log('Всего в корзине:', cart.getTotalCount());
   });
-
-  // Очистка корзины
-  document.getElementById('clear-cart').onclick = () => {
-    cart.cartItems.length = 0;
-    cart.onProductUpdate();
-  };
 
 </script>
 </body>

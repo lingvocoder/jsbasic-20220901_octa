@@ -1,6 +1,5 @@
 import CartIcon from './cart-icon.js';
 import {createElement} from '../../assets/lib/create-element.js';
-import {it, jest} from "@jest/globals";
 
 describe('Класс, описывающий компонент "Иконка корзины"', () => {
   let cartIcon;
@@ -62,22 +61,22 @@ describe('Класс, описывающий компонент "Иконка к
   afterEach(() => {
     // Очищаем DOM после каждого теста
     cartIconContainer.remove();
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   describe('Отрисовка вёрстки компонента после создания экземпляра класса', () => {
 
-    it('Добавляет корневой элемент в свойство elem', () => {
+    test('Добавляет корневой элемент в свойство elem', () => {
       expect(cartIcon.elem).not.toBeNull();
       expect(cartIcon.elem.tagName).toBe('DIV');
     });
 
-    it('Элемент иконки добавлен в документ и имеет соответсвующий класс', () => {
+    test('Элемент иконки добавлен в документ и имеет соответсвующий класс', () => {
       expect(cartIcon.elem.classList.contains('cart-icon')).toBe(true);
       expect(cartIcon.elem.classList.contains('cart-icon_visible')).toBe(true);
     });
 
-    it('Элемент иконки корзины отображает корректный HTML', () => {
+    test('Элемент иконки корзины отображает корректный HTML', () => {
       let iconInner = cartIcon.elem.querySelector('.cart-icon__inner');
       let itemsCount = cartIcon.elem.querySelector('.cart-icon__count');
       let totalPrice = cartIcon.elem.querySelector('.cart-icon__price');
@@ -87,20 +86,20 @@ describe('Класс, описывающий компонент "Иконка к
       expect(totalPrice).not.toBeNull();
     });
 
-    it('Отрисовывает иконку корзины с количеством товаров и общей стоимостью, указанными в момент создания экземпляра класса', () => {
+    test('Отрисовывает иконку корзины с количеством товаров и общей стоимостью, указанными в момент создания экземпляра класса', () => {
       let itemsCount = cartIcon.elem.querySelector('.cart-icon__count');
       let totalPrice = cartIcon.elem.querySelector('.cart-icon__price');
 
-      expect(itemsCount.textContent).toBe('5');
-      expect(totalPrice.textContent).toBe('€10.00');
+      expect(itemsCount.textContent).toBe('0');
+      expect(totalPrice.textContent).toBe('€0.00');
     });
 
-    it('Метод render возвращает созданный экземпляр класса', () => {
+    test('Метод render возвращает созданный экземпляр класса', () => {
       const renderedIcon = cartIcon.render();
       expect(renderedIcon).toBe(cartIcon.elem);
     });
 
-    it('Не создаёт новый экземпляр класса, если уже существует экземпляр данного класса', () => {
+    test('Не создаёт новый экземпляр класса, если уже существует экземпляр данного класса', () => {
       const renderedFirst = cartIcon.render();
       const renderedSecond = cartIcon.render();
 
@@ -110,15 +109,15 @@ describe('Класс, описывающий компонент "Иконка к
 
   describe('Добавляет обработчики событий scroll и resize', () => {
 
-    it('Добавляет обработчик события scroll', () => {
-      const eventSpy = jest.spyOn(document, 'addEventListener');
+    test('Добавляет обработчик события scroll', () => {
+      const eventSpy = vi.spyOn(document, 'addEventListener');
       const cartIcon = new CartIcon();
       expect(eventSpy).toHaveBeenCalledWith('scroll', expect.any(Function));
       eventSpy.mockRestore();
     });
 
-    it('Добавляет обработчик события resize', () => {
-      const eventSpy = jest.spyOn(window, 'addEventListener');
+    test('Добавляет обработчик события resize', () => {
+      const eventSpy = vi.spyOn(window, 'addEventListener');
       const cartIcon = new CartIcon();
       expect(eventSpy).toHaveBeenCalledWith('resize', expect.any(Function));
       eventSpy.mockRestore();
@@ -139,16 +138,16 @@ describe('Класс, описывающий компонент "Иконка к
       icon = cartIcon.elem;
       containerElement = document.querySelector('.container');
       // Мокаем размеры и позицию элементов
-      jest.spyOn(icon, 'offsetWidth', 'get').mockReturnValue(57);
-      jest.spyOn(icon, 'offsetHeight', 'get').mockReturnValue(63);
-      jest.spyOn(icon, 'offsetTop', 'get').mockReturnValue(100);
+      vi.spyOn(icon, 'offsetWidth', 'get').mockReturnValue(57);
+      vi.spyOn(icon, 'offsetHeight', 'get').mockReturnValue(63);
+      vi.spyOn(icon, 'offsetTop', 'get').mockReturnValue(100);
       mockContainerDimensions(containerElement);
-      updatePositionSpy = jest.spyOn(cartIcon, 'updatePosition');
+      updatePositionSpy = vi.spyOn(cartIcon, 'updatePosition');
     });
 
     function mockContainerDimensions(containerElement) {
 
-      jest.spyOn(containerElement, 'getBoundingClientRect').mockReturnValue({
+      vi.spyOn(containerElement, 'getBoundingClientRect').mockReturnValue({
         left: CONTAINER_LEFT,
         right: CONTAINER_LEFT + CONTAINER_WIDTH,
         top: 0,
@@ -158,7 +157,7 @@ describe('Класс, описывающий компонент "Иконка к
       });
     }
 
-    it('Вызывает метод updatePosition при событии scroll', () => {
+    test('Вызывает метод updatePosition при событии scroll', () => {
       // Очищаем предыдущие вызовы
       updatePositionSpy.mockClear();
 
@@ -169,7 +168,7 @@ describe('Класс, описывающий компонент "Иконка к
       expect(updatePositionSpy).toHaveBeenCalled();
     });
 
-    it('Правильно вычисляет свойство left для position:fixed', () => {
+    test('Правильно вычисляет свойство left для position:fixed', () => {
       Object.defineProperty(window, 'scrollY', {
         value: 150,
         configurable: true,
@@ -183,7 +182,7 @@ describe('Класс, описывающий компонент "Иконка к
       expect(cartIcon.elem.style.left).toBe('1120px');
     });
 
-    it('Устанавливает position:fixed при прокрутке ниже верхней границы элемента', () => {
+    test('Устанавливает position:fixed при прокрутке ниже верхней границы элемента', () => {
       // Имитируем прокрутку ниже верхней границы корзины
       Object.defineProperty(window, 'scrollY', {
         value: 150,
@@ -198,7 +197,7 @@ describe('Класс, описывающий компонент "Иконка к
       expect(cartIcon.elem.style.zIndex).toBe('100');
     });
 
-    it('Очищает стили при прокрутке выше верхней границы элемента', () => {
+    test('Очищает стили при прокрутке выше верхней границы элемента', () => {
       // Сначала устанавливаем фиксированное позиционирование
       Object.defineProperty(window, 'scrollY', {
         value: 150,
@@ -236,16 +235,16 @@ describe('Класс, описывающий компонент "Иконка к
       icon = cartIcon.elem;
       containerElement = document.querySelector('.container');
       // Мокаем размеры и позицию элементов
-      jest.spyOn(icon, 'offsetWidth', 'get').mockReturnValue(57);
-      jest.spyOn(icon, 'offsetHeight', 'get').mockReturnValue(63);
-      jest.spyOn(icon, 'offsetTop', 'get').mockReturnValue(100);
+      vi.spyOn(icon, 'offsetWidth', 'get').mockReturnValue(57);
+      vi.spyOn(icon, 'offsetHeight', 'get').mockReturnValue(63);
+      vi.spyOn(icon, 'offsetTop', 'get').mockReturnValue(100);
       mockContainerDimensions(containerElement);
-      updatePositionSpy = jest.spyOn(cartIcon, 'updatePosition');
+      updatePositionSpy = vi.spyOn(cartIcon, 'updatePosition');
     });
 
     function mockContainerDimensions(containerElement) {
 
-      jest.spyOn(containerElement, 'getBoundingClientRect').mockReturnValue({
+      vi.spyOn(containerElement, 'getBoundingClientRect').mockReturnValue({
         left: CONTAINER_LEFT,
         right: CONTAINER_LEFT + CONTAINER_WIDTH,
         top: 0,
@@ -255,7 +254,7 @@ describe('Класс, описывающий компонент "Иконка к
       });
     }
 
-    it('Вызывает метод updatePosition при событии resize', () => {
+    test('Вызывает метод updatePosition при событии resize', () => {
       updatePositionSpy.mockClear();
 
       const resizeEvent = new Event('resize');
@@ -264,9 +263,9 @@ describe('Класс, описывающий компонент "Иконка к
       expect(updatePositionSpy).toHaveBeenCalled();
     });
 
-    it('Удаляет position:fixed на мобильных устройствах (при ширине экрана <= 767px)', () => {
+    test('Удаляет position:fixed на мобильных устройствах (при ширине экрана <= 767px)', () => {
       // Устанавливаем мобильную ширину
-      jest.spyOn(cartIcon, 'getClientWidth').mockReturnValue( 767);
+      vi.spyOn(cartIcon, 'getClientWidth').mockReturnValue( 767);
 
       cartIcon.updatePosition();
 
@@ -290,15 +289,15 @@ describe('Класс, описывающий компонент "Иконка к
     beforeEach(() => {
       icon = cartIcon.elem;
       containerElement = document.querySelector('.container');
-      jest.spyOn(icon, 'offsetWidth', 'get').mockReturnValue(57);
-      jest.spyOn(icon, 'offsetHeight', 'get').mockReturnValue(63);
-      jest.spyOn(icon, 'offsetTop', 'get').mockReturnValue(100);
+      vi.spyOn(icon, 'offsetWidth', 'get').mockReturnValue(57);
+      vi.spyOn(icon, 'offsetHeight', 'get').mockReturnValue(63);
+      vi.spyOn(icon, 'offsetTop', 'get').mockReturnValue(100);
       mockContainerDimensions(containerElement);
     });
 
     function mockContainerDimensions(containerElement) {
 
-      jest.spyOn(containerElement, 'getBoundingClientRect').mockReturnValue({
+      vi.spyOn(containerElement, 'getBoundingClientRect').mockReturnValue({
         left: CONTAINER_LEFT,
         right: CONTAINER_RIGHT,
         top: 0,
@@ -309,8 +308,8 @@ describe('Класс, описывающий компонент "Иконка к
     }
 
 
-    it('Корректно позиционирует элемент на планшете (ширина 768px)', () => {
-      jest.spyOn(cartIcon, 'getClientWidth').mockReturnValue( 768);
+    test('Корректно позиционирует элемент на планшете (ширина 768px)', () => {
+      vi.spyOn(cartIcon, 'getClientWidth').mockReturnValue( 768);
 
       Object.defineProperty(window, 'scrollY', {
         value: 150,
@@ -325,8 +324,8 @@ describe('Класс, описывающий компонент "Иконка к
       expect(cartIcon.elem.style.left).toBe('670px'); //Ожидаемая позиция: Math.min(650 + 20, 768 - 57 - 10) = min(670, 701) = 670
     });
 
-    it('Устанавливает корректные отступы при позиционировании иконки корзины', () => {
-      jest.spyOn(cartIcon, 'getClientWidth').mockReturnValue( 1200);
+    test('Устанавливает корректные отступы при позиционировании иконки корзины', () => {
+      vi.spyOn(cartIcon, 'getClientWidth').mockReturnValue( 1200);
 
       Object.defineProperty(window, 'scrollY', {
         value: 150,

@@ -1,4 +1,4 @@
-@media all and (max-width: 767px) {
+@media (max-width: 767px) {
   .cart-product {
     align-items: unset;
   }

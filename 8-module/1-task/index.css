@@ -16,6 +16,10 @@
   cursor: pointer;
   transition: all 0.5s ease;
 }
+.cart-icon:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
 
 .cart-icon__inner {
   background: url("/assets/images/icons/cart-icon.svg") center no-repeat;
@@ -82,7 +86,7 @@
   }
 }
 
-@media all and (max-width: 767px) {
+@media (max-width: 767px) {
   .cart-icon {
     position: fixed;
     top: 15px;

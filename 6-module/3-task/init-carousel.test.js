@@ -1,6 +1,6 @@
 import data from "./slides.js";
 
-import Carousel from "./initCarousel.js";
+import Carousel from "./init-carousel.js";
 
 describe('Класс, описывающий компонент "Карусель"', () => {
   let sut;

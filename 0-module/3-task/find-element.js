@@ -1,8 +1,8 @@
-function findElementInSequence(X, nums) {
+function findElementInSequence(x, nums) {
 
   let isFoundAtIndex = -1;
   for (let j = 0; j < nums.length; j++) {
-    if (nums[j] === X ) {
+    if (nums[j] === x ) {
       isFoundAtIndex = j;
     }
   }

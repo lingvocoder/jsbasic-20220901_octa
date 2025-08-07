@@ -34,20 +34,23 @@ export default class Modal {
 
   addEventListeners() {
     this.elem.addEventListener("click", this.onCloseBtnClick);
-    document.addEventListener("keydown", this.onEscButtonClick);
   }
 
   open() {
     const body = document.body;
     body.classList.add('is-modal-open');
     body.append(this.elem);
+    // Добавляем обработчик Escape только при открытии модалки
+    document.addEventListener("keydown", this.onEscButtonClick);
   }
 
   close() {
     const body = document.body;
-    document.removeEventListener('keydown', this.onEscButtonClick);
     body.classList.remove('is-modal-open');
     this.elem.remove();
+
+    // Удаляем обработчик Escape только при закрытии
+    document.removeEventListener('keydown', this.onEscButtonClick);
   }
 
   onEscButtonClick = (ev) => {
@@ -70,7 +73,9 @@ export default class Modal {
   };
 
   setBody = (node) => {
-    this.elem.querySelector('.modal__body').append(node);
+    const modalBody = this.elem.querySelector('.modal__body');
+    modalBody.innerHTML = ''; // ← Очищаем содержимое
+    modalBody.append(node);
   };
 
 }

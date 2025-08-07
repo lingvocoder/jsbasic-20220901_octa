@@ -68,7 +68,7 @@ describe('Класс, описывающий компонент "Пошагов�
 
     afterEach(() => {
       // Очищаем моки
-      jest.restoreAllMocks();
+      vi.restoreAllMocks();
     });
 
     function mockSliderDimensions(slider, SLIDER_WIDTH) {
@@ -78,7 +78,7 @@ describe('Класс, описывающий компонент "Пошагов�
         writable: true,
       });
 
-      jest.spyOn(slider, 'getBoundingClientRect').mockReturnValue({
+      vi.spyOn(slider, 'getBoundingClientRect').mockReturnValue({
         left: SLIDER_LEFT,
         right: SLIDER_LEFT + SLIDER_WIDTH,
         width: SLIDER_WIDTH,
@@ -201,7 +201,7 @@ describe('Класс, описывающий компонент "Пошагов�
         writable: true,
       });
 
-      jest.spyOn(slider, 'getBoundingClientRect').mockReturnValue({
+      vi.spyOn(slider, 'getBoundingClientRect').mockReturnValue({
         left: SLIDER_LEFT,
         right: SLIDER_LEFT + SLIDER_WIDTH,
         width: SLIDER_WIDTH,
@@ -213,7 +213,7 @@ describe('Класс, описывающий компонент "Пошагов�
 
     it('Добавляет обработчик события pointerdown при инициализации экземпляра класса StepSlider', () => {
       // Создаем новый слайдер для проверки инициализации
-      const addEventListenerSpy = jest.spyOn(HTMLElement.prototype, 'addEventListener');
+      const addEventListenerSpy = vi.spyOn(HTMLElement.prototype, 'addEventListener');
       const newSlider = new StepSlider(config);
 
       expect(addEventListenerSpy).toHaveBeenCalledWith('pointerdown', expect.any(Function));
@@ -222,7 +222,7 @@ describe('Класс, описывающий компонент "Пошагов�
     });
 
     it('По завершении перетаскивания происходит корректная замена текущего значения detail в пользовательском событии slider-change', (done) => {
-      const eventSpy = jest.fn((event) => {
+      const eventSpy = vi.fn((event) => {
         try {
           expect(event.type).toBe('slider-change');
           expect(event.detail).toBe(stepSlider.steps - 1); // Значение должно быть 2 для правого края 3-х шагового слайдера
