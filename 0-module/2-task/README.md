@@ -17,7 +17,7 @@ findElementInSequence(12, [1, 2, 3, 2, 4, 3]) === -1 // не найден
 ## 🔍 Алгоритм поиска
 
 ```mermaid
-flowchart TD
+```mermaid
     A[Начало: X и массив nums] --> B[Инициализация: index = -1]
     B --> C[Перебор элементов массива]
     C --> D{nums[i] === X?}
