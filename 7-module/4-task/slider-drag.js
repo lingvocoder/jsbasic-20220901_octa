@@ -164,6 +164,7 @@ export default class StepSlider {
       detail: this.value,
       bubbles: true,
     });
+    console.log(event.detail);
     this.elem.dispatchEvent(event);
   };
 

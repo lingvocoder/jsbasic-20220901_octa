@@ -7,6 +7,7 @@ export default class Cart extends EventTarget {
 
   addProduct(product) {
     const availableItems = this.cartItems;
+    console.log(product);
     if (!product || !product.id) return;
     let isFoundItem = -1;
 
@@ -84,7 +85,7 @@ export default class Cart extends EventTarget {
   onProductUpdate() {
 
     // Генерируем событие с данными корзины
-    this.dispatchEvent(new CustomEvent('cartChanged', {
+    this.dispatchEvent(new CustomEvent('cart-changed', {
       detail: {
         totalCount: this.getTotalCount(),
         totalPrice: this.getTotalPrice(),

@@ -1,14 +1,14 @@
-import Carousel from '../../6-module/3-task/initCarousel.js';
+import Carousel from '../../6-module/3-task/init-carousel.js';
 import slides from '../../6-module/3-task/slides.js';
 
-import RibbonMenu from '../../7-module/1-task/ribbonMenu.js';
+import RibbonMenu from '../../7-module/1-task/ribbon-menu.js';
 import categories from '../../7-module/1-task/categories.js';
 
 import StepSlider from '../../7-module/4-task/slider-drag.js';
-import ProductsGrid from '../../8-module/4-task/product-grid.js';
+import ProductsGrid from '../../8-module/6-task/product-grid.js';
 
-import {CartIcon} from '../../8-module/1-task/cart-icon.js';
-import Cart from '../../8-module/6-task/cart.js';
+import CartIcon from '../../8-module/5-task/cart-icon.js';
+import Cart from '../../8-module/3-task/cart.js';
 
 export default class Main {
 
@@ -16,50 +16,51 @@ export default class Main {
   }
 
   async render() {
-    this.getCarousel();
-    this.getRibbonMenu();
-    this.getSlider();
-    this.getCartIcon();
+    this.initCarousel();
+    this.initRibbonMenu();
+    this.initSlider();
+    this.cart = new Cart();
+    this.initCartIcon(this.cart);
     this.productArray = await fetch('products.json').then(res => res.json());
     await this.getProductGrid();
-    const cart = new Cart(this.cartIcon);
 
 
     document.body.addEventListener('product-add', (ev) => {
-      let product = this.productArray.find(item => item.id === ev.detail);
-      console.log(product);
-      cart.addProduct(product);
+      const productID = ev.detail;
+      let product = this.productArray.find(item => item.id === productID);
+      this.cart.addProduct(product);
     });
 
-    document.getElementById('nuts-checkbox').addEventListener('change', (ev) => {
-      console.log(ev.target);
-      this.grid.updateFilter({
-        noNuts: ev.target.checked
-      });
+    const excludeNutsCheckbox = document.getElementById('exclude-nuts');
+    excludeNutsCheckbox.addEventListener('change', (ev) => {
+      const excludeNuts = ev.target.checked || undefined;
+      this.grid.updateFilter({excludeNuts});
+      this.grid.getVisibleProductsCount();
     });
 
     this.stepSlider.elem.addEventListener('slider-change', (ev) => {
       this.grid.updateFilter({
         maxSpiciness: ev.detail
       });
+      this.grid.getVisibleProductsCount();
     });
 
-    document.getElementById('vegeterian-checkbox').addEventListener('change', (ev) => {
-
-      this.grid.updateFilter({
-        vegeterianOnly: ev.target.checked
-      });
+    const vegetarianOnlyCheckbox = document.getElementById('vegetarian-only');
+    vegetarianOnlyCheckbox.addEventListener('change', (ev) => {
+      const onlyVegetarian = ev.target.checked || undefined;
+      this.grid.updateFilter({onlyVegetarian});
+      this.grid.getVisibleProductsCount();
     });
   }
 
-  getCarousel = () => {
-    const carouselHolder = document.querySelector('[data-carousel-holder]');
+  initCarousel = () => {
+    const carouselHolder = document.querySelector('.carousel-holder');
     this.carousel = new Carousel(slides);
     carouselHolder.append(this.carousel.elem);
   }
 
-  getRibbonMenu = () => {
-    const ribbonHolder = document.querySelector('[data-ribbon-holder]');
+  initRibbonMenu = () => {
+    const ribbonHolder = document.querySelector('.ribbon-holder');
     this.ribbonMenu = new RibbonMenu(categories);
     ribbonHolder.append(this.ribbonMenu.elem);
     this.ribbonMenu.elem.addEventListener('ribbon-select', (ev) => {
@@ -69,23 +70,22 @@ export default class Main {
     });
   }
 
-  getSlider = () => {
-    const sliderHolder = document.querySelector('[data-slider-holder]');
+  initSlider = () => {
+    const sliderHolder = document.querySelector('.slider-holder');
     this.stepSlider = new StepSlider({
       steps: 5, value: 3
     });
     sliderHolder.append(this.stepSlider.elem);
-
   }
 
-  getCartIcon = () => {
-    const cartIconHolder = document.querySelector('[data-cart-icon-holder]');
-    this.cartIcon = new CartIcon();
+  initCartIcon = () => {
+    const cartIconHolder = document.querySelector('.cart-icon-holder');
+    this.cartIcon = new CartIcon(this.cart);
     cartIconHolder.append(this.cartIcon.elem);
   }
 
   getProductGrid = () => {
-    const gridHolder = document.querySelector('[data-products-grid-holder]');
+    const gridHolder = document.querySelector('.products-grid-holder');
     this.grid = new ProductsGrid(this.productArray);
     gridHolder.innerHTML = '';
     gridHolder.append(this.grid.elem);

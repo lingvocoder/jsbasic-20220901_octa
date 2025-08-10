@@ -5,8 +5,6 @@
     "category": "salads",
     "image": "laab_kai_chicken_salad.png",
     "id": "laab-kai-chicken-salad",
-    "nuts": true,
-    "vegeterian": false,
     "spiciness": 2
   },
   {
@@ -15,8 +13,6 @@
     "category": "salads",
     "image": "som_tam_papaya_salad.png",
     "id": "som-tam-papaya-salad",
-    "nuts": false,
-    "vegeterian": true,
     "spiciness": 0
   },
   {
@@ -25,8 +21,6 @@
     "category": "soups",
     "image": "tom_yam.png",
     "id": "tom-yam-kai",
-    "nuts": false,
-    "vegeterian": false,
     "spiciness": 3
   },
   {
@@ -35,8 +29,6 @@
     "category": "soups",
     "image": "tom_kha.png",
     "id": "tom-kha-kai",
-    "nuts": false,
-    "vegeterian": false,
     "spiciness": 3
   },
   {
@@ -45,8 +37,6 @@
     "category": "soups",
     "image": "tom_kha.png",
     "id": "tom-kha-koong",
-    "nuts": false,
-    "vegeterian": false,
     "spiciness": 2
   },
   {
@@ -55,8 +45,6 @@
     "category": "soups",
     "image": "tom_yam.png",
     "id": "tom-yam-koong",
-    "nuts": false,
-    "vegeterian": false,
     "spiciness": 4
   },
   {
@@ -65,8 +53,6 @@
     "category": "soups",
     "image": "tom_yam.png",
     "id": "tom-yam-vegetarian",
-    "nuts": false,
-    "vegeterian": true,
     "spiciness": 1
   },
   {
@@ -75,8 +61,6 @@
     "category": "soups",
     "image": "tom_kha.png",
     "id": "tom-kha-vegetarian",
-    "nuts": false,
-    "vegeterian": true,
     "spiciness": 1
   },
   {
@@ -85,8 +69,6 @@
     "category": "chicken-dishes",
     "image": "sweet_n_sour.png",
     "id": "sweet-n-sour-chicken",
-    "nuts": true,
-    "vegeterian": false,
     "spiciness": 2
   },
   {
@@ -95,8 +77,6 @@
     "category": "chicken-dishes",
     "image": "chicken_cashew.png",
     "id": "chicken-cashew",
-    "nuts": true,
-    "vegeterian": false,
     "spiciness": 1
   },
   {
@@ -105,8 +85,6 @@
     "category": "chicken-dishes",
     "image": "kai_see_ew.png",
     "id": "kai-see-ew",
-    "nuts": false,
-    "vegeterian": false,
     "spiciness": 4
   },
   {
@@ -115,8 +93,6 @@
     "category": "beef-dishes",
     "image": "beef_massaman.png",
     "id": "beef-massaman",
-    "nuts": false,
-    "vegeterian": false,
     "spiciness": 2
   },
   {
@@ -125,8 +101,6 @@
     "category": "seafood-dishes",
     "image": "chu_chee.png",
     "id": "seafood-chu-chee",
-    "nuts": false,
-    "vegeterian": false,
     "spiciness": 2
   },
   {
@@ -135,8 +109,6 @@
     "category": "seafood-dishes",
     "image": "red_curry.png",
     "id": "penang-shrimp",
-    "nuts": true,
-    "vegeterian": false,
     "spiciness": 4
   },
   {
@@ -145,8 +117,7 @@
     "category": "vegetable-dishes",
     "image": "green_curry.png",
     "id": "green-curry-veggies",
-    "nuts": true,
-    "vegeterian": true,
+    "vegetarian": true,
     "spiciness": 0
   },
   {
@@ -155,8 +126,7 @@
     "category": "vegetable-dishes",
     "image": "tofu_cashew.png",
     "id": "tofu-cashew",
-    "nuts": true,
-    "vegeterian": true,
+    "vegetarian": true,
     "spiciness": 0
   },
   {
@@ -165,8 +135,6 @@
     "category": "vegetable-dishes",
     "image": "red_curry_vega.png",
     "id": "red-curry-veggies",
-    "nuts": false,
-    "vegeterian": true,
     "spiciness": 4
   },
   {
@@ -175,8 +143,6 @@
     "category": "vegetable-dishes",
     "image": "krapau_vega.png",
     "id": "krapau-tofu",
-    "nuts": false,
-    "vegeterian": true,
     "spiciness": 0
   },
   {
@@ -185,8 +151,6 @@
     "category": "bits-and-bites",
     "image": "kroepoek.png",
     "id": "prawn-crackers",
-    "nuts": false,
-    "vegeterian": false,
     "spiciness": 1
   },
   {
@@ -195,8 +159,6 @@
     "category": "bits-and-bites",
     "image": "fish_cakes.png",
     "id": "fish-cakes",
-    "nuts": false,
-    "vegeterian": false,
     "spiciness": 1
   },
   {
@@ -205,8 +167,6 @@
     "category": "bits-and-bites",
     "image": "sate.png",
     "id": "chicken-satay",
-    "nuts": false,
-    "vegeterian": false,
     "spiciness": 1
   },
   {
@@ -215,8 +175,6 @@
     "category": "bits-and-bites",
     "image": "satesaus.png",
     "id": "satay-sauce",
-    "nuts": false,
-    "vegeterian": false,
     "spiciness": 2
   },
   {
@@ -225,8 +183,6 @@
     "category": "bits-and-bites",
     "image": "koong_hom_pha.png",
     "id": "shrimp-springrolls",
-    "nuts": false,
-    "vegeterian": false,
     "spiciness": 3
   },
   {
@@ -235,8 +191,6 @@
     "category": "bits-and-bites",
     "image": "mini_vega_springrolls.png",
     "id": "mini-vegetarian-spring-rolls",
-    "nuts": false,
-    "vegeterian": false,
     "spiciness": 2
   },
   {
@@ -245,8 +199,6 @@
     "category": "bits-and-bites",
     "image": "chicken_loempias.png",
     "id": "chicken-springrolls",
-    "nuts": false,
-    "vegeterian": false,
     "spiciness": 2
   },
   {
@@ -255,8 +207,6 @@
     "category": "on-the-side",
     "image": "fried_rice.png",
     "id": "thai-fried-rice",
-    "nuts": false,
-    "vegeterian": false,
     "spiciness": 2
   },
   {
@@ -265,8 +215,6 @@
     "category": "on-the-side",
     "image": "prik_nam_pla.png",
     "id": "prik-nam-pla",
-    "nuts": false,
-    "vegeterian": false,
     "spiciness": 4
   },
   {
@@ -275,8 +223,6 @@
     "category": "on-the-side",
     "image": "kroepoek.png",
     "id": "fresh-prawn-crackers",
-    "nuts": false,
-    "vegeterian": false,
     "spiciness": 1
   },
   {
@@ -285,8 +231,6 @@
     "category": "on-the-side",
     "image": "stir_fried_vegetables.png",
     "id": "stir-fried-vegetables",
-    "nuts": false,
-    "vegeterian": true,
     "spiciness": 0
   },
   {
@@ -295,8 +239,6 @@
     "category": "on-the-side",
     "image": "witte_rijst.png",
     "id": "white-rice",
-    "nuts": false,
-    "vegeterian": true,
     "spiciness": 0
   },
   {
@@ -305,8 +247,7 @@
     "category": "on-the-side",
     "image": "fried_noodles.png",
     "id": "fried-noodles-thai-style",
-    "nuts": false,
-    "vegeterian": true,
+    "nuts": true,
     "spiciness": 2
   },
   {
@@ -315,8 +256,7 @@
     "category": "on-the-side",
     "image": "king_salad.png",
     "id": "king-salad",
-    "nuts": false,
-    "vegeterian": true,
+    "nuts": true,
     "spiciness": 2
   },
   {
@@ -325,8 +265,7 @@
     "category": "on-the-side",
     "image": "satesaus.png",
     "id": "sat-saus",
-    "nuts": false,
-    "vegeterian": true,
+    "nuts": true,
     "spiciness": 2
   }
 ]

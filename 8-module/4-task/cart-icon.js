@@ -10,7 +10,7 @@ export default class CartIcon {
     this.render();
     this.addEventListeners();
     this.subscribeToCart();
-    this.setupModal(); // Настраиваем модальное окно
+    this.initModal(); // Настраиваем модальное окно
   }
 
   render() {
@@ -22,12 +22,12 @@ export default class CartIcon {
 
   subscribeToCart() {
     // Подписываемся на событие изменения корзины
-    this.cart.addEventListener('cartChanged', (event) => {
+    this.cart.addEventListener('cart-changed', (event) => {
       this.update(event.detail);
     });
   }
 
-  setupModal() {
+  initModal() {
     this.modal = new Modal();
 
     // При клике на иконку открываем модалку
@@ -101,7 +101,7 @@ export default class CartIcon {
     });
 
     // Подписка на изменения корзины для обновления модалки
-    this.cart.addEventListener('cartChanged', (event) => {
+    this.cart.addEventListener('cart-changed', (event) => {
       this.updateModal(event.detail);
     });
   }

@@ -6,8 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Бангкок Экспресс</title>
 
-  <link rel="stylesheet" href="/assets/styles/common.css" />
-  <link rel="stylesheet" href="./all.css">
+  <link rel="stylesheet" href="../../assets/styles/common.css" />
+  <link rel="stylesheet" href="../../assets/styles/button.css" />
+  <link rel="stylesheet" href="all.css">
 
   <script type="module">
     import Main from './index.js';
@@ -25,18 +26,21 @@
     <h1 class="heading logo">Bangkok Express</h1>
     <h3 class="subheading">Great food・Free delivery・Fair price</h3>
 
-    <div data-cart-icon-holder>
+    <div class="cart-icon-holder">
+      <!--СЮДА ВСТАВЛЯЕТСЯ корневой элемент из свойства cart-icon.elem-->
     </div>
   </header>
 
   <main>
-    <div class="container" data-carousel-holder></div>
+    <div class="container carousel-holder"></div>
 
     <div class="container">
       <h2 class="section-heading">
         Our Menu
       </h2>
-      <div data-ribbon-holder></div>
+      <div class="ribbon-holder">
+        <!--СЮДА ВСТАВЛЯЕТСЯ корневой элемент из свойства ribbon-menu.elem-->
+      </div>
     </div>
 
     <div class="container">
@@ -44,17 +48,18 @@
         <div class="filters__inner">
           <div class="filters__group">
             <label class="filters__label">Max spiciness</label>
-            <div class="filters__slider" data-slider-holder></div>
+            <div class="filters__slider slider-holder" >
+              <!--СЮДА ВСТАВЛЯЕТСЯ корневой элемент из свойства step-slider.elem-->
+            </div>
           </div>
           <div class="filters__group">
             <div class="filters__checkbox">
               <input
                 class="styled-checkbox"
-                id="nuts-checkbox"
+                id="exclude-nuts"
                 type="checkbox"
-                value="1"
               >
-              <label for="nuts-checkbox">
+              <label for="exclude-nuts">
                 <span class="filters__label">No nuts</span>
               </label>
             </div>
@@ -63,12 +68,11 @@
             <div class="filters__checkbox">
               <input
                 class="styled-checkbox"
-                id="vegeterian-checkbox"
+                id="vegetarian-only"
                 type="checkbox"
-                value="1"
               >
-              <label for="vegeterian-checkbox">
-                <span class="filters__label">Vegeterian only</span>
+              <label for="vegetarian-only">
+                <span class="filters__label">Vegetarian only</span>
               </label>
             </div>
           </div>
@@ -76,7 +80,7 @@
       </div>
     </div>
 
-    <div class="container" data-products-grid-holder>
+    <div class="container products-grid-holder" >
       <div class="products-grid is-loading">
         <div class="products-grid__skeleton">
           <div class="products-grid__skeleton-item"></div>

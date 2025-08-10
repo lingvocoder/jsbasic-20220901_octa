@@ -2,6 +2,11 @@ import {createElement} from '../../assets/lib/create-element.js';
 import escapeHtml from '../../assets/lib/escape-html.js';
 import Modal from '../../7-module/2-task/modal.js';
 
+const POSITION = {
+  TOP_MARGIN: 50,
+  LEFT_MARGIN: 10,
+  RIGHT_MARGIN: 20
+};
 export default class CartIcon {
   elem = null;
   isShowingSuccess = false; // Флаг для показа успеха
@@ -11,9 +16,10 @@ export default class CartIcon {
     this.render();
     this.addEventListeners();
     this.subscribeToCart();
-    this.setupModal(); // Настраиваем модальное окно
+    this.initModal(); // Настраиваем модальное окно
   }
 
+  /* ---------- Инициализация ---------- */
   render() {
     if (!this.elem) {
       this.elem = createElement(this.getCartIcon());
@@ -23,15 +29,14 @@ export default class CartIcon {
 
   subscribeToCart() {
     // Подписываемся на событие изменения корзины
-    this.cart.addEventListener('cartChanged', (event) => {
+    this.cart.addEventListener('cart-changed', (event) => {
       this.update(event.detail);
     });
   }
 
-  setupModal() {
+  initModal() {
     this.modal = new Modal();
 
-    // При клике на иконку открываем модалку
     this.elem.addEventListener('click', () => {
       if (!this.cart.isEmpty()) {
         this.openModal();
@@ -39,6 +44,7 @@ export default class CartIcon {
     });
   }
 
+  /* ---------- Модальное окно ---------- */
   openModal() {
     this.renderModal();
     this.modal.open();
@@ -55,7 +61,6 @@ export default class CartIcon {
 
     //Добавляем форму заказа
     this.modalBody.append(this.renderOrderForm());
-
     this.modal.setBody(this.modalBody);
   }
 
@@ -117,37 +122,36 @@ export default class CartIcon {
     // Обработчик для кнопок +/-
     this.modalBody.addEventListener('click', (event) => {
       const button = event.target.closest('.cart-counter__button');
-      if (!button) return;
+      if (!button) {
+        return;
+      }
 
       const productElem = button.closest('.cart-product');
       const {productId} = productElem.dataset;
 
-      const isPlus = button.classList.contains('cart-counter__button_plus');
-      const amount = isPlus ? 1 : -1;
+      const amount = button.classList.contains('cart-counter__button_plus') ? 1 : -1;
 
       this.cart.updateProductCount(productId, amount);
     });
 
-    // Обработчик отправки формы
+    // Отправка формы
     this.modalBody.addEventListener('submit', (event) => {
       this.onSubmit(event);
     });
 
-    // Подписка на изменения корзины для обновления модалки
-    this.cart.addEventListener('cartChanged', (event) => {
+    // Подписка на изменения корзины для обновления модального окна
+    this.cart.addEventListener('cart-changed', (event) => {
       this.updateModal(event.detail);
     });
   }
 
   async onSubmit(event) {
     event.preventDefault();
-
     const form = event.target;
     const submitButton = form.querySelector('button[type="submit"]');
 
     //Показываем состояние загрузки
-    submitButton.classList.add('is-loading');
-    submitButton.disabled = true;
+    this.toggleLoading(submitButton, true);
 
     try {
       //Собираем данные формы
@@ -166,16 +170,19 @@ export default class CartIcon {
     } catch (error) {
       alert(`Error: ${error.message}`);
     } finally {
-      submitButton.classList.remove('is-loading');
-      submitButton.disabled = false;
+      this.toggleLoading(submitButton, false);
     }
+  }
+
+  toggleLoading(submitButton, isLoading) {
+    submitButton.classList.toggle('is-loading', isLoading);
+    submitButton.disabled = isLoading;
   }
 
   showSuccess() {
     // Устанавливаем флаг показа успеха
     this.isShowingSuccess = true;
-
-    // Обновляем модалку
+    // Обновляем заголовок модального окна
     this.modal.setTitle('Success!');
     this.modalBody.innerHTML = `
       <div class="modal__body-inner">
@@ -191,19 +198,19 @@ export default class CartIcon {
     this.cart.cartItems.length = 0;
     // Генерируем событие об изменении
     this.cart.onProductUpdate();
-
     // Сбрасываем флаг через некоторое время
     setTimeout(() => {
       this.isShowingSuccess = false;
     }, 100);
   }
 
+  /* ---------- Обновления ---------- */
   updateModal(cartData) {
-    // Если показываем успех, не закрываем модалку
+    // Если показываем успех, не закрываем модальное окно
     if (this.isShowingSuccess) {
       return;
     }
-    // Если корзина пуста — закрываем модалку
+    // Если корзина пуста — закрываем модальное окно
     if (cartData.isEmpty) {
       this.modal.close();
       return;
@@ -213,18 +220,15 @@ export default class CartIcon {
     cartData.items.forEach(item => {
       const productElement = this.modalBody.querySelector(`[data-product-id="${item.product.id}"]`);
       if (productElement) {
-        const countElem = productElement.querySelector('.cart-counter__count');
-        const priceElem = productElement.querySelector('.cart-product__price');
-
-        countElem.textContent = item.count;
-        priceElem.textContent = this.formatPrice(item.product.price * item.count);
+        productElement.querySelector('.cart-counter__count').textContent = item.count
+        productElement.querySelector('.cart-product__price').textContent = this.formatPrice(item.product.price * item.count);
       }
     });
 
     // Удаляем товары, которых больше нет в корзине
     const allProductElements = this.modalBody.querySelectorAll('.cart-product');
     allProductElements.forEach(productElem => {
-      const productId = productElem.dataset.productId;
+      const {productId} = productElem.dataset;
       const itemExists = cartData.items.some(item => item.product.id === productId);
 
       if (!itemExists) {
@@ -240,11 +244,8 @@ export default class CartIcon {
   }
 
   update(cartData) {
-    const countElem = this.elem.querySelector('.cart-icon__count');
-    const priceElem = this.elem.querySelector('.cart-icon__price');
-
-    countElem.textContent = cartData.totalCount;
-    priceElem.textContent = this.formatPrice(cartData.totalPrice);
+    this.elem.querySelector('.cart-icon__count').textContent = cartData.totalCount;
+    this.elem.querySelector('.cart-icon__price').textContent = this.formatPrice(cartData.totalPrice);
 
     // Анимируем иконку только если корзина не пуста
     if (!cartData.isEmpty && !this.elem.classList.contains('shake')) {
@@ -255,6 +256,7 @@ export default class CartIcon {
     }
   }
 
+  /* ---------- Вспомогательные ---------- */
   formatPrice(price) {
     return `€${parseFloat(price).toFixed(2)}`;
   }
@@ -270,47 +272,45 @@ export default class CartIcon {
     `;
   }
 
+  getClientWidth() {
+    return document.documentElement.clientWidth;
+  }
+
+  /* ---------- Позиционирование ---------- */
   addEventListeners() {
     document.addEventListener('scroll', () => this.updatePosition());
     window.addEventListener('resize', () => this.updatePosition());
   }
 
-  getClientWidth() {
-    return document.documentElement.clientWidth;
+  resetPosition() {
+    Object.assign(this.elem.style, {position: '', top: '', left: '', zIndex: ''});
   }
 
   updatePosition() {
     const DIST_Y = window.scrollY || document.documentElement.scrollTop;
-    const TOP_MARGIN = 50;
-    const LEFT_MARGIN = 10;
-    const RIGHT_MARGIN = 20;
     const cartIcon = this.elem;
     const container = document.querySelector('.container');
-    const {right} = container.getBoundingClientRect();
-    const rightOffset = right + RIGHT_MARGIN;
-    const leftOffset = document.documentElement.clientWidth - cartIcon.offsetWidth - LEFT_MARGIN;
 
-    if (!(cartIcon.offsetHeight || cartIcon.offsetWidth)) {
-      return false;
+    if (!container || !(cartIcon.offsetHeight || cartIcon.offsetWidth)) {
+      return;
     }
+    const {right} = container.getBoundingClientRect();
+    const rightOffset = right + POSITION.RIGHT_MARGIN;
+    const leftOffset = document.documentElement.clientWidth - cartIcon.offsetWidth - POSITION.LEFT_MARGIN;
 
     if (DIST_Y > cartIcon.offsetTop) {
-      cartIcon.style.position = 'fixed';
-      cartIcon.style.top = `${TOP_MARGIN}px`;
-      cartIcon.style.left = `${Math.min(rightOffset, leftOffset)}px`;
-      cartIcon.style.zIndex = 100;
+      Object.assign(cartIcon.style, {
+        position: 'fixed',
+        top: `${POSITION.TOP_MARGIN}px`,
+        left: `${Math.min(rightOffset, leftOffset)}px`,
+        zIndex: 100
+      });
     } else {
-      cartIcon.style.position = '';
-      cartIcon.style.top = '';
-      cartIcon.style.left = '';
-      cartIcon.style.zIndex = '';
+      this.resetPosition();
     }
 
     if (document.documentElement.clientWidth <= 767) {
-      cartIcon.style.position = '';
-      cartIcon.style.top = '';
-      cartIcon.style.left = '';
-      cartIcon.style.zIndex = '';
+      this.resetPosition();
     }
   }
 }

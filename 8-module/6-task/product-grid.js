@@ -14,23 +14,25 @@ export default class ProductGrid {
     if (!this.elem) {
       this.elem = createElement(this.getProductGrid(this.products));
     }
+    this.getProductCards(this.products);
     return this.elem;
   }
 
-  getProductGrid = (data) => {
+  getProductGrid = () => {
     return `
         <div class="products-grid">
-            <div class="products-grid__inner">
-                ${this.getProductCards(data)}
-            </div>
+            <div class="products-grid__inner"></div>
         </div>
     `;
   };
 
-  getProductCards = (data) => {
-    return data.map(item => {
-      return new ProductCard(item).elem.outerHTML;
-    }).join('');
+  getProductCards = (products) => {
+    const gridInner = this.elem.querySelector('.products-grid__inner');
+
+    products.forEach(item => {
+      const productCard = new ProductCard(item);
+      gridInner.appendChild(productCard.elem);
+    });
   };
 
   /**
@@ -47,6 +49,7 @@ export default class ProductGrid {
         // Устанавливаем фильтр
         this.activeFilters[key] = value;
       }
+      console.log(this.activeFilters);
       this.applyFilters();
     });
   };
@@ -70,9 +73,9 @@ export default class ProductGrid {
     const filteredProducts = this.products.filter(product =>
       this.isProductVisible(product)
     );
-
     const gridInner = this.elem.querySelector('.products-grid__inner');
-    gridInner.innerHTML = this.getProductCards(filteredProducts);
+    gridInner.innerHTML = '';
+    this.getProductCards(filteredProducts);
   };
 
   /**
@@ -127,6 +130,7 @@ export default class ProductGrid {
    * @returns {number} — Количество видимых продуктов
    */
   getVisibleProductsCount = () => {
+    console.log(this.products.filter(product => this.isProductVisible(product)).length);
     return this.products.filter(product => this.isProductVisible(product)).length;
   };
 }
