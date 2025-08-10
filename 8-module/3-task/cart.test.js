@@ -18,22 +18,22 @@ describe('События корзины (CartChanged)', () => {
 
     // Мок функция для отслеживания событий
     eventListener = vi.fn();
-    cart.addEventListener('cartChanged', eventListener);
+    cart.addEventListener('cart-changed', eventListener);
   });
 
   afterEach(() => {
-    cart.removeEventListener('cartChanged', eventListener);
+    cart.removeEventListener('cart-changed', eventListener);
   });
 
   describe('Метод onProductUpdate() — генерация событий', () => {
 
-    it('Генерирует событие cartChanged при добавлении товара', () => {
+    it('Генерирует событие cart-changed при добавлении товара', () => {
       cart.addProduct(sampleProduct);
 
       expect(eventListener).toHaveBeenCalledTimes(1);
       expect(eventListener).toHaveBeenCalledWith(
         expect.objectContaining({
-          type: 'cartChanged',
+          type: 'cart-changed',
           detail: {
             totalCount: 1,
             totalPrice: 10,
@@ -49,7 +49,7 @@ describe('События корзины (CartChanged)', () => {
       );
     });
 
-    it('Генерирует событие cartChanged при обновлении количества товара', () => {
+    it('Генерирует событие cart-changed при обновлении количества товара', () => {
       // Добавляем товар
       cart.addProduct(sampleProduct);
       eventListener.mockClear(); // Очищаем предыдущие вызовы
@@ -60,7 +60,7 @@ describe('События корзины (CartChanged)', () => {
       expect(eventListener).toHaveBeenCalledTimes(1);
       expect(eventListener).toHaveBeenCalledWith(
         expect.objectContaining({
-          type: 'cartChanged',
+          type: 'cart-changed',
           detail: {
             totalCount: 3,
             totalPrice: 30,
@@ -76,7 +76,7 @@ describe('События корзины (CartChanged)', () => {
       );
     });
 
-    it('Генерирует событие cartChanged при удалении товара', () => {
+    it('Генерирует событие cart-changed при удалении товара', () => {
       cart.addProduct(sampleProduct);
       eventListener.mockClear();
 
@@ -86,7 +86,7 @@ describe('События корзины (CartChanged)', () => {
       expect(eventListener).toHaveBeenCalledTimes(1);
       expect(eventListener).toHaveBeenCalledWith(
         expect.objectContaining({
-          type: 'cartChanged',
+          type: 'cart-changed',
           detail: {
             totalCount: 0,
             totalPrice: 0,
@@ -108,7 +108,7 @@ describe('События корзины (CartChanged)', () => {
       // Состояние корзины не должно измениться
       expect(eventListener).toHaveBeenCalledWith(
         expect.objectContaining({
-          type: 'cartChanged',
+          type: 'cart-changed',
           detail: {
             totalCount: 1,
             totalPrice: 10,
@@ -177,18 +177,18 @@ describe('События корзины (CartChanged)', () => {
 
     it('Поддерживает множественных слушателей событий', () => {
       const secondListener = vi.fn();
-      cart.addEventListener('cartChanged', secondListener);
+      cart.addEventListener('cart-changed', secondListener);
 
       cart.addProduct(sampleProduct);
 
       expect(eventListener).toHaveBeenCalledTimes(1);
       expect(secondListener).toHaveBeenCalledTimes(1);
 
-      cart.removeEventListener('cartChanged', secondListener);
+      cart.removeEventListener('cart-changed', secondListener);
     });
 
     it('Позволяет отписаться от событий', () => {
-      cart.removeEventListener('cartChanged', eventListener);
+      cart.removeEventListener('cart-changed', eventListener);
       cart.addProduct(sampleProduct);
 
       expect(eventListener).not.toHaveBeenCalled();

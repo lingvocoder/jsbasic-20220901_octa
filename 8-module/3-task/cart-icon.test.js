@@ -51,10 +51,10 @@ describe('CartIcon — События и автоматическое обнов
     it('Подписывается на события корзины при инициализации', () => {
       const addEventListenerSpy = vi.spyOn(cart, 'addEventListener');
 
-      // Создаем новую иконку чтобы проверить подписку
+      // Создаем новую иконку, чтобы проверить подписку
       const newCartIcon = new CartIcon(cart);
 
-      expect(addEventListenerSpy).toHaveBeenCalledWith('cartChanged', expect.any(Function));
+      expect(addEventListenerSpy).toHaveBeenCalledWith('cart-changed', expect.any(Function));
 
       addEventListenerSpy.mockRestore();
     });
@@ -64,7 +64,7 @@ describe('CartIcon — События и автоматическое обнов
 
       cartIcon.subscribeToCart();
 
-      expect(addEventListenerSpy).toHaveBeenCalledWith('cartChanged', expect.any(Function));
+      expect(addEventListenerSpy).toHaveBeenCalledWith('cart-changed', expect.any(Function));
       expect(addEventListenerSpy).toHaveBeenCalledTimes(1);
 
       addEventListenerSpy.mockRestore();
