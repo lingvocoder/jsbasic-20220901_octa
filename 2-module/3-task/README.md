@@ -16,20 +16,20 @@ console.log(calculator.multiply()); // 15 (3 × 5)
 ## 🔍 Архитектура калькулятора
 
 ```mermaid
-flowchart TD
+graph TD
     A[calculator объект] --> B[Свойства данных]
     A --> C[Методы обработки]
     
-    B --> B1[this.a - первое число]
-    B --> B2[this.b - второе число]
+    B --> B1["this.a (первое число)"]
+    B --> B2["this.b (второе число)"]
     
-    C --> C1[read(a, b) - сохранение]
-    C --> C2[sum() - сложение]
-    C --> C3[multiply() - умножение]
+    C --> C1["read(a, b)"]
+    C --> C2["sum()"]
+    C --> C3["multiply()"]
     
-    C1 --> D[Обновляет this.a и this.b]
-    C2 --> E[Возвращает this.a + this.b]
-    C3 --> F[Возвращает this.a × this.b]
+    C1 --> D[Сохраняет значения]
+    C2 --> E[Возвращает сумму]
+    C3 --> F[Возвращает произведение]
     
     style A fill:#e1f5fe
     style B fill:#fff3e0
