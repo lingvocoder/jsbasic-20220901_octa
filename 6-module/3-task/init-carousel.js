@@ -57,6 +57,7 @@ export default class Carousel {
     const carouselInner = this.elem.querySelector('.carousel__inner');
     const slideWidth = parseFloat(window.getComputedStyle(carouselInner).width);
     let dist = -this.counter * slideWidth;
+    carouselInner.style.transition = 'transform 0.3s ease-in-out';
     carouselInner.style.transform = `translateX(${dist}px)`;
   }
 

@@ -37,12 +37,6 @@ export default function initCarousel() {
     moveSlide();
   }
 
-  document.addEventListener('keydown', (ev) => {
-    if (ev.key === 'ArrowLeft') prev();
-    if (ev.key === 'ArrowRight') next();
-    checkEdgeSlides();
-  });
-
   container.addEventListener('click', (ev) => {
     const {target} = ev;
     const btnPrev = target.closest('.carousel__arrow_left');

@@ -54,7 +54,6 @@ export default class ProductCard {
       bubbles: true,
       detail: this.productID,
     });
-    console.log(event.detail);
     this.elem.dispatchEvent(event);
   };
 
