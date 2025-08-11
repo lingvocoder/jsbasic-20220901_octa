@@ -4,26 +4,27 @@
     <meta charset="UTF-8">
     <title>Занятие 4: Список друзей</title>
   </head>
-  <script src="make-friend-list.js"></script>
+
   <body>
-    <script>
+  <script type="module" >
+    import makeFriendList from "./make-friend-list.js";
 
-      let friends = [
-        {
-          firstName: 'Artsiom',
-          lastName: 'Mezin'
-        },
-        {
-          firstName: 'Ilia',
-          lastName: 'Kantor'
-        },
-        {
-          firstName: 'Christopher',
-          lastName: 'Michael'
-        }
-      ];
+    let friends = [
+      {
+        firstName: 'Artyom',
+        lastName: 'Mazepin'
+      },
+      {
+        firstName: 'Ilya',
+        lastName: 'Thorik'
+      },
+      {
+        firstName: 'Christopher',
+        lastName: 'Michael'
+      }
+    ];
 
-      document.body.appendChild(makeFriendList(friends));
-    </script>
+    document.body.appendChild(makeFriendList(friends));
+  </script>
   </body>
 </html>

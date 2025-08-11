@@ -1,24 +1,21 @@
-function highlight(table) {
+export default function highlight(table) {
   for (let i = 1; i < table.rows.length; i++) {
     let row = table.rows[i];
-    for (let j = 0; j < row.cells.length; j++) {
-      const td = row.cells[j];
-      const text = td.textContent;
-      const {available} = td.dataset;
 
-      row.hidden = !td.hasAttribute('data-available');
+    // Данные из конкретных ячеек
+    const age = parseInt(row.cells[1].textContent);
+    const gender = row.cells[2].textContent;
+    const statusCell = row.cells[3];
+    console.log(statusCell.dataset);
 
-      if (parseInt(text) <= 18) {
-        row.style.textDecoration = 'line-through';
-      }
-      if (available === 'true') {
-        row.classList.add('available');
-      } else if (available === 'false') {
-        row.classList.add('unavailable');
-      }
-      row.classList.add(`${text === 'm' ? 'male' : 'female'}`);
+    const {available} = statusCell.dataset;
+    row.hidden = !statusCell.hasAttribute('data-available');
+    row.classList.add(available === 'true' ? 'available' : 'unavailable');
+    row.classList.add(gender === 'm' ? 'male' : 'female');
+
+    if (age <= 18) {
+      row.style.textDecoration = 'line-through';
     }
   }
 }
 
-export default highlight;
