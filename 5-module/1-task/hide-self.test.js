@@ -17,7 +17,7 @@ describe('Функция, которая скрывает/показывает �
     buttonElement.remove();
   });
 
-  it('При первом нажатии кнопки она скрывается', () => {
+  it('При нажатии кнопки она скрывается', () => {
     let clickEvent = new MouseEvent('click', { bubbles: true });
     buttonElement.dispatchEvent(clickEvent);
 

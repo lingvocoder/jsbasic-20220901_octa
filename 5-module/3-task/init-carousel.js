@@ -1,4 +1,4 @@
-function initCarousel() {
+export default function initCarousel() {
   const container = document.querySelector('.container');
   let slideCount = container.querySelectorAll('.carousel__slide').length;
   const carouselInner = container.querySelector('.carousel__inner');
@@ -10,6 +10,7 @@ function initCarousel() {
 
   function moveSlide() {
     let dist = -counter * slideWidth;
+    carouselInner.style.transition = 'transform 0.3s ease-in-out';
     carouselInner.style.transform = `translateX(${dist}px)`;
   }
 
@@ -36,6 +37,12 @@ function initCarousel() {
     moveSlide();
   }
 
+  document.addEventListener('keydown', (ev) => {
+    if (ev.key === 'ArrowLeft') prev();
+    if (ev.key === 'ArrowRight') next();
+    checkEdgeSlides();
+  });
+
   container.addEventListener('click', (ev) => {
     const {target} = ev;
     const btnPrev = target.closest('.carousel__arrow_left');
@@ -50,5 +57,3 @@ function initCarousel() {
   });
 
 }
-
-export default initCarousel;

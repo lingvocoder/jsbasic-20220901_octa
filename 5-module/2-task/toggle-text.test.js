@@ -24,17 +24,26 @@ describe("Функция, которая скрывает элемент при 
   });
 
   it('При первом нажатии кнопки текст скрывается', () => {
-    let clickEvent = new MouseEvent('click', { bubbles: true });
+    let clickEvent = new MouseEvent('click', {bubbles: true});
     buttonElement.dispatchEvent(clickEvent);
 
     expect(textElement.hidden).toBeTruthy();
   });
 
   it('При повторном нажатии кнопки текст отображается', () => {
-    let clickEvent = new MouseEvent('click', { bubbles: true });
+    let clickEvent = new MouseEvent('click', {bubbles: true});
     buttonElement.dispatchEvent(clickEvent);
     buttonElement.dispatchEvent(clickEvent);
 
     expect(textElement.hidden).toBeFalsy();
+  });
+
+  it('При нажатии кнопки свойство атрибута hidden обновляется корректно', () => {
+    let clickEvent = new MouseEvent('click', {bubbles: true});
+    buttonElement.dispatchEvent(clickEvent);
+    expect(textElement.hidden).toBeTruthy();
+    buttonElement.dispatchEvent(clickEvent);
+    expect(textElement.hidden).toBeFalsy();
+
   });
 });
