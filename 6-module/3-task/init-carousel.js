@@ -9,6 +9,8 @@ export default class Carousel {
     this.render();
     this.addEventListeners();
     this.initCarousel();
+    console.log(this.counter);
+
   }
 
   render() {
@@ -57,8 +59,8 @@ export default class Carousel {
     const carouselInner = this.elem.querySelector('.carousel__inner');
     const slideWidth = parseFloat(window.getComputedStyle(carouselInner).width);
     let dist = -this.counter * slideWidth;
-    carouselInner.style.transition = 'transform 0.3s ease-in-out';
     carouselInner.style.transform = `translateX(${dist}px)`;
+    console.log(this.counter);
   }
 
   checkEdgeSlides() {
@@ -71,13 +73,17 @@ export default class Carousel {
   }
 
   prev() {
-    this.counter--;
-    this.moveSlide();
+    if (this.counter > 0) {
+      this.counter--;
+      this.moveSlide();
+    }
   }
 
   next() {
-    this.counter++;
-    this.moveSlide();
+    if (this.counter < this.slides.length - 1) {
+      this.counter++;
+      this.moveSlide();
+    }
   }
 
   addEventListeners() {

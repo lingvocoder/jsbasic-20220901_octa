@@ -25,7 +25,7 @@ describe('Класс, описывающий компонент "Карточк�
     item.elem.remove();
   });
 
-  describe('Отрисовка', () => {
+  describe('Отрисовка вёрстки компонента после создания экземпляра класса', () => {
     it('Свойство elem возвращает один и тот же элемент, при каждом обращении', () => {
       const elementFirstCall = item.elem;
       const elementSecondCall = item.elem;

@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/assets/styles/common.css"/>
-  <link rel="stylesheet" href="./index.css"/>
+  <link rel="stylesheet" href="style.css"/>
   <title>Бангкок Экспресс: Карусель</title>
 </head>
 
 <body>
 <main>
-  <div class="container" data-carousel-holder>
+  <div id="carousel-holder" class="container">
     <div class="carousel">
       <div class="carousel__arrow carousel__arrow_right">
         <img src="/assets/images/icons/angle-icon.svg" alt="icon">
@@ -69,6 +70,7 @@
 
 <script type="module">
   import initCarousel from './init-carousel.js';
+
   initCarousel();
 </script>
 

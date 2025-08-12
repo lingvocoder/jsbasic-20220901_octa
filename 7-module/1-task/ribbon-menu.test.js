@@ -3,7 +3,6 @@ import RibbonMenu from "./ribbon-menu.js";
 
 describe('Класс, описывающий компонент "Лента-Меню"', () => {
   let sut;
-
   let ribbonInner;
   let ribbonArrowRight;
   let ribbonArrowLeft;

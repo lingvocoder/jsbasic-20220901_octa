@@ -40,7 +40,6 @@ export default class Modal {
     const body = document.body;
     body.classList.add('is-modal-open');
     body.append(this.elem);
-    // Добавляем обработчик Escape только при открытии модалки
     document.addEventListener("keydown", this.onEscButtonClick);
   }
 
@@ -48,8 +47,6 @@ export default class Modal {
     const body = document.body;
     body.classList.remove('is-modal-open');
     this.elem.remove();
-
-    // Удаляем обработчик Escape только при закрытии
     document.removeEventListener('keydown', this.onEscButtonClick);
   }
 

@@ -1,4 +1,4 @@
-const slides = [
+export default  [
   {
     name: 'Penang shrimp',
     price: 16,
@@ -25,4 +25,3 @@ const slides = [
   }
 ];
 
-export default slides;

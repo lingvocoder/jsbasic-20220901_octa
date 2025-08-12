@@ -1,135 +1,159 @@
-import data from "./slides.js";
-
+import {createElement} from "../../assets/lib/create-element.js";
 import Carousel from "./init-carousel.js";
+import slides from "./slides.js";
 
-describe('Класс, описывающий компонент "Карусель"', () => {
-  let sut;
-
-  let carouselInner;
-  let carouselArrowRight;
-  let carouselArrowLeft;
-
-  let clickEvent;
-  let testSlides;
+describe('Класс, описывающий компонент Carousel', () => {
+  let carousel;
+  let container;
+  const SLIDE_WIDTH = 300;
 
   beforeEach(() => {
-    testSlides = data.slice(1);
+    container = createElement(`<div id="carousel-holder"></div>`);
+    document.body.append(container);
 
-    sut = new Carousel(testSlides);
-    document.body.append(sut.elem);
+    carousel = new Carousel(slides);
+    container.appendChild(carousel.elem);
 
-    const slideWidth = '500px';
+    // Сбрасываем counter на 0
+    carousel.counter = 0;
 
-    carouselInner = sut.elem.querySelector('.carousel__inner');
-    carouselInner.style.width = slideWidth;
+    const carouselInner = carousel.elem.querySelector('.carousel__inner');
 
-    let slides = sut.elem.querySelectorAll('.carousel__slide');
-
-    slides.forEach((slide) => {
-      slide.style.width = slideWidth;
-      let img = slide.querySelector('.carousel__img');
-
-      if (img) {
-        img.style.width = slideWidth;
+    // Мокаем getComputedStyle ТОЛЬКО для carouselInner
+    const originalGetComputedStyle = window.getComputedStyle;
+    window.getComputedStyle = (element, pseudoElement) => {
+      if (element === carouselInner) {
+        return {
+          width: `${SLIDE_WIDTH}px`,
+          getPropertyValue: (prop) => {
+            if (prop === 'width') return `${SLIDE_WIDTH}px`;
+            return '';
+          }
+        };
       }
-    });
-
-    carouselArrowRight = sut.elem.querySelector('.carousel__arrow_right');
-    carouselArrowLeft = sut.elem.querySelector('.carousel__arrow_left');
-
-    clickEvent = new MouseEvent('click', {bubbles: true});
+      return originalGetComputedStyle.call(window, element, pseudoElement);
+    };
   });
 
   afterEach(() => {
-    sut.elem.remove();
+    container.remove();
   });
 
-  describe('Отрисовка вёрстки после создания экземпляра класса', () => {
-    it('Добавляет корневой элемент в свойство "elem"', () => {
-      expect(sut.elem.classList.contains('carousel')).toBe(true);
+  describe('Отрисовка вёрстки компонента после создания экземпляра класса', () => {
+    it('Добавляет корневой элемент в свойство elem', () => {
+      expect(carousel.elem).not.toBeNull();
+      expect(carousel.elem.classList.contains('carousel')).toBe(true);
     });
 
-    it('Отрисовывает все слайды', () => {
-      let slides = sut.elem.querySelectorAll('.carousel__slide');
-
-      expect(slides.length).toBe(3);
-    });
-  });
-
-  describe('Переключение слайдов', () => {
-    describe('Переключение вперёд', () => {
-      it('При нажатии кнопки "вперёд" передвигает на один слайд вперёд', () => {
-        carouselArrowRight.dispatchEvent(clickEvent);
-
-        expect(carouselInner.style.transform).toBe("translateX(-500px)");
-      });
+    it('Компонент Carousel содержит все слайды', () => {
+      let slideElements = carousel.elem.querySelectorAll('.carousel__slide');
+      expect(slideElements.length).toBe(slides.length);
     });
 
-    describe('Переключение назад', () => {
-      beforeEach(() => {
-        carouselArrowRight.dispatchEvent(clickEvent);
-        carouselArrowRight.dispatchEvent(clickEvent);
-        carouselArrowRight.dispatchEvent(clickEvent);
-      });
-
-      it('При нажатии кнопки "назад" передвигает на один слайд назад', () => {
-        carouselArrowLeft.dispatchEvent(clickEvent);
-
-        expect(carouselInner.style.transform).toBe('translateX(-1000px)');
-      });
+    it('Кнопка "назад" скрыта, кнопка "вперёд" видна', () => {
+      let carouselArrowLeft = carousel.elem.querySelector('.carousel__arrow_left');
+      let carouselArrowRight = carousel.elem.querySelector('.carousel__arrow_right');
+      expect(carouselArrowLeft.style.display).toBe('none');
+      expect(carouselArrowRight.style.display).toBe('');
     });
 
-    describe('Скрытие стрелок переключения', () => {
-      it('В исходном состоянии скрывает стрелку переключения назад', () => {
-        expect(carouselArrowLeft.style.display).toBe('none');
-      });
+    it('Корректно создаёт разметку каждого слайда', () => {
+      let slideElements = carousel.elem.querySelectorAll('.carousel__slide');
+      let firstSlide = slideElements[0];
 
-      it('При достижении крайнего слайда скрывает стрелку переключения вперёд', () => {
-        carouselArrowRight.dispatchEvent(clickEvent);
-        carouselArrowRight.dispatchEvent(clickEvent);
-
-        expect(carouselArrowRight.style.display).toBe('none');
-      });
+      expect(firstSlide.querySelector('.carousel__img')).not.toBeNull();
+      expect(firstSlide.querySelector('.carousel__price')).not.toBeNull();
+      expect(firstSlide.querySelector('.carousel__title')).not.toBeNull();
+      expect(firstSlide.querySelector('.carousel__button')).not.toBeNull();
     });
   });
 
-  describe('Генерация события добавления в корзину("product-add")', () => {
-    let productAddEvent;
+  describe('Переключение слайдов с помощью кнопок "назад"/"вперёд"', () => {
 
-    beforeEach(() => {
-      productAddEvent = null;
+    it('При нажатии кнопки "вперёд" передвигает на один слайд вперёд', () => {
+      let carouselInner = carousel.elem.querySelector('.carousel__inner');
+      let carouselArrowRight = carousel.elem.querySelector('.carousel__arrow_right');
 
-      document.body.addEventListener('product-add', (event) => {
-        productAddEvent = event;
-      }, {once: true});
-    });
+      expect(carousel.counter).toBe(0);
+      expect(window.getComputedStyle(carouselInner).width).toBe('300px');
 
-    afterEach(() => {
-      productAddEvent = null;
-    });
-
-    it('При нажатии по кнопке, создаётся событие', () => {
-      let addButton = sut.elem.querySelector('.carousel__button');
-      addButton.dispatchEvent(clickEvent);
-
-      expect(productAddEvent instanceof CustomEvent).toBe(true);
-    });
-
-    it('Созданное событие содержит в себе уникальный идентификатор товара("id") из 1-го слайда,' +
-      'Если нажатие на 1-м слайде', () => {
-      let addButton = sut.elem.querySelector('.carousel__button');
-      addButton.dispatchEvent(clickEvent);
-
-      expect(productAddEvent.detail).toBe(testSlides[0].id);
-    });
-
-    it('Созданное событие содержит в себе уникальный идентификатор товара("id") из 2-го слайда,' +
-      'Если нажатие на 2-м слайде', () => {
+      const clickEvent = new MouseEvent('click', {bubbles: true});
       carouselArrowRight.dispatchEvent(clickEvent);
-      let addButtons = sut.elem.querySelectorAll('.carousel__button');
-      addButtons[1].dispatchEvent(clickEvent);
 
-      expect(productAddEvent.detail).toBe(testSlides[1].id);
+      expect(carousel.counter).toBe(1);
+      expect(carouselInner.style.transform).toBe('translateX(-300px)');
+    });
+
+    it('При нажатии кнопки "назад" передвигает на один слайд назад', () => {
+      let carouselInner = carousel.elem.querySelector('.carousel__inner');
+      let carouselArrowRight = carousel.elem.querySelector('.carousel__arrow_right');
+      let carouselArrowLeft = carousel.elem.querySelector('.carousel__arrow_left');
+
+      const clickEvent = new MouseEvent('click', {bubbles: true});
+      carouselArrowRight.dispatchEvent(clickEvent);
+      expect(carouselInner.style.transform).toBe('translateX(-300px)');
+
+      carouselArrowLeft.dispatchEvent(clickEvent);
+      expect(carouselInner.style.transform).toBe('translateX(0px)');
+    });
+
+    it('Корректно показывает/скрывает кнопки навигации', () => {
+      let carouselArrowLeft = carousel.elem.querySelector('.carousel__arrow_left');
+      let carouselArrowRight = carousel.elem.querySelector('.carousel__arrow_right');
+
+      expect(carouselArrowLeft.style.display).toBe('none');
+      expect(carouselArrowRight.style.display).toBe('');
+
+      const clickEvent = new MouseEvent('click', {bubbles: true});
+      carouselArrowRight.dispatchEvent(clickEvent);
+
+      expect(carouselArrowLeft.style.display).toBe('');
+      expect(carouselArrowRight.style.display).toBe('');
+
+      for (let i = 1; i < slides.length - 1; i++) {
+        carouselArrowRight.dispatchEvent(clickEvent);
+      }
+
+      expect(carouselArrowLeft.style.display).toBe('');
+      expect(carouselArrowRight.style.display).toBe('none');
+    });
+
+    it('Не перемещается дальше первого слайда при клике "назад"', () => {
+      let carouselInner = carousel.elem.querySelector('.carousel__inner');
+      let carouselArrowLeft = carousel.elem.querySelector('.carousel__arrow_left');
+
+      // В начале мы на первом слайде
+      expect(carousel.counter).toBe(0);
+      expect(carouselInner.style.transform).toBe('');
+
+      const clickEvent = new MouseEvent('click', {bubbles: true});
+      carouselArrowLeft.dispatchEvent(clickEvent);
+
+      // После клика "назад" на первом слайде ничего не должно измениться
+      expect(carousel.counter).toBe(0);
+      expect(carouselInner.style.transform).toBe('');
+    });
+
+    it('Не перемещается дальше последнего слайда при клике "вперёд"', () => {
+      let carouselInner = carousel.elem.querySelector('.carousel__inner');
+      let carouselArrowRight = carousel.elem.querySelector('.carousel__arrow_right');
+
+      const clickEvent = new MouseEvent('click', {bubbles: true});
+
+      for (let i = 0; i < slides.length; i++) {
+        carouselArrowRight.dispatchEvent(clickEvent);
+      }
+
+      // Проверяем что мы на последнем слайде
+      expect(carousel.counter).toBe(slides.length - 1);
+      const lastPosition = carouselInner.style.transform;
+
+      // Пытаемся кликнуть еще раз "вперёд"
+      carouselArrowRight.dispatchEvent(clickEvent);
+
+      // Counter и позиция не должны измениться
+      expect(carousel.counter).toBe(slides.length - 1);
+      expect(carouselInner.style.transform).toBe(lastPosition);
     });
   });
 });

@@ -1,16 +1,13 @@
 import initCarousel from "./init-carousel.js";
+import slides from "../../6-module/3-task/slides.js";
 
 describe('Функция, которая создаёт элемент интерфейса – карусель', () => {
   let carouselWrapper;
-  let carouselInner;
-  let carouselArrowRight;
-  let carouselArrowLeft;
   let clickEvent;
 
   beforeEach(() => {
     clickEvent = new MouseEvent('click', { bubbles: true });
     carouselWrapper = document.createElement('div');
-    carouselWrapper.setAttribute('data-carousel-holder', '');
     carouselWrapper.classList.add('container');
     carouselWrapper.innerHTML = `
       <div class="carousel">
@@ -70,24 +67,6 @@ describe('Функция, которая создаёт элемент инте�
     `;
     document.body.append(carouselWrapper);
 
-    let slideWidth = '500px';
-    carouselInner = carouselWrapper.querySelector('.carousel__inner');
-    carouselInner.style.width = slideWidth;
-
-    let slides = carouselWrapper.querySelectorAll('.carousel__slide');
-
-    slides.forEach((slide) => {
-      slide.style.width = slideWidth;
-      let img = slide.querySelector('.carousel__img');
-
-      if (img) {
-        img.style.width = slideWidth;
-      }
-    });
-
-    carouselArrowRight = carouselWrapper.querySelector('.carousel__arrow_right');
-    carouselArrowLeft = carouselWrapper.querySelector('.carousel__arrow_left');
-
     initCarousel();
   });
 
@@ -95,40 +74,61 @@ describe('Функция, которая создаёт элемент инте�
     carouselWrapper.remove();
   });
 
+  describe('Переключение слайдов с помощью кнопок "назад"/"вперёд"', () => {
 
-  describe('Переключение вперёд', () => {
-    it('При нажатии кнопки "вперёд", передвигает на один слайд вперёд', () => {
+    it('Корректно показывает/скрывает кнопки навигации', () => {
+      let carouselArrowLeft = carouselWrapper.querySelector('.carousel__arrow_left');
+      let carouselArrowRight = carouselWrapper.querySelector('.carousel__arrow_right');
+
+      expect(carouselArrowLeft.style.display).toBe('none');
+      expect(carouselArrowRight.style.display).toBe('');
+
+      const clickEvent = new MouseEvent('click', {bubbles: true});
       carouselArrowRight.dispatchEvent(clickEvent);
 
-      expect(carouselInner.style.transform).toBe("translateX(-500px)");
+      expect(carouselArrowLeft.style.display).toBe('none');
+      expect(carouselArrowRight.style.display).toBe('');
+
+      for (let i = 1; i < slides.length - 1; i++) {
+        carouselArrowRight.dispatchEvent(clickEvent);
+      }
+
+      expect(carouselArrowLeft.style.display).toBe('none');
+      expect(carouselArrowRight.style.display).toBe('');
     });
-  });
 
-  describe('Переключение назад', () => {
-    beforeEach(() => {
-      carouselArrowRight.dispatchEvent(clickEvent);
-      carouselArrowRight.dispatchEvent(clickEvent);
-      carouselArrowRight.dispatchEvent(clickEvent);
-    });
+    it('Не перемещается дальше первого слайда при клике "назад"', () => {
+      let carouselInner = carouselWrapper.querySelector('.carousel__inner');
+      let carouselArrowLeft = carouselWrapper.querySelector('.carousel__arrow_left');
 
-    it('При нажатии кнопки "назад", передвигает на один слайд назад', () => {
+      // В начале мы на первом слайде
+      expect(carouselInner.style.transform).toBe('');
+
+      const clickEvent = new MouseEvent('click', {bubbles: true});
       carouselArrowLeft.dispatchEvent(clickEvent);
 
-      expect(carouselInner.style.transform).toBe('translateX(-1000px)');
-    });
-  });
-
-  describe('Скрытие стрелок переключения', () => {
-    it('В исходном состоянии скрывает стрелку переключения назад', () => {
-      expect(carouselArrowLeft.style.display).toBe('none');
+      // После клика "назад" на первом слайде ничего не должно измениться
+      expect(carouselInner.style.transform).toBe('');
     });
 
-    it('При достижении четвёртого слайда скрывает стрелку переключения вперёд', () => {
-      carouselArrowRight.dispatchEvent(clickEvent);
-      carouselArrowRight.dispatchEvent(clickEvent);
+    it('Не перемещается дальше последнего слайда при клике "вперёд"', () => {
+      let carouselInner = carouselWrapper.querySelector('.carousel__inner');
+      let carouselArrowRight = carouselWrapper.querySelector('.carousel__arrow_right');
+
+      const clickEvent = new MouseEvent('click', {bubbles: true});
+
+      for (let i = 0; i < slides.length; i++) {
+        carouselArrowRight.dispatchEvent(clickEvent);
+      }
+
+      // Проверяем что мы на последнем слайде
+      const lastPosition = carouselInner.style.transform;
+
+      // Пытаемся кликнуть еще раз "вперёд"
       carouselArrowRight.dispatchEvent(clickEvent);
 
-      expect(carouselArrowRight.style.display).toBe('none');
+      // Counter и позиция не должны измениться
+      expect(carouselInner.style.transform).toBe(lastPosition);
     });
   });
 

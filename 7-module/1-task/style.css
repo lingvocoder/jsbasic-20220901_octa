@@ -1,3 +1,7 @@
+:root {
+  --transition-duration: 150ms;
+}
+
 .ribbon {
   margin-bottom: 38px;
   height: 50px;
@@ -88,6 +92,58 @@
 .ribbon__item.ribbon__item_active,
 .ribbon__item:hover {
   background-color: var(--color-black-light);
+}
+
+/* ===== СТИЛИ ДЛЯ ИНДИКАТОРА ПРОКРУТКИ ===== */
+
+.ribbon__indicator {
+  position: absolute;
+  bottom: 0;
+  left: 60px; /* Учитываем отступ для кнопок */
+  right: 60px;
+  height: 4px;
+  background: transparent;
+  z-index: 1;
+}
+
+.ribbon__indicator-track {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  background: #e0e0e0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.ribbon__indicator-thumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #af874c, #a67c12);
+  border-radius: 2px;
+  transition: left var(--transition-duration) linear 0s;
+  will-change: left;
+  box-shadow: 0 1px 3px rgba(175, 162, 76, 0.3);
+}
+
+/* Анимация появления индикатора */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.ribbon__indicator {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.ribbon__indicator {
+  animation: fadeIn 0.3s ease-out;
 }
 
 @media all and (max-width: 767px) {

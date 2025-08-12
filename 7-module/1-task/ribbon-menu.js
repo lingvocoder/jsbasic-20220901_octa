@@ -7,6 +7,7 @@ export default class RibbonMenu {
   constructor(categories) {
     this.categories = categories;
     this.render();
+    this.updateIndicator();
     this.addEventListeners();
   }
 
@@ -15,6 +16,19 @@ export default class RibbonMenu {
       this.elem = createElement(this.getMenu(this.categories));
     }
     return this.elem;
+  }
+
+  updateIndicator() {
+    const ribbonInner = this.elem.querySelector('.ribbon__inner');
+    const indicator = this.elem.querySelector('.ribbon__indicator-thumb');
+    if (!indicator) return;
+
+    const maxScroll = ribbonInner.scrollWidth - ribbonInner.clientWidth;
+    const scrollPercent = ribbonInner.scrollLeft / maxScroll;
+    const thumbWidth = (ribbonInner.clientWidth / ribbonInner.scrollWidth) * 100;
+
+    indicator.style.left = `${scrollPercent * (100 - thumbWidth)}%`;
+    indicator.style.setProperty("width", `${thumbWidth}%`);
   }
 
   addEventListeners() {
@@ -35,8 +49,13 @@ export default class RibbonMenu {
       this.onCategoryChoose(ev);
     });
 
+    window.addEventListener('DOMContentLoaded', () => {
+      this.updateIndicator();
+    });
+
     ribbonInner.addEventListener('scroll', (ev) => {
       this.onScroll(ev);
+      this.updateIndicator();
     });
 
   }
@@ -53,6 +72,11 @@ export default class RibbonMenu {
                 <button class="ribbon__arrow ribbon__arrow_right ribbon__arrow_visible">
                     <img src="/assets/images/icons/angle-icon.svg" alt="icon">
                 </button>
+                <div class="ribbon__indicator">
+                    <div class="ribbon__indicator-track">
+                        <div class="ribbon__indicator-thumb"></div>
+                    </div>
+                </div>
             </div>
             `;
   };

@@ -10,7 +10,6 @@ export default function initCarousel() {
 
   function moveSlide() {
     let dist = -counter * slideWidth;
-    carouselInner.style.transition = 'transform 0.3s ease-in-out';
     carouselInner.style.transform = `translateX(${dist}px)`;
   }
 
@@ -28,13 +27,17 @@ export default function initCarousel() {
   }
 
   function prev() {
-    counter--;
-    moveSlide();
+    if (counter > 0) {
+      counter--;
+      moveSlide();
+    }
   }
 
   function next() {
-    counter++;
-    moveSlide();
+    if (counter < slideCount.length - 1) {
+      counter++;
+      moveSlide();
+    }
   }
 
   container.addEventListener('click', (ev) => {
