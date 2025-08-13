@@ -1,28 +1,28 @@
 import {createElement} from "../../assets/lib/create-element.js";
 import StepSlider from "./slider.js";
-
+import {it} from "vitest";
 
 describe('Класс, описывающий компонент "Пошаговый слайдер"', () => {
   const SLIDER_LEFT = 100;
   const SLIDER_WIDTH = 330;
   let config;
   let stepSlider;
-  let mainElements;
+  let sliderContainer;
 
   beforeEach(() => {
-    //Создание конфигурации слайдера
+    //Конфиг слайдера
     config = {
       steps: 3,
       value: 0,
     };
 
-    mainElements = createElement(`
+    sliderContainer = createElement(`
       <div class="container" id="holder" style="padding: 50px;">
       </div>
     `);
 
     //Добавляем DOM-элементы (контейнер для слайдера)
-    document.body.append(mainElements);
+    document.body.append(sliderContainer);
 
     // Создаём экземпляр слайдера
     stepSlider = new StepSlider(config);
@@ -33,7 +33,7 @@ describe('Класс, описывающий компонент "Пошагов�
 
   afterEach(() => {
     // Очищаем DOM после каждого теста
-    mainElements.remove();
+    sliderContainer.remove();
   });
 
   describe('Отрисовка вёрстки компонента после создания экземпляра класса', () => {
@@ -47,12 +47,12 @@ describe('Класс, описывающий компонент "Пошагов�
       expect(step1.classList.contains('slider__step-active')).toBe(true);
     });
 
-    it('Задаёт корректное значение ширины закрашенной области', () => {
-      let progress = stepSlider.elem.querySelector('.slider__progress');
-      let thumb = stepSlider.elem.querySelector('.slider__thumb');
+    it('Задаёт корректное значение CSS-переменной --slider-progress', () => {
+      let sliderProgress = stepSlider.elem.style.getPropertyValue('--slider-progress');
+      expect(sliderProgress).toBe('0%');
 
-      expect(progress.style.width).toBe('0%');
-      expect(thumb.style.left).toBe('0%');
+      const progressValue = stepSlider.elem.querySelector('.slider__value');
+      expect(progressValue.textContent).toBe('0');
     });
   });
 
@@ -90,7 +90,7 @@ describe('Класс, описывающий компонент "Пошагов�
       });
     }
 
-    it('При нажатии на первый разделитель слайдера устанавливает значение шага равное 0', () => {
+    it('При нажатии на первый разделитель слайдера устанавливает значение 0', () => {
       mockSliderDimensions(slider, SLIDER_WIDTH);
 
       const clickEvent = new MouseEvent('click', {
@@ -101,11 +101,14 @@ describe('Класс, описывающий компонент "Пошагов�
       slider.dispatchEvent(clickEvent);
 
       expect(stepSlider.value).toBe(0);
-      expect(thumb.style.left).toBe('0%');
-      expect(progress.style.width).toBe('0%');
+      let sliderProgress = slider.style.getPropertyValue('--slider-progress');
+      expect(sliderProgress).toBe('0%');
+
+      const progressValue = slider.querySelector('.slider__value');
+      expect(progressValue.textContent).toBe('0');
     });
 
-    it('При нажатии задаёт корректное значение ширины закрашенной области', () => {
+    it('При нажатии задаёт корректное значение CSS-переменной --slider-progress', () => {
       mockSliderDimensions(slider, SLIDER_WIDTH);
 
       const clickEvent = new MouseEvent('click', {
@@ -116,11 +119,15 @@ describe('Класс, описывающий компонент "Пошагов�
       slider.dispatchEvent(clickEvent);
 
       expect(stepSlider.value).toBe(1);
-      expect(thumb.style.left).toBe('50%');
-      expect(progress.style.width).toBe('50%');
+
+      let sliderProgress = slider.style.getPropertyValue('--slider-progress');
+      expect(sliderProgress).toBe('50%');
+
+      const progressValue = slider.querySelector('.slider__value');
+      expect(progressValue.textContent).toBe('1');
     });
 
-    it('При нажатии на последний разделитель слайдера устанавливает значение шага равное config.steps - 1', () => {
+    it('При нажатии на последний разделитель слайдера устанавливает максимальное значение', () => {
       mockSliderDimensions(slider, SLIDER_WIDTH);
 
       const clickEvent = new MouseEvent('click', {
@@ -131,23 +138,27 @@ describe('Класс, описывающий компонент "Пошагов�
       slider.dispatchEvent(clickEvent);
 
       expect(stepSlider.value).toBe(stepSlider.steps - 1);
-      expect(thumb.style.left).toBe('100%');
-      expect(progress.style.width).toBe('100%');
+
+      let sliderProgress = slider.style.getPropertyValue('--slider-progress');
+      expect(sliderProgress).toBe('100%');
+
+      const progressValue = slider.querySelector('.slider__value');
+      expect(progressValue.textContent).toBe('2');
     });
 
-    it("При нажатии происходит корректная замена текущего значения detail в пользовательском событии для разных позиций", async () => {
+    it("При нажатии происходит корректная замена текущего значения detail в пользовательском событии slider-change", async () => {
       // Проверка промежуточных позиций
       const LEFT_EDGE = SLIDER_LEFT;
       const MIDDLE = SLIDER_LEFT + SLIDER_WIDTH / 2;
       const RIGHT_EDGE = SLIDER_LEFT + SLIDER_WIDTH;
 
       const testCases = [
-        {clientX: LEFT_EDGE, expectedValue: 0, description: 'левый край'},
-        {clientX: MIDDLE, expectedValue: 1, description: 'середина'},
-        {clientX: RIGHT_EDGE, expectedValue: 2, description: 'правый край'}
+        {clientX: LEFT_EDGE, expectedValue: 0, expectedProgress: '0%'},
+        {clientX: MIDDLE, expectedValue: 1, expectedProgress: '50%'},
+        {clientX: RIGHT_EDGE, expectedValue: 2, expectedProgress: '100%'}
       ];
 
-      for (const {clientX, expectedValue} of testCases) {
+      for (const {clientX, expectedValue, expectedProgress} of testCases) {
         const eventPromise = new Promise((resolve) => {
           slider.addEventListener('slider-change', (event) => {
             resolve(event.detail);
@@ -161,8 +172,50 @@ describe('Класс, описывающий компонент "Пошагов�
 
         const detail = await eventPromise;
         expect(detail).toBe(expectedValue);
+
+        const sliderProgress = slider.style.getPropertyValue('--slider-progress');
+        expect(sliderProgress).toBe(expectedProgress);
       }
     });
-  });
 
+    it('При нажатии активный шаг имеет соответствующий класс', () => {
+      const clickEvent = new MouseEvent('click', {
+        clientX: SLIDER_LEFT + SLIDER_WIDTH / 2,
+        bubbles: true,
+      });
+
+      slider.dispatchEvent(clickEvent);
+      let steps = slider.querySelectorAll('.slider__steps span');
+      const activeSteps = slider.querySelectorAll('.slider__steps span.slider__step-active');
+
+      expect(activeSteps.length).toBe(1);
+      expect(steps[0].classList.contains('slider__step-active')).toBe(false);
+      expect(steps[1].classList.contains('slider__step-active')).toBe(true);
+      expect(steps[2].classList.contains('slider__step-active')).toBe(false);
+    });
+
+    describe('Отслеживание нажатий за пределами слайдера', () => {
+      it('Отслеживание нажатий левее слайдера', () => {
+        const clickEvent = new MouseEvent('click', {
+          clientX: SLIDER_LEFT - 10,
+          bubbles: true,
+        });
+
+        slider.dispatchEvent(clickEvent);
+        expect(stepSlider.value).toBe(0);
+        expect(slider.style.getPropertyValue('--slider-progress')).toBe('0%');
+      });
+
+      it('Отслеживание нажатий правее слайдера', () => {
+        const clickEvent = new MouseEvent('click', {
+          clientX: SLIDER_LEFT + SLIDER_WIDTH + 10,
+          bubbles: true,
+        });
+
+        slider.dispatchEvent(clickEvent);
+        expect(stepSlider.value).toBe(2);
+        expect(slider.style.getPropertyValue('--slider-progress')).toBe('100%');
+      });
+    });
+  });
 });

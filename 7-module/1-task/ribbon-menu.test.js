@@ -38,7 +38,7 @@ describe('Класс, описывающий компонент "Лента-Ме
   });
 
   describe('Прокрутка ленты меню', () => {
-    let scrollBySpy = vi  .fn();
+    let scrollBySpy = vi.fn();
 
     beforeEach(() => {
       ribbonInner.scrollBy = scrollBySpy;

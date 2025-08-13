@@ -1,22 +1,30 @@
 .slider {
+  --slider-progress: 0%;
+  --slider-thumb-size: 20px;
+  --slider-height: 8px;
+  --slider-color-primary: #ffd045;
+  --slider-color-track: linear-gradient(90deg, #f3e273 0%, #dd6428 52%, #d31c34 100%);
+
   position: relative;
   background-color: var(--color-black-dark);
   margin: 0 16px;
   width: 330px;
-  height: 8px;
+  height: var(--slider-height);
   border-radius: 3px;
   cursor: pointer;
 }
 
 .slider__progress {
-  height: 8px;
+  height: var(--slider-height);
+  width: var(--slider-progress);
   border-radius: 3px;
   position: absolute;
   top: 50%;
   left: 0;
   right: 0;
   z-index: 1;
-  background: linear-gradient(90deg, #f3e273 0%, #dd6428 52%, #d31c34 100%);
+  will-change: width;
+  background: var(--slider-color-track);
   transform: translate(0, -50%);
 }
 
@@ -27,13 +35,14 @@
 .slider__thumb {
   background-color: var(--color-white);
   border-radius: 3px;
-  width: 20px;
-  height: 20px;
+  width: var(--slider-thumb-size);
+  height: var(--slider-thumb-size);
   position: absolute;
   z-index: 2;
   top: 50%;
-  left: 0;
+  left: var(--slider-progress);
   margin-left: -10px;
+  will-change: left;
   transform: translate(0, -50%);
   cursor: grab;
 }
@@ -42,7 +51,7 @@
   color: var(--color-body);
   font-size: 12px;
   font-weight: 700;
-  font-family: var(--font-primary);
+  font-family: var(--font-primary), sans-serif;
   position: absolute;
   left: 0;
   top: calc(100% + 6px);

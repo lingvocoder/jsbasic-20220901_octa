@@ -25,9 +25,7 @@ export default class StepSlider {
   initSliderPosition = () => {
     const segments = this.steps - 1;
     const percent = segments > 0 ? (this.value / segments * 100) : 0;
-
-    this.changeProgressBarWidth(percent);
-    this.changeSliderThumbPosition(percent);
+    this.elem.style.setProperty('--slider-progress', `${percent}%`);
   };
 
   getSlider() {
@@ -55,12 +53,12 @@ export default class StepSlider {
   getSteps = () => [...Array(this.steps).keys()].map(step => this.getStep(step)).join('');
 
   setStepActive = () => {
-    const steps = [...this.elem.querySelectorAll('span[data-value]')];
-    const currStep = steps.find(span => span.dataset.value === String(this.value));
+    const steps = this.elem.querySelectorAll('.slider__steps span');
+
     if (this.activeStep) {
       this.activeStep.classList.remove('slider__step-active');
     }
-    this.activeStep = currStep;
+    this.activeStep = steps[this.value];
     if (this.activeStep) {
       this.activeStep.classList.add('slider__step-active');
     }
@@ -69,7 +67,6 @@ export default class StepSlider {
   addEventListeners() {
     this.elem.addEventListener('click', (ev) => {
       this.updateSliderPosition(ev);
-      this.setStepActive();
       this.onStepSelected();
     });
     this.elem.addEventListener('pointerdown', this.onPointerDown);
@@ -87,11 +84,11 @@ export default class StepSlider {
     this.setStepActive();
   };
 
-  onPointerUp = (ev) => {
-    ev.preventDefault();
+  onPointerUp = () => {
     this.elem.classList.remove('slider_dragging');
     this.onStepSelected();
     document.removeEventListener('pointermove', this.onPointerMove);
+    document.removeEventListener('pointerup', this.onPointerUp);
   };
 
   updateSliderPosition = (ev) => {
@@ -99,8 +96,8 @@ export default class StepSlider {
     let {value, percent} = this.calculateLeftOffset(ev);
     valueOutput.textContent = String(value);
     this.value = value;
-    this.changeProgressBarWidth(percent);
-    this.changeSliderThumbPosition(percent);
+    this.setStepActive();
+    this.elem.style.setProperty('--slider-progress', `${percent}%`);
   };
 
   onDragThumb = (ev) => {
@@ -108,20 +105,18 @@ export default class StepSlider {
     let {value, percent} = this.calculateDragLeftOffset(ev);
     valueOutput.textContent = String(value);
     this.value = value;
-    this.changeProgressBarWidth(percent);
-    this.changeSliderThumbPosition(percent);
+    this.elem.style.setProperty('--slider-progress', `${percent}%`);
   };
 
   calculateDragLeftOffset = (ev) => {
-    let left = ev.clientX - this.elem.getBoundingClientRect().left;
-    let leftRelative = left / this.elem.offsetWidth;
+    const rect = this.elem.getBoundingClientRect();
+    let left = ev.clientX - rect.left;
+    if (left < 0) left = 0;
+    if (left > rect.width) left = rect.width;
+
+    let leftRelative =  Math.max(0, Math.min(1, left / rect.width));
     let segments = this.steps - 1;
-    if (leftRelative < 0) {
-      leftRelative = 0;
-    }
-    if (leftRelative > 1) {
-      leftRelative = 1;
-    }
+
     let leftPercent = leftRelative * 100;
     let approximateValue = Math.round(leftRelative * segments);
     return {
@@ -131,8 +126,12 @@ export default class StepSlider {
   };
 
   calculateLeftOffset = (ev) => {
-    let left = ev.clientX - this.elem.getBoundingClientRect().left;
-    let leftRelative = left / this.elem.offsetWidth;
+    const rect = this.elem.getBoundingClientRect();
+    let left = ev.clientX - rect.left;
+    if (left < 0) left = 0;
+    if (left > rect.width) left = rect.width;
+
+    let leftRelative = Math.max(0, Math.min(1, left / rect.width));
     const segments = this.steps - 1;
     if (segments === 0) {
       return {
@@ -147,16 +146,6 @@ export default class StepSlider {
       value: approximateValue,
       percent: valuePercent,
     };
-  };
-
-  changeSliderThumbPosition = (percent) => {
-    const sliderThumb = this.elem.querySelector('.slider__thumb');
-    sliderThumb.style.left = `${percent}%`;
-  };
-
-  changeProgressBarWidth = (percent) => {
-    const progressBar = this.elem.querySelector('.slider__progress');
-    progressBar.style.width = `${percent}%`;
   };
 
   onStepSelected = () => {
