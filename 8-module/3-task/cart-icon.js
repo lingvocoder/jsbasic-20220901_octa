@@ -54,6 +54,9 @@ export default class CartIcon {
     </div>
     `;
   }
+  getClientWidth() {
+    return document.documentElement.clientWidth;
+  }
 
   subscribeToCart() {
     // Подписываемся на событие изменения корзины
@@ -85,11 +88,20 @@ export default class CartIcon {
     const leftOffset = document.documentElement.clientWidth - cartIcon.offsetWidth - POSITION.LEFT_MARGIN;
 
     if (DIST_Y > cartIcon.offsetTop) {
+
       Object.assign(cartIcon.style, {
         position: 'fixed',
         top: `${POSITION.TOP_MARGIN}px`,
         left: `${Math.min(rightOffset, leftOffset)}px`,
+        transition: 'none',
+        opacity: '0',
         zIndex: 100
+      });
+      requestAnimationFrame(() => {
+        Object.assign(cartIcon.style, {
+          transition: 'opacity 0.3s ease',
+          opacity: '1',
+        });
       });
     } else {
       this.resetPosition();

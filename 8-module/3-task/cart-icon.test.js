@@ -244,7 +244,7 @@ describe('CartIcon — События и автоматическое обнов
       classListAddSpy.mockRestore();
     });
 
-    it('Удаляет класс shake после окончания анимации', (done) => {
+    it('Удаляет класс shake после окончания анимации', () => {
       const cartData = {
         totalCount: 1,
         totalPrice: 10,
@@ -252,7 +252,8 @@ describe('CartIcon — События и автоматическое обнов
         items: [
           {
             product: { id: 'test' },
-            count: 1 }
+            count: 1
+          }
         ]
       };
 
@@ -267,7 +268,6 @@ describe('CartIcon — События и автоматическое обнов
       // Проверяем асинхронно, так как обработчик события может сработать с задержкой
       setTimeout(() => {
         expect(cartIcon.elem.classList.contains('shake')).toBe(false);
-        done();
       }, 0);
     });
   });
