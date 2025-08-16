@@ -16,7 +16,7 @@ export default class CartIcon {
     this.render();
     this.addEventListeners();
     this.subscribeToCart();
-    this.initModal(); // Настраиваем модальное окно
+    this.initModal();
   }
 
   /* ---------- Инициализация ---------- */
@@ -206,7 +206,7 @@ export default class CartIcon {
 
   /* ---------- Обновления ---------- */
   updateModal(cartData) {
-    // Если показываем успех, не закрываем модальное окно
+    // Флаг для предотвращения преждевременного закрытия модального окна
     if (this.isShowingSuccess) {
       return;
     }

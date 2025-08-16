@@ -30,7 +30,6 @@ export default class CartIcon {
     countElem.textContent = cartData.totalCount;
     priceElem.textContent = this.formatPrice(cartData.totalPrice);
 
-
     // Анимируем иконку в зависимости от наличия товаров
     if (!cartData.isEmpty && !this.elem.classList.contains('shake')) {
       this.elem.classList.add('shake');
@@ -93,15 +92,7 @@ export default class CartIcon {
         position: 'fixed',
         top: `${POSITION.TOP_MARGIN}px`,
         left: `${Math.min(rightOffset, leftOffset)}px`,
-        transition: 'none',
-        opacity: '0',
         zIndex: 100
-      });
-      requestAnimationFrame(() => {
-        Object.assign(cartIcon.style, {
-          transition: 'opacity 0.3s ease',
-          opacity: '1',
-        });
       });
     } else {
       this.resetPosition();

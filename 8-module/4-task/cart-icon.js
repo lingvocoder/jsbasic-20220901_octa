@@ -2,6 +2,13 @@ import {createElement} from '../../assets/lib/create-element.js';
 import escapeHtml from '../../assets/lib/escape-html.js';
 import Modal from '../../7-module/2-task/modal.js';
 
+
+const POSITION = {
+  TOP_MARGIN: 50,
+  LEFT_MARGIN: 10,
+  RIGHT_MARGIN: 20
+};
+
 export default class CartIcon {
   elem = null;
 
@@ -168,47 +175,46 @@ export default class CartIcon {
     `;
   }
 
-  addEventListeners() {
-    document.addEventListener('scroll', () => this.updatePosition());
-    window.addEventListener('resize', () => this.updatePosition());
-  }
-
   getClientWidth() {
     return document.documentElement.clientWidth;
   }
 
+  /* ---------- Позиционирование ---------- */
+  addEventListeners() {
+    document.addEventListener('scroll', () => this.updatePosition());
+    window.addEventListener('resize', () => this.updatePosition());
+  }
+  resetPosition() {
+    Object.assign(this.elem.style, {position: '', top: '', left: '', zIndex: ''});
+  }
+
   updatePosition() {
     const DIST_Y = window.scrollY || document.documentElement.scrollTop;
-    const TOP_MARGIN = 50;
-    const LEFT_MARGIN = 10;
-    const RIGHT_MARGIN = 20;
     const cartIcon = this.elem;
     const container = document.querySelector('.container');
-    const {right} = container.getBoundingClientRect();
-    const rightOffset = right + RIGHT_MARGIN;
-    const leftOffset = document.documentElement.clientWidth - cartIcon.offsetWidth - LEFT_MARGIN;
 
-    if (!(cartIcon.offsetHeight || cartIcon.offsetWidth)) {
-      return false;
+    if (!container || !(cartIcon.offsetHeight || cartIcon.offsetWidth)) {
+      return;
     }
+    const {right} = container.getBoundingClientRect();
+    const rightOffset = right + POSITION.RIGHT_MARGIN;
+    const leftOffset = document.documentElement.clientWidth - cartIcon.offsetWidth - POSITION.LEFT_MARGIN;
+
 
     if (DIST_Y > cartIcon.offsetTop) {
-      cartIcon.style.position = 'fixed';
-      cartIcon.style.top = `${TOP_MARGIN}px`;
-      cartIcon.style.left = `${Math.min(rightOffset, leftOffset)}px`;
-      cartIcon.style.zIndex = 100;
+
+      Object.assign(cartIcon.style, {
+        position: 'fixed',
+        top: `${POSITION.TOP_MARGIN}px`,
+        left: `${Math.min(rightOffset, leftOffset)}px`,
+        zIndex: 100
+      });
     } else {
-      cartIcon.style.position = '';
-      cartIcon.style.top = '';
-      cartIcon.style.left = '';
-      cartIcon.style.zIndex = '';
+      this.resetPosition();
     }
 
     if (document.documentElement.clientWidth <= 767) {
-      cartIcon.style.position = '';
-      cartIcon.style.top = '';
-      cartIcon.style.left = '';
-      cartIcon.style.zIndex = '';
+      this.resetPosition();
     }
   }
 }
