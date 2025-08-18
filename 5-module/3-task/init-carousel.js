@@ -1,56 +1,60 @@
 export default function initCarousel() {
   const container = document.querySelector('.container');
-  let slideCount = container.querySelectorAll('.carousel__slide').length;
-  const carouselInner = container.querySelector('.carousel__inner');
-  const btnPrev = container.querySelector('.carousel__arrow_left');
-  const btnNext = container.querySelector('.carousel__arrow_right');
-  let counter = 0;
+  if (!container) {
+    console.warn('Carousel container not found');
+    return;
+  }
+
+  const carouselInner = container.querySelector('.carousel__slides-container');
+  if (!carouselInner) {
+    console.warn('Carousel inner element not found');
+    return;
+  }
+
+  const slideCount = container.querySelectorAll('.carousel__slide').length;
+  const btnPrev = container.querySelector('.carousel__prev-button');
+  const btnNext = container.querySelector('.carousel__next-button');
+
+  let currentSlide = 0;
   const slideWidth = parseFloat(window.getComputedStyle(carouselInner).width);
-  checkEdgeSlides();
+
+  updateButtons();
 
   function moveSlide() {
-    let dist = -counter * slideWidth;
-    carouselInner.style.transform = `translateX(${dist}px)`;
+    const translateDistance = -currentSlide * slideWidth;
+    carouselInner.style.transform = `translateX(${translateDistance}px)`;
   }
 
-  function checkEdgeSlides() {
-    if (counter === 0) {
-      btnPrev.style.display = 'none';
-    } else {
-      btnPrev.style.display = '';
-    }
-    if (counter === slideCount - 1) {
-      btnNext.style.display = 'none';
-    } else {
-      btnNext.style.display = '';
-    }
+  function updateButtons() {
+    btnPrev.style.visibility = currentSlide === 0 ? 'hidden' : 'visible';
+    btnNext.style.visibility = currentSlide === slideCount - 1 ? 'hidden' : 'visible';
   }
-
+  
   function prev() {
-    if (counter > 0) {
-      counter--;
+    if (currentSlide > 0) {
+      currentSlide--;
       moveSlide();
     }
   }
 
   function next() {
-    if (counter < slideCount.length - 1) {
-      counter++;
+    if (currentSlide < slideCount - 1) {
+      currentSlide++;
       moveSlide();
     }
   }
 
-  container.addEventListener('click', (ev) => {
-    const {target} = ev;
-    const btnPrev = target.closest('.carousel__arrow_left');
-    const btnNext = target.closest('.carousel__arrow_right');
-    if (btnPrev) {
+  container.addEventListener('click', (event) => {
+    const clickedButton = event.target.closest('.carousel__prev-button, .carousel__next-button');
+    if (!clickedButton) return;
+
+    if (clickedButton.classList.contains('carousel__prev-button')) {
       prev();
-    }
-    if (btnNext) {
+    } else if (clickedButton.classList.contains('carousel__next-button')) {
       next();
     }
-    checkEdgeSlides();
+
+    updateButtons();
   });
 
 }

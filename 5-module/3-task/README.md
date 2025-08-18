@@ -40,28 +40,32 @@ graph TD
 ```html
 
 <div class="container">
-  <div class="carousel__inner">    <!-- Лента слайдов -->
-    <div class="carousel__slide">1</div>
-    <div class="carousel__slide">2</div>
-    <div class="carousel__slide">3</div>
-    <div class="carousel__slide">4</div>
-  </div>
-  <div class="carousel__arrow_left">←</div>   <!-- Кнопки -->
-  <div class="carousel__arrow_right">→</div>
+  <section class="carousel">
+    <div class="carousel__slides-container">    <!-- Лента слайдов -->
+      <article class="carousel__slide">1</article>
+      <article class="carousel__slide">2</article>
+      <article class="carousel__slide">3</article>
+      <article class="carousel__slide">4</article>
+    </div>
+    <button class="carousel__nav-button carousel__prev-button" aria-label="Предыдущий слайд">←</button>
+    <!-- Кнопки -->
+    <button class="carousel__nav-button carousel__next-button" aria-label="Следующий слайд">→</button>
+  </section>
 </div>
 ```
->Структура карусели состоит из внешнего элемента ("контейнер"), в котором находится "лента" из нескольких слайдов.
-Внешний элемент имеет фиксированную ширину, поэтому видна только часть ленты (один слайд).
-Для переключения слайдов мы будем сдвигать этот элемент на ширину одного слайда.
+
+> Структура карусели состоит из внешнего элемента ("контейнер"), в котором находится "лента" из нескольких слайдов.
+> Внешний элемент имеет фиксированную ширину, поэтому видна только часть ленты (один слайд).
+> Для переключения слайдов мы будем сдвигать этот элемент на ширину одного слайда.
 
 ### ⚙️ Ключевые CSS классы
 
-| Класс                    | Назначение                |
-|--------------------------|---------------------------|
-| `.carousel__inner`       | Лента слайдов (двигается) |
-| `.carousel__arrow_left`  | Кнопка "назад"            |
-| `.carousel__arrow_right` | Кнопка "вперед"           |
-| `.carousel__slide`       | Отдельный слайд           |
+| Класс                         | Назначение                |
+|-------------------------------|---------------------------|
+| `.carousel__slides-container` | Лента слайдов (двигается) |
+| `.carousel__prev-button`      | Кнопка "назад"            |
+| `.carousel__next-button`      | Кнопка "вперед"           |
+| `.carousel__slide`            | Отдельный слайд           |
 
 ## 🔧 Алгоритм реализации
 
@@ -69,9 +73,9 @@ graph TD
 
 ```js
 const container = document.querySelector('.container');
-const carouselInner = container.querySelector('.carousel__inner');
-const btnPrev = container.querySelector('.carousel__arrow_left');
-const btnNext = container.querySelector('.carousel__arrow_right');
+const carouselInner = container.querySelector('.carousel__slides-container');
+const btnPrev = container.querySelector('.carousel__prev-button');
+const btnNext = container.querySelector('.carousel__next-button');
 ```
 
 ### 2️⃣ Вычисление ширины слайда
@@ -153,7 +157,7 @@ const width = element.offsetWidth; // Число без 'px'
 
 ```js
 container.addEventListener('click', (event) => {
-  if (event.target.matches('.carousel__arrow_left')) {
+  if (event.target.matches('.carousel__prev-button')) {
     // Клик по левой кнопке
   }
 });
@@ -212,7 +216,6 @@ function nextSlide() {
 | Клик →   | 1 → 2        | -300 → -600px | ← ✅, → ✅ |  
 | Клик →   | 2 → 3        | -600 → -900px | ← ✅, → ❌ |
 | Клик ←   | 3 → 2        | -900 → -600px | ← ✅, → ✅ |
-
 
 ## 🎨 Практическое применение
 
