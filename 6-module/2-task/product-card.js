@@ -20,20 +20,21 @@ export default class ProductCard {
   }
 
   getCard = () => {
+
     return `
-    <div class="card">
-      <div class="card__top">
-        <img src="/assets/images/products/${this.image}" class="card__image" alt="product">
-        <span class="card__price">${this.formatPrice(this.price)}</span>
-      </div>
-      <div class="card__body">
-        <div class="card__title">${this.name}</div>
-        <button type="button" class="card__button">
-          <img src="/assets/images/icons/plus-icon.svg" alt="icon">
-        </button>
-      </div>
-    </div>
-    `;
+     <article class="product-card" aria-label="Add ${this.name} to cart">
+       <div class="product-card__media">
+         <img src="../../assets/images/products/${this.image}" class="product-card__image" alt="${this.name}">
+         <span class="product-card__price-badge">${this.formatPrice(this.price)}</span>
+       </div>
+       <div class="product-card__content">
+         <h3 class="product-card__title">${this.name}</h3>
+         <button type="button" class="product-card__add-button" aria-label="Add ${this.name} to cart">
+           <img src="../../assets/images/icons/plus-icon.svg" alt="" aria-hidden="true">
+         </button>
+       </div>
+     </article>
+     `;
   }
 
   formatPrice = (num) => {
@@ -46,7 +47,7 @@ export default class ProductCard {
 
   onAddBtnClick = (ev) => {
     const {target} = ev;
-    const addBtn = target.closest('.card__button');
+    const addBtn = target.closest('.product-card__add-button');
     if (!addBtn) {
       return;
     }
