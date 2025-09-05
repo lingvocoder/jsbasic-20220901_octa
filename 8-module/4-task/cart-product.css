@@ -1,68 +1,114 @@
+/*
+ * Component: CartProduct
+ * Description: Modern cart product item with image, title, price display
+ * Dependencies: Global design tokens from common.css
+ * Usage: Display product information in cart/modal
+ */
+
 .cart-product {
+  /* === Cart Product Design Tokens === */
+  --cart-product-min-height: 5rem; /* 80px */
+  --cart-product-gap: var(--space-md);
+  --cart-product-padding: var(--space-lg);
+  --cart-product-border-radius: var(--radius-md);
+  --cart-product-bg: var(--color-white);
+  --cart-product-border-color: var(--color-gray-200);
+  --cart-product-shadow: var(--shadow-sm);
+  
+  /* === Image Tokens === */
+  --cart-product-image-size: 5rem; /* 80px */
+  --cart-product-image-bg: var(--color-gray-50);
+  --cart-product-image-padding: var(--space-sm);
+  --cart-product-image-border-radius: var(--radius-md);
+  
+  /* === Content Tokens === */
+  --cart-product-content-padding: var(--space-lg);
+  --cart-product-content-min-width: 6.25rem; /* 100px */
+  
+  /* === Typography === */
+  --cart-product-title-font-family: var(--font-secondary);
+  --cart-product-title-font-size: var(--font-size-base);
+  --cart-product-title-font-weight: 500;
+  --cart-product-title-line-height: var(--line-height-tight);
+  --cart-product-title-color: var(--color-gray-900);
+  
+  --cart-product-price-font-family: var(--font-primary);
+  --cart-product-price-font-size: var(--font-size-base);
+  --cart-product-price-font-weight: 600;
+  --cart-product-price-color: var(--color-gray-900);
+  
+  /* === Base Styles === */
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  margin-bottom: 8px;
-  background-color: var(--color-black-dark);
+  align-items: stretch;
+  margin-bottom: var(--cart-product-gap);
+  background-color: var(--cart-product-bg);
+  border-radius: var(--cart-product-border-radius);
+  box-shadow: var(--cart-product-shadow);
+  border: 0.0625rem solid var(--cart-product-border-color); /* 1px */
+  min-height: var(--cart-product-min-height);
 }
 
-.cart-product > * {
-  flex-grow: 1;
-}
 
+/* === Image Section === */
 .cart-product__img {
-  max-width: 92px;
-  overflow: hidden;
-  background-color: var(--color-black-middle);
+  width: var(--cart-product-image-size);
+  min-width: var(--cart-product-image-size);
+  height: var(--cart-product-image-size);
+  background-color: var(--cart-product-image-bg);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+  border-top-left-radius: var(--cart-product-image-border-radius);
+  border-bottom-left-radius: var(--cart-product-image-border-radius);
+  overflow: hidden;
 }
 
 .cart-product__img > img {
-  max-width: 100%;
-  padding: 0 8px;
+  width: calc(var(--cart-product-image-size) - 1.25rem); /* 60px = 80px - 20px */
+  height: calc(var(--cart-product-image-size) - 1.25rem); /* 60px = 80px - 20px */
+  object-fit: contain;
 }
 
+/* === Price Section === */
 .cart-product__price {
-  max-width: 135px;
-  width: 100%;
+  min-width: var(--cart-product-content-min-width);
   text-align: right;
-  font-family: var(--font-primary), sans-serif;
-  font-weight: 500;
-  font-size: 21px;
-  line-height: 1.2;
-  color: var(--color-yellow);
-  padding: 24px;
+  font-family: var(--cart-product-price-font-family);
+  font-weight: var(--cart-product-price-font-weight);
+  font-size: var(--cart-product-price-font-size);
+  line-height: var(--line-height-tight);
+  color: var(--cart-product-price-color);
+  padding: var(--cart-product-content-padding);
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: center;
+  align-items: center;
+  justify-content: flex-end;
 }
 
+/* === Title Section === */
 .cart-product__title {
-  padding: 24px;
-  font-family: var(--font-primary), sans-serif;
-  font-style: italic;
-  font-weight: 500;
-  font-size: 21px;
-  line-height: 1.5;
-  color: var(--color-body);
+  padding: var(--cart-product-content-padding);
+  font-family: var(--cart-product-title-font-family);
+  font-weight: var(--cart-product-title-font-weight);
+  font-size: var(--cart-product-title-font-size);
+  line-height: var(--cart-product-title-line-height);
+  color: var(--cart-product-title-color);
   white-space: normal;
   flex-grow: 1;
   display: flex;
   align-items: center;
 }
 
+/* === Layout Sections === */
 .cart-product__info {
   display: flex;
   flex-direction: row;
+  flex: 1 1 auto;
 }
 
 .cart-product__price-wrap {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
-  width: 260px;
+  align-items: stretch;
+  min-width: 15rem; /* 240px */
 }

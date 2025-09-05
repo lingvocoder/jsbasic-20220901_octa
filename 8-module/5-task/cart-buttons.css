@@ -1,49 +1,107 @@
+/*
+ * Component: CartButtons
+ * Description: Modern cart action buttons with pricing display and loading states
+ * Dependencies: Global design tokens from common.css
+ * Usage: Cart checkout buttons with total price display
+ */
+
 .cart-buttons {
-  padding: 48px 80px 0;
-  text-align: center;
+  /* === Cart Buttons Design Tokens === */
+  --cart-buttons-padding: var(--space-xl) var(--space-2xl) var(--space-2xl);
+  --cart-buttons-gap: var(--space-lg);
+  
+  /* === Button Tokens === */
+  --cart-buttons-button-min-width: 8.75rem; /* 140px */
+  --cart-buttons-button-max-width: 12.5rem; /* 200px */
+  --cart-buttons-button-padding-right: var(--space-3xl); /* 48px */
+  --cart-buttons-button-icon-size: var(--space-md);
+  --cart-buttons-button-icon-spacing: var(--space-xl);
+  --cart-buttons-button-icon-loading-top: var(--space-md);
+  
+  /* === Info Display Tokens === */
+  --cart-buttons-info-padding: var(--space-xl) var(--space-xl);
+  --cart-buttons-info-margin: var(--space-xl);
+  --cart-buttons-info-border-width: 0.125rem; /* 2px */
+  --cart-buttons-info-border-radius: var(--radius-md);
+  --cart-buttons-info-bg: var(--color-gray-100);
+  --cart-buttons-info-border-color: var(--color-green-500);
+  
+  /* === Text Tokens === */
+  --cart-buttons-info-text-font-family: var(--font-primary);
+  --cart-buttons-info-text-font-size: 0.875rem; /* 14px */
+  --cart-buttons-info-text-font-weight: 500;
+  --cart-buttons-info-text-color: var(--color-gray-600);
+  --cart-buttons-info-text-spacing: var(--space-sm);
+  
+  /* === Price Tokens === */
+  --cart-buttons-price-font-size: 1.75rem; /* 28px */
+  --cart-buttons-price-font-weight: 800;
+  --cart-buttons-price-line-height: 1;
+  --cart-buttons-price-color: var(--color-green-600);
+  
+  /* === Base Styles === */
+  padding: var(--cart-buttons-padding);
+  display: flex;
+  flex-direction: column;
+  gap: var(--cart-buttons-gap);
 }
 
+/* === Cart Button === */
 .cart-buttons__button {
-  padding-right: 54px !important;
+  position: relative;
+  padding-right: var(--cart-buttons-button-padding-right) !important;
+  width: auto;
+  min-width: var(--cart-buttons-button-min-width);
+  max-width: var(--cart-buttons-button-max-width);
 }
 
 .cart-buttons__button:after {
   content: "";
   position: absolute;
-  right: 24px;
+  right: var(--cart-buttons-button-icon-spacing);
   top: 50%;
-  transform: translate(0, -50%);
+  transform: translateY(-50%);
   background: url("/assets/images/icons/angle-sm-icon.svg") center no-repeat;
-  background-size: cover;
-  width: 10px;
-  height: 18px;
+  background-size: contain;
+  width: var(--cart-buttons-button-icon-size);
+  height: var(--cart-buttons-button-icon-size);
+  filter: brightness(0) invert(1);
 }
 
 .cart-buttons__button.is-loading:after {
   position: absolute;
-  top: 22px;
-  right: 16px;
+  top: var(--cart-buttons-button-icon-loading-top);
+  right: var(--cart-buttons-button-icon-spacing);
 }
 
+/* === Cart Info Display === */
 .cart-buttons__info {
-  padding: 11px 14px 13px;
+  padding: var(--cart-buttons-info-padding);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  color: var(--color-body);
-  font-family: var(--font-primary), sans-serif;
-  background-color: var(--color-pink);
+  justify-content: space-between;
+  color: var(--color-gray-900);
+  font-family: var(--cart-buttons-info-text-font-family);
+  background-color: var(--cart-buttons-info-bg);
+  border-radius: var(--cart-buttons-info-border-radius);
+  border: var(--cart-buttons-info-border-width) solid var(--cart-buttons-info-border-color);
+  margin-bottom: var(--cart-buttons-info-margin);
 }
 
+/* === Cart Info Text and Price === */
 .cart-buttons__info-text {
-  font-weight: 500;
-  font-size: 11px;
+  font-weight: var(--cart-buttons-info-text-font-weight);
+  font-size: var(--cart-buttons-info-text-font-size);
+  color: var(--cart-buttons-info-text-color);
+  margin-right: var(--cart-buttons-info-text-spacing);
   text-transform: uppercase;
 }
 
 .cart-buttons__info-price {
-  font-size: 20px;
-  line-height: 1.2;
-  font-weight: 500;
+  font-size: var(--cart-buttons-price-font-size);
+  line-height: var(--cart-buttons-price-line-height);
+  font-weight: var(--cart-buttons-price-font-weight);
+  color: var(--cart-buttons-price-color);
+  margin: 0;
 }

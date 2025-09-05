@@ -1,24 +1,87 @@
+/*
+ * Component: CartCounter
+ * Description: Modern cart counter with +/- buttons and count display
+ * Dependencies: Global design tokens from common.css
+ * Usage: Increment/decrement product quantities in cart
+ */
+
 .cart-counter {
+  /* === Cart Counter Design Tokens === */
+  --cart-counter-width: 7.5rem; /* 120px */
+  --cart-counter-padding: 0 var(--space-md);
+  --cart-counter-bg: var(--color-gray-50);
+  --cart-counter-border-color: var(--color-gray-200);
+  
+  /* === Button Tokens === */
+  --cart-counter-button-size: 2rem; /* 32px */
+  --cart-counter-button-bg: var(--color-white);
+  --cart-counter-button-border-color: var(--color-gray-300);
+  --cart-counter-button-hover-bg: var(--color-gray-100);
+  --cart-counter-button-hover-border-color: var(--color-gray-400);
+  --cart-counter-button-icon-size: 1.375rem; /* 22px */
+  
+  /* === Count Display Tokens === */
+  --cart-counter-count-min-width: 2rem; /* 32px */
+  --cart-counter-count-padding: 0 var(--space-sm);
+  --cart-counter-count-font-family: var(--font-primary);
+  --cart-counter-count-font-size: var(--font-size-base);
+  --cart-counter-count-font-weight: 600;
+  --cart-counter-count-color: var(--color-gray-900);
+  
+  /* === Base Styles === */
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  max-width: 125px;
-  padding: 24px;
+  align-self: stretch;
+  width: var(--cart-counter-width);
+  min-width: var(--cart-counter-width);
+  padding: var(--cart-counter-padding);
+  background-color: var(--cart-counter-bg);
+  border-left: 0.0625rem solid var(--cart-counter-border-color); /* 1px */
+  border-right: 0.0625rem solid var(--cart-counter-border-color); /* 1px */
 }
 
+/* === Counter Button === */
 .cart-counter__button {
   cursor: pointer;
-  display: inline-block;
-  max-width: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cart-counter-button-size);
+  height: var(--cart-counter-button-size);
+  border-radius: var(--radius-full);
+  background-color: var(--cart-counter-button-bg);
+  border: 0.0625rem solid var(--cart-counter-button-border-color); /* 1px */
+  transition: all var(--duration-normal) var(--easing-standard);
 }
 
+.cart-counter__button:hover {
+  background-color: var(--cart-counter-button-hover-bg);
+  border-color: var(--cart-counter-button-hover-border-color);
+  transform: scale(1.05);
+}
+
+.cart-counter__button:active {
+  transform: scale(0.95);
+}
+
+.cart-counter__button img {
+  width: var(--cart-counter-button-icon-size);
+  height: var(--cart-counter-button-icon-size);
+}
+
+/* === Count Display === */
 .cart-counter__count {
-  display: inline-block;
-  padding: 0 14px;
-  font-family: var(--font-primary), sans-serif;
-  font-weight: 500;
-  font-size: 21px;
-  line-height: 1.2;
-  color: var(--color-body);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--cart-counter-count-min-width);
+  padding: var(--cart-counter-count-padding);
+  font-family: var(--cart-counter-count-font-family);
+  font-weight: var(--cart-counter-count-font-weight);
+  font-size: var(--cart-counter-count-font-size);
+  line-height: 1;
+  color: var(--cart-counter-count-color);
+  text-align: center;
 }

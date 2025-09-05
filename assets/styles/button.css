@@ -1,25 +1,151 @@
+/*
+ * Component: Button
+ * Description: Modern button system with variants, sizes, and interactive states
+ * Dependencies: Global design tokens from common.css
+ * Usage: Primary actions, forms, navigation with consistent styling
+ */
+
 .button {
-  height: 64px;
-  padding: 19px 24px;
-  background-color: var(--color-yellow);
-  font-family: "Lato", sans-serif;
-  font-style: italic;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 1.2;
-  color: var(--color-black);
-  display: inline-block;
-  transition: 0.2s all;
-  text-transform: uppercase;
+  /* === Button Design Tokens === */
+  --button-height: var(--size-button-lg); /* 48px */
+  --button-padding: var(--space-md) var(--space-xl);
+  --button-gap: var(--space-sm);
+  --button-border-radius: var(--radius-md);
+  --button-border-width: 0.0625rem; /* 1px */
+  
+  /* === Primary Button Colors === */
+  --button-bg: var(--color-green-500);
+  --button-bg-hover: var(--color-green-600);
+  --button-color: var(--color-white);
+  --button-border-color: transparent;
+  
+  /* === Interactive States === */
+  --button-shadow: var(--shadow-sm);
+  --button-shadow-hover: var(--shadow-md);
+  --button-transform-hover: translateY(-0.0625rem); /* -1px */
+  --button-transform-active: translateY(0);
+  
+  /* === Typography === */
+  --button-font-family: var(--font-primary);
+  --button-font-size: var(--font-size-base);
+  --button-font-weight: 500;
+  --button-line-height: var(--line-height-base);
+  
+  /* === Disabled State === */
+  --button-disabled-bg: var(--color-gray-300);
+  --button-disabled-color: var(--color-gray-500);
+  
+  /* === Loading State === */
+  --button-loading-icon-size: 1.5rem; /* 24px */
+  --button-loading-spacing: var(--space-md);
+  
+  /* === Base Styles === */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: var(--button-height);
+  padding: var(--button-padding);
+  background-color: var(--button-bg);
+  font-family: var(--button-font-family);
+  font-weight: var(--button-font-weight);
+  font-size: var(--button-font-size);
+  line-height: var(--button-line-height);
+  color: var(--button-color);
+  border: var(--button-border-width) solid var(--button-border-color);
+  border-radius: var(--button-border-radius);
+  gap: var(--button-gap);
+  transition: all var(--duration-normal) var(--easing-standard);
   cursor: pointer;
+  box-shadow: var(--button-shadow);
+  text-decoration: none;
+  text-transform: uppercase;
 }
 
-.button:hover,
-.button:active,
+/* === Interactive States === */
+.button:hover {
+  background-color: var(--button-bg-hover);
+  box-shadow: var(--button-shadow-hover);
+  transform: var(--button-transform-hover);
+}
+
+.button:active {
+  background-color: var(--button-bg-hover);
+  box-shadow: var(--button-shadow);
+  transform: var(--button-transform-active);
+}
+
 .button:focus {
-  background-color: var(--color-yellow-dark);
+  outline: 0.125rem solid var(--color-green-500); /* 2px */
+  outline-offset: 0.125rem; /* 2px */
 }
 
+.button:disabled {
+  background-color: var(--button-disabled-bg);
+  color: var(--button-disabled-color);
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* === Button Variants === */
+.button--secondary {
+  --button-bg: var(--color-white);
+  --button-bg-hover: var(--color-gray-50);
+  --button-color: var(--color-gray-700);
+  --button-border-color: var(--color-gray-300);
+  
+  background-color: var(--button-bg);
+  color: var(--button-color);
+  border-color: var(--button-border-color);
+}
+
+.button--secondary:hover {
+  background-color: var(--button-bg-hover);
+  border-color: var(--color-gray-400);
+}
+
+.button--outline {
+  --button-bg: transparent;
+  --button-bg-hover: var(--color-green-50);
+  --button-color: var(--color-green-500);
+  --button-border-color: var(--color-green-500);
+  
+  background-color: var(--button-bg);
+  color: var(--button-color);
+  border-color: var(--button-border-color);
+}
+
+.button--outline:hover {
+  background-color: var(--button-bg-hover);
+  color: var(--color-green-600);
+  border-color: var(--color-green-600);
+}
+
+/* === Button Sizes === */
+.button--sm {
+  --button-height: var(--size-button-sm); /* 32px */
+  --button-padding: var(--space-sm) var(--space-lg);
+  --button-font-size: var(--font-size-sm);
+  
+  height: var(--button-height);
+  padding: var(--button-padding);
+  font-size: var(--button-font-size);
+}
+
+.button--lg {
+  --button-height: calc(var(--size-button-lg) + 0.5rem); /* 56px */
+  --button-padding: var(--space-lg) var(--space-2xl);
+  --button-font-size: var(--font-size-lg);
+  --button-font-weight: 600;
+  
+  height: var(--button-height);
+  padding: var(--button-padding);
+  font-size: var(--button-font-size);
+  font-weight: var(--button-font-weight);
+}
+
+/* === Button Modifiers === */
 .button.button_block {
   display: block;
   width: 100%;
@@ -31,9 +157,9 @@
 
 .button.is-loading:after {
   content: "";
-  width: 24px;
-  height: 24px;
-  margin-left: 12px;
+  width: var(--button-loading-icon-size);
+  height: var(--button-loading-icon-size);
+  margin-left: var(--button-loading-spacing);
   position: absolute;
   background: url(/assets/images/icons/loader-icon-sm.svg) center no-repeat;
   background-size: cover;
@@ -42,19 +168,24 @@
   animation: loadingSpinner 1s infinite linear;
 }
 
+/* === Button Groups === */
 .btn-group {
-  display: inline-flex;
-  flex-direction: row;
-  justify-content: center;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  gap: var(--space-md);
 }
 
 .btn-group__button {
   position: relative;
 }
 
+/* === Responsive Design === */
 @media all and (max-width: 767px) {
   .btn-group {
     display: flex;
+    flex-direction: row;
+    gap: var(--space-sm);
   }
 
   .btn-group__button {

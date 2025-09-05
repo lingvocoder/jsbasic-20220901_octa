@@ -1,69 +1,132 @@
+/*
+ * Component: CartForm
+ * Description: Modern cart form with responsive inputs and focus states
+ * Dependencies: Global design tokens from common.css
+ * Usage: Order form for cart checkout with validation and accessibility
+ */
+
 .cart-form {
-  padding: 20px 27px 32px;
-  background-color: var(--color-black-dark);
+  /* === Cart Form Design Tokens === */
+  --cart-form-padding: var(--space-2xl);
+  --cart-form-bg: var(--color-gray-50);
+  --cart-form-border-radius: var(--radius-md);
+  --cart-form-border-color: var(--color-gray-200);
+  --cart-form-border-width: 0.0625rem; /* 1px */
+  
+  /* === Title Tokens === */
+  --cart-form-title-font-family: var(--font-secondary);
+  --cart-form-title-font-size: var(--font-size-xl);
+  --cart-form-title-font-weight: 600;
+  --cart-form-title-line-height: var(--line-height-tight);
+  --cart-form-title-color: var(--color-gray-900);
+  --cart-form-title-spacing: var(--space-xl);
+  
+  /* === Group Tokens === */
+  --cart-form-group-gap: var(--space-lg);
+  --cart-form-row-gap: var(--space-md);
+  
+  /* === Input Tokens === */
+  --cart-form-input-height: 2.75rem; /* 44px */
+  --cart-form-input-height-mobile: 3rem; /* 48px */
+  --cart-form-input-padding: var(--space-md) var(--space-lg);
+  --cart-form-input-bg: var(--color-white);
+  --cart-form-input-border-color: var(--color-gray-300);
+  --cart-form-input-border-radius: var(--radius-md);
+  --cart-form-input-font-family: var(--font-primary);
+  --cart-form-input-font-size: var(--font-size-base);
+  --cart-form-input-font-weight: 400;
+  --cart-form-input-line-height: var(--line-height-base);
+  --cart-form-input-color: var(--color-gray-900);
+  --cart-form-input-shadow: var(--shadow-sm);
+  
+  /* === Focus State === */
+  --cart-form-input-focus-border-color: var(--color-green-500);
+  --cart-form-input-focus-shadow: 0 0 0 0.1875rem rgba(34, 197, 94, 0.1); /* 3px */
+  
+  /* === Placeholder === */
+  --cart-form-placeholder-color: var(--color-gray-400);
+  
+  /* === Mobile Tokens === */
+  --cart-form-padding-mobile: var(--space-xl);
+  --cart-form-bg-mobile: var(--color-white);
+  
+  /* === Base Styles === */
+  padding: var(--cart-form-padding);
+  background-color: var(--cart-form-bg);
+  border-radius: var(--cart-form-border-radius);
+  border: var(--cart-form-border-width) solid var(--cart-form-border-color);
 }
 
+/* === Form Title === */
 .cart-form__title {
-  font-size: 21px;
-  line-height: 1.2;
-  font-weight: 700;
-  font-family: var(--font-primary), sans-serif;
-  font-style: italic;
-  color: var(--color-body);
-  margin: 0 0 25px;
+  font-size: var(--cart-form-title-font-size);
+  line-height: var(--cart-form-title-line-height);
+  font-weight: var(--cart-form-title-font-weight);
+  font-family: var(--cart-form-title-font-family);
+  color: var(--cart-form-title-color);
+  margin: 0 0 var(--cart-form-title-spacing);
   text-align: center;
 }
 
-.cart-form__group+.cart-form__group {
-  margin-top: 16px;
+/* === Form Groups === */
+.cart-form__group + .cart-form__group {
+  margin-top: var(--cart-form-group-gap);
 }
 
 .cart-form__group.cart-form__group_row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 6px;
+  gap: var(--cart-form-row-gap);
 }
 
+/* === Form Inputs === */
 .cart-form__input {
-  height: 48px;
-  border: none;
-  box-shadow: none;
-  outline: none;
-  background-color: var(--color-white);
-  padding: 11px 16px;
-  color: var(--color-black);
-  font-family: var(--font-primary), sans-serif;
-  font-style: italic;
-  font-size: 21px;
-  line-height: 1.2;
-  font-weight: 500;
+  height: var(--cart-form-input-height);
+  border: var(--cart-form-border-width) solid var(--cart-form-input-border-color);
+  border-radius: var(--cart-form-input-border-radius);
+  background-color: var(--cart-form-input-bg);
+  padding: var(--cart-form-input-padding);
+  color: var(--cart-form-input-color);
+  font-family: var(--cart-form-input-font-family);
+  font-size: var(--cart-form-input-font-size);
+  line-height: var(--cart-form-input-line-height);
+  font-weight: var(--cart-form-input-font-weight);
   width: 100%;
-  transition: 0.2s box-shadow;
+  transition: all var(--duration-normal) var(--easing-standard);
+  box-shadow: var(--cart-form-input-shadow);
 }
 
 .cart-form__input:focus {
-  box-shadow: 0 5px 0 0 var(--color-pink);
+  outline: none;
+  border-color: var(--cart-form-input-focus-border-color);
+  box-shadow: var(--cart-form-input-focus-shadow);
 }
 
 .cart-form__input::placeholder {
-  color: var(--color-grey);
+  color: var(--cart-form-placeholder-color);
 }
 
+/* === Responsive Design === */
 @media (max-width: 767px) {
   .cart-form {
-    background-color: transparent;
-    padding: 24px;
+    --cart-form-padding: var(--cart-form-padding-mobile);
+    --cart-form-bg: var(--cart-form-bg-mobile);
+    --cart-form-input-height: var(--cart-form-input-height-mobile);
+    
+    padding: var(--cart-form-padding);
+    background-color: var(--cart-form-bg);
+    border: none;
+    border-radius: 0;
   }
 
   .cart-form__group.cart-form__group_row {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    gap: var(--cart-form-row-gap);
   }
 
-  .cart-form__group.cart-form__group_row>.cart-form__input {
-    margin-top: 16px;
-  }
-
-  .cart-form__group.cart-form__group_row>.cart-form__input:first-child {
-    margin-top: 0;
+  .cart-form__input {
+    height: var(--cart-form-input-height);
+    font-size: var(--cart-form-input-font-size);
   }
 }

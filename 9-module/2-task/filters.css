@@ -1,8 +1,70 @@
+/*
+ * Component: Filters
+ * Description: Modern filter system with checkboxes and sliders for product filtering
+ * Dependencies: Global design tokens from common.css
+ * Usage: Product filtering interface with responsive design
+ */
+
 .filters {
-  padding: 16px;
-  border: 16px solid var(--color-black-light);
-  border-bottom: none;
-  color: var(--color-grey);
+  /* === Filters Design Tokens === */
+  --filters-padding: var(--space-xl);
+  --filters-bg: var(--color-white);
+  --filters-border-radius: var(--radius-lg);
+  --filters-border-color: var(--color-gray-200);
+  --filters-shadow: var(--shadow-md);
+  --filters-color: var(--color-gray-700);
+  --filters-margin-bottom: var(--space-2xl);
+  
+  /* === Desktop Tokens === */
+  --filters-min-height: 4.5rem; /* 72px */
+  --filters-padding-desktop: var(--space-xl) var(--space-2xl);
+  
+  /* === Group Tokens === */
+  --filters-group-margin: var(--space-xl);
+  --filters-group-spacing-desktop: var(--space-2xl);
+  
+  /* === Label Tokens === */
+  --filters-label-font-family: var(--font-primary);
+  --filters-label-font-size: var(--font-size-base);
+  --filters-label-font-weight: 600;
+  --filters-label-line-height: var(--line-height-tight);
+  --filters-label-color: var(--color-gray-900);
+  
+  /* === Slider Tokens === */
+  --filters-slider-padding: 0.4375rem 0 var(--space-2xl); /* 7px 0 32px */
+  --filters-slider-margin: var(--space-md) 0 0;
+  --filters-slider-padding-desktop: 0.4375rem var(--space-3xl) 0 var(--space-lg); /* 7px 48px 0 16px */
+  --filters-slider-margin-desktop: -0.25rem 1.1875rem 0; /* -4px 19px 0 */
+  
+  /* === Pepper Icon Tokens === */
+  --filters-pepper-size: 1rem 1.0625rem; /* 16px 17px */
+  --filters-pepper-size-large: var(--space-3xl) 1.0625rem; /* 48px 17px */
+  
+  /* === Checkbox Tokens === */
+  --filters-checkbox-size: 1.25rem; /* 20px */
+  --filters-checkbox-border-width: 0.125rem; /* 2px */
+  --filters-checkbox-border-radius: var(--radius-sm);
+  --filters-checkbox-border-color: var(--color-gray-300);
+  --filters-checkbox-border-hover: var(--color-gray-400);
+  --filters-checkbox-bg: var(--color-white);
+  --filters-checkbox-bg-checked: var(--color-green-500);
+  --filters-checkbox-spacing: var(--space-md);
+  --filters-checkbox-font-size: 0.9375rem; /* 15px */
+  --filters-checkbox-font-weight: 500;
+  --filters-checkbox-color: var(--color-gray-700);
+  
+  /* === Check Icon Tokens === */
+  --filters-check-size: var(--space-md);
+  --filters-check-position: 0.375rem 0.25rem; /* 6px 4px */
+  
+  /* === Base Styles === */
+  padding: var(--filters-padding);
+  background: var(--filters-bg);
+  border-radius: var(--filters-border-radius);
+  box-shadow: var(--filters-shadow);
+  border: 0.0625rem solid var(--filters-border-color); /* 1px */
+  color: var(--filters-color);
+  margin-bottom: var(--filters-margin-bottom);
 }
 
 .filters__inner {
@@ -11,26 +73,31 @@
   display: flex;
 }
 
+/* === Filter Groups === */
 .filters__group {
   display: flex;
   flex-direction: column;
-  margin-bottom: 26px;
+  margin-bottom: var(--filters-group-margin);
 }
 
 .filters__group:last-child {
   margin-bottom: 0;
 }
 
+/* === Filter Labels === */
 .filters__label {
-  font-size: 18px;
-  line-height: 1.2;
-  font-family: var(--font-primary);
+  font-size: var(--filters-label-font-size);
+  line-height: var(--filters-label-line-height);
+  font-family: var(--filters-label-font-family);
+  font-weight: var(--filters-label-font-weight);
+  color: var(--filters-label-color);
 }
 
+/* === Filter Slider === */
 .filters__slider {
   position: relative;
-  padding: 7px 0 32px;
-  margin: 12px 0 0;
+  padding: var(--filters-slider-padding);
+  margin: var(--filters-slider-margin);
   display: flex;
   align-items: center;
 }
@@ -39,8 +106,7 @@
   content: "";
   position: absolute;
   left: 0;
-  width: 16px;
-  height: 17px;
+  width: var(--filters-pepper-size);
   background: url(/assets/images/icons/pepper-icon.svg) center no-repeat;
   background-size: cover;
   display: none;
@@ -50,8 +116,7 @@
   content: "";
   position: absolute;
   right: 0;
-  width: 48px;
-  height: 17px;
+  width: var(--filters-pepper-size-large);
   background: url(/assets/images/icons/pepper-icon.svg) center repeat;
   display: none;
 }
@@ -75,57 +140,67 @@
 
 .styled-checkbox + label span {
   vertical-align: middle;
+  font-size: var(--filters-checkbox-font-size);
+  color: var(--filters-checkbox-color);
+  font-weight: var(--filters-checkbox-font-weight);
 }
 
+/* === Checkbox Styles === */
 .styled-checkbox + label:before {
   content: "";
-  margin-right: 12px;
+  margin-right: var(--filters-checkbox-spacing);
   display: inline-block;
   vertical-align: middle;
-  width: 20px;
-  height: 20px;
-  background: var(--color-black-dark);
-  border: 2px solid #8d8a73;
-  border-radius: 2px;
+  width: var(--filters-checkbox-size);
+  height: var(--filters-checkbox-size);
+  background: var(--filters-checkbox-bg);
+  border: var(--filters-checkbox-border-width) solid var(--filters-checkbox-border-color);
+  border-radius: var(--filters-checkbox-border-radius);
   box-sizing: border-box;
+  transition: all var(--duration-normal) var(--easing-standard);
 }
 
-.styled-checkbox:hover + label:before,
+.styled-checkbox:hover + label:before {
+  border-color: var(--filters-checkbox-border-hover);
+  box-shadow: var(--shadow-sm);
+}
+
 .styled-checkbox:checked + label:before {
-  border-color: var(--color-grey);
+  background-color: var(--filters-checkbox-bg-checked);
+  border-color: var(--filters-checkbox-bg-checked);
 }
 
 .styled-checkbox:disabled + label {
-  color: #b8b8b8;
+  color: var(--color-gray-400);
   cursor: auto;
 }
 
 .styled-checkbox:disabled + label:before {
-  background: #ddd;
+  background: var(--color-gray-300);
 }
 
 .styled-checkbox:checked + label:after {
   content: "";
   position: absolute;
-  left: 4px;
-  top: 5px;
-  width: 12px;
-  height: 11px;
+  left: var(--filters-check-position);
+  width: var(--filters-check-size);
+  height: var(--filters-check-size);
   background: url(/assets/images/icons/check-icon.svg) center no-repeat;
-  background-size: cover;
+  background-size: contain;
+  filter: brightness(0) invert(1);
 }
 
+/* === Responsive Design === */
 @media all and (min-width: 768px) {
   .filters {
-    border: 2px solid var(--color-black-light);
-    margin-bottom: 24px;
+    margin-bottom: var(--filters-margin-bottom);
   }
 }
 
 @media all and (min-width: 992px) {
   .filters {
-    height: 80px;
-    padding: 20px 34px;
+    min-height: var(--filters-min-height);
+    padding: var(--filters-padding-desktop);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -141,7 +216,7 @@
     display: inline-flex;
     flex-direction: row;
     margin-bottom: 0;
-    margin-right: 32px;
+    margin-right: var(--filters-group-spacing-desktop);
   }
 
   .filters__group:last-child {
@@ -149,19 +224,19 @@
   }
 
   .filters__slider {
-    padding: 7px 48px 0 16px;
-    margin: -4px 19px 0;
+    padding: var(--filters-slider-padding-desktop);
+    margin: var(--filters-slider-margin-desktop);
   }
 
   .filters__slider:before {
     top: 50%;
-    transform: translate(0, -50%);
+    transform: translate(0, -25%);
     display: block;
   }
 
   .filters__slider:after {
     top: 50%;
-    transform: translate(0, -50%);
+    transform: translate(0, -25%);
     display: block;
   }
 }

@@ -1,25 +1,61 @@
+/*
+ * Component: ProductsGrid
+ * Description: Modern responsive product grid with loading states and animations
+ * Dependencies: Global design tokens from common.css
+ * Usage: Display products in responsive grid layout with skeleton loading
+ */
+
 .products-grid .products-grid__inner {
+  /* === Product Grid Design Tokens === */
+  --products-grid-gap: var(--space-xl);
+  --products-grid-gap-mobile: var(--space-lg);
+  --products-grid-padding: var(--space-xl) 0;
+  --products-grid-padding-mobile: var(--space-lg);
+  --products-grid-min-card-width: 18.75rem; /* 300px */
+  
+  /* === Skeleton Tokens === */
+  --products-grid-skeleton-height: var(--card-height);
+  --products-grid-skeleton-bg: var(--color-white);
+  --products-grid-skeleton-border-radius: var(--radius-lg);
+  --products-grid-skeleton-border-color: var(--color-gray-200);
+  --products-grid-skeleton-shadow: var(--shadow-md);
+  
+  /* === Shimmer Animation Tokens === */
+  --products-grid-shimmer-bg-start: var(--color-gray-100);
+  --products-grid-shimmer-bg-middle: var(--color-gray-200);
+  --products-grid-shimmer-bg-end: var(--color-gray-100);
+  --products-grid-shimmer-size: 200% 100%;
+  
+  /* === Loading Icon Tokens === */
+  --products-grid-loader-size: 2.5rem; /* 40px */
+  --products-grid-loader-filter: invert(0.6);
+  
+  /* === Base Styles === */
   display: grid;
-  grid-gap: 20px;
-  grid-template-columns: repeat(3, calc(33.3333% - 14px));
+  gap: var(--products-grid-gap);
+  grid-template-columns: repeat(auto-fit, minmax(var(--products-grid-min-card-width), 1fr));
+  padding: var(--products-grid-padding);
 }
 
 .products-grid.is-loading .products-grid__inner {
   display: none;
 }
 
+/* === Mobile Responsive === */
 @media all and (max-width: 767px) {
   .products-grid .products-grid__inner {
-    display: block;
-    padding: 16px;
-    background-color: var(--color-black-light);
+    grid-template-columns: 1fr;
+    gap: var(--products-grid-gap-mobile);
+    padding: var(--products-grid-padding-mobile);
   }
 }
 
+/* === Loading Skeleton Grid === */
 .products-grid .products-grid__skeleton {
   display: grid;
-  grid-gap: 20px;
-  grid-template-columns: repeat(3, calc(33.3333% - 14px));
+  gap: var(--products-grid-gap);
+  grid-template-columns: repeat(auto-fit, minmax(var(--products-grid-min-card-width), 1fr));
+  padding: var(--products-grid-padding);
 }
 
 .products-grid .products-grid__skeleton {
@@ -31,44 +67,69 @@
   pointer-events: none;
 }
 
+/* === Skeleton Item === */
 .products-grid.is-loading .products-grid__skeleton-item {
   position: relative;
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  transition: 0.2s all;
+  height: var(--products-grid-skeleton-height);
+  border-radius: var(--products-grid-skeleton-border-radius);
+  background: var(--products-grid-skeleton-bg);
+  box-shadow: var(--products-grid-skeleton-shadow);
+  border: 0.0625rem solid var(--products-grid-skeleton-border-color); /* 1px */
+  overflow: hidden;
 }
 
+/* === Shimmer Animation === */
 .products-grid.is-loading .products-grid__skeleton-item:before {
   content: "";
   position: absolute;
   z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  background: var(--color-black-middle);
+  background: linear-gradient(
+    90deg,
+    var(--products-grid-shimmer-bg-start) 0%,
+    var(--products-grid-shimmer-bg-middle) 50%,
+    var(--products-grid-shimmer-bg-end) 100%
+  );
+  background-size: var(--products-grid-shimmer-size);
+  animation: shimmer var(--duration-slow) infinite;
 }
 
+/* === Loading Icon === */
 .products-grid.is-loading .products-grid__skeleton-item:after {
   content: "";
-  width: 64px;
-  height: 64px;
+  width: var(--products-grid-loader-size);
+  height: var(--products-grid-loader-size);
   position: absolute;
   z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: -32px;
-  margin-left: -32px;
   top: 50%;
   left: 50%;
+  transform: translate(-50%, -50%);
   background: url(/assets/images/icons/loader-icon.svg) center no-repeat;
-  background-size: cover;
-  animation: loadingSpinner 1s infinite linear;
+  background-size: contain;
+  filter: var(--products-grid-loader-filter);
+  animation: loadingSpinner var(--duration-normal) infinite linear;
+}
+
+/* === Shimmer Animation Keyframes === */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* === Mobile Skeleton === */
+@media (max-width: 767px) {
+  .products-grid .products-grid__skeleton {
+    grid-template-columns: 1fr;
+    gap: var(--products-grid-gap-mobile);
+    padding: var(--products-grid-padding-mobile);
+  }
 }
 
 
